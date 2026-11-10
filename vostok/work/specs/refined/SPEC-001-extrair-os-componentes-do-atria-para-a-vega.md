@@ -1,10 +1,10 @@
 ---
 id: SPEC-001
 title: "Extrair os componentes do Atria para a Vega"
-status: planned
+status: implemented
 author: "Victor Batalha"
 created_at: 2026-11-10T12:35:06Z
-updated_at: 2026-11-10T13:59:40Z
+updated_at: 2026-11-10T17:59:29Z
 tags: []
 type: feature
 source: "draft/SPEC-001-extrair-os-componentes-do-atria-para-a-vega.md"
@@ -14,7 +14,7 @@ adjusted_at: null
 content_hash: b579244c90f3c509363011ee811361f61fc74083deff47e336c7ed5bf5895ac2
 approved_at: 2026-11-10T13:22:49Z
 approved_hash: b579244c90f3c509363011ee811361f61fc74083deff47e336c7ed5bf5895ac2
-status_history: 2026-11-10T13:22:49Z approved; 2026-11-10T13:59:40Z planned
+status_history: 2026-11-10T13:22:49Z approved; 2026-11-10T13:59:40Z planned; 2026-11-10T17:59:29Z implemented
 ---
 
 # Extrair os componentes do Atria para a Vega - Especificação Refinada

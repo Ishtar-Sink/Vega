@@ -20,9 +20,15 @@ node --input-type=module -e "import { readFileSync, statSync } from 'node:fs'; c
 npm view @ishtar-sink/vega@0.1.0 name version dist.attestations.provenance.predicateType dist.tarball --json
 # evidência: release-ci.txt
 gh run list --repo Ishtar-Sink/Vega --workflow release.yml --json headBranch,event,status,conclusion,url --jq '.[] | select(.headBranch == "v0.1.0") | [.headBranch, .event, .status, .conclusion, .url] | @tsv' | grep -P '^v0\.1\.0\tpush\tcompleted\tsuccess\t'
+# evidência: changelog.diff
+git diff 30a65f3 08cb228 -- CHANGELOG.md | grep -q '^+## \[0.1.0\]' && git diff 30a65f3 08cb228 -- CHANGELOG.md
+# evidência: readme.diff
+git diff 30a65f3 08cb228 -- README.md | grep -q '^-> \*\*Em desenvolvimento' && git diff 30a65f3 08cb228 -- README.md
+# evidência: release-workflow.diff
+git diff 30a65f3 08cb228 -- .github/workflows/release.yml | grep -q '^+.*npm publish --provenance --access public' && git diff 30a65f3 08cb228 -- .github/workflows/release.yml
 ```
 
-Resultado esperado: código 0. Os comandos até a conferência do README (`readme-pacote.txt`) são locais e passam logo depois dos passos 2 a 4; `npm view` e `gh run list` só passam depois dos passos manuais do passo 6 (antes, `npm view` responde `E404` e o `grep` não acha a execução). `npm-view.txt` com `"version": "0.1.0"` e `"dist.attestations.provenance.predicateType": "https://slsa.dev/provenance/v1"`; `release-ci.txt` com a linha `v0.1.0	push	completed	success	https://github.com/Ishtar-Sink/Vega/actions/runs/...`.
+Resultado esperado: código 0. Os três diffs comparam `30a65f3`, o último commit antes da tarefa, com `08cb228`, o último commit dela, porque os arquivos foram commitados antes das evidências; cada um falha se o trecho principal (`## [0.1.0]`, a remoção do aviso ou o `npm publish --provenance`) não estiver no diff. Os comandos até a conferência do README (`readme-pacote.txt`) são locais e passam logo depois dos passos 2 a 4; `npm view` e `gh run list` só passam depois dos passos manuais do passo 6 (antes, `npm view` responde `E404` e o `grep` não acha a execução). `npm-view.txt` com `"version": "0.1.0"` e `"dist.attestations.provenance.predicateType": "https://slsa.dev/provenance/v1"`; `release-ci.txt` com a linha `v0.1.0	push	completed	success	https://github.com/Ishtar-Sink/Vega/actions/runs/...`.
 
 ### Evidências
 
@@ -51,17 +57,17 @@ Resultado esperado: código 0. Os comandos até a conferência do README (`readm
   - Prova: a publicação veio do workflow "Release" disparado pelo push da tag `v0.1.0` e terminou com sucesso (RF-22, CT-15, [project/security-04]).
   - Trecho: a linha `v0.1.0	push	completed	success	https://github.com/Ishtar-Sink/Vega/actions/runs/...`.
   - Falha: saída vazia (nenhuma execução da tag) ou `failure` na quarta coluna.
-- `changelog.diff` (diff): `CHANGELOG.md`
+- `changelog.diff` (automática, da verificação)
   - Título: Entrada da 0.1.0 no CHANGELOG
   - Prova: a entrada da 0.1.0 tem Adicionado, Alterado, Corrigido, Removido, os motivos, os componentes e tokens afetados e a migração do `@atria/ui` com exemplos (RF-23, [project/development-methodology-06]).
   - Trecho: `## [0.1.0]`, `### Adicionado`, `### Alterado (em relação ao @atria/ui)`, `### Removido`, `### Corrigido` e `### Migração do @atria/ui` com blocos `tsx`.
   - Falha: um grupo ausente, um componente do índice sem menção ou migração sem exemplo.
-- `readme.diff` (diff): `README.md`
+- `readme.diff` (automática, da verificação)
   - Título: README sem aviso e com instalação real
   - Prova: o README perde o aviso "Em desenvolvimento" e ganha instalação, estilos, uso e tema próprio (RF-23).
   - Trecho: a remoção de `> **Em desenvolvimento.**` e as seções `## Instalação`, `## Estilos`, `## Uso` e `## Tema próprio`.
   - Falha: o aviso continua ou os estilos citam caminhos fora do `exports`.
-- `release-workflow.diff` (diff): `.github/workflows/release.yml`
+- `release-workflow.diff` (automática, da verificação)
   - Título: Fluxo de publicação por tag com provenance
   - Prova: o fluxo dispara em tag `v*`, tem `id-token: write` e publica com `npm publish --provenance --access public` (RF-22).
   - Trecho: `tags: - 'v*'`, `id-token: write` e `npm publish --provenance --access public`.

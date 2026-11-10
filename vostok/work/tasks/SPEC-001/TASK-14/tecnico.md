@@ -53,3 +53,32 @@ RF-22, RF-23, CT-15, RN-06, FA-01, FA-02; premissas e risco "Publicação bloque
 ## Arquivos em comum na onda
 
 Onda 6 só tem esta tarefa: nenhum arquivo em comum.
+
+## O que foi feito
+
+- `.github/workflows/release.yml` (novo, `e5b480b`): roda na tag `v*`, com `id-token: write` e ambiente `npm`. Confere a tag contra a versão do `package.json`, repete lint, typecheck, testes, `pnpm audit` e build, e roda `npm publish --provenance --access public` com o `NPM_TOKEN`.
+- `CHANGELOG.md` (novo, `8b4ebdd`): entrada `[0.1.0] - 2026-11-10` com quatro grupos:
+  - **Adicionado:** os grupos de componentes, o tema, os tipos públicos e a CI.
+  - **Alterado:** cada mudança de API registrada nas TASK-03 a 11.
+  - **Removido:** `paletteFor`/`artPalettes`.
+  - **Corrigido:** o título do `Calendar`, o contraste do `Skeleton`/`ProgressBar` e o `box-sizing` dos campos, bugs herdados do Atria.
+
+  Termina com a "Migração do @atria/ui": 7 passos e exemplos `tsx` do `BrandLogo` e do `TagField`. O exemplo de props renomeadas usa `listLabel`/`removeLabel`, porque o `TagField` não tem `emptyText` (que é do `Autocomplete`).
+- `README.md` (`8b4ebdd`): o aviso "Em desenvolvimento" sai, e entram Componentes, Instalação, Estilos, Uso e Tema próprio. A primeira cor do exemplo de tema próprio (`#0f766e`) reprovava em `checkThemeContrast` (4,33:1 sobre `primarySoft`), então o exemplo usa `#115e59`, que passa.
+- **Publicação:**
+  - A `main` foi enviada com a CI verde.
+  - O usuário criou o `NPM_TOKEN` e a tag `v0.1.0`. O workflow Release ([run 42863876643](https://github.com/Ishtar-Sink/Vega/actions/runs/42863876643)) terminou com `success`.
+  - O npm deixou a 0.1.0 em revisão automática por alguns minutos. Depois ela saiu com `"latest": "0.1.0"`, licença `AGPL-3.0-only` e provenance `https://slsa.dev/provenance/v1`.
+- **Identidade:** o PR Ishtar-Sink/.github#1, integrado, atualiza o `docs/identidade-ecossistema.md` com:
+  - o comentário de origem do `tokens.ts` da Vega;
+  - `fontWeights`, `lineHeights`, `zIndices` e `itemPalette`;
+  - as variáveis `--font-weight-*`, `--line-height-*`, `--z-*`, `--item-palette-*` e `--deep-gradient`;
+  - a regra prática citando o `@ishtar-sink/vega`.
+- **Ajuste 2:** as três evidências diff viraram automáticas com `git diff 30a65f3 08cb228`. Os arquivos foram commitados antes de as evidências serem geradas, e o tipo diff do vostok compara com o `HEAD`, o que dava "sem diferença". O defeito foi relatado em Ishtar-Sink/Vostok#11.
+- **Verificação:** testes, regressão (5 comandos iguais ao baseline) e as nove evidências passaram, todas conferidas pelo usuário. O `identidade-ecossistema.png` mostra a aba Conversation do PR integrado, com a descrição das mudanças e o `+35 −5`, e não o diff. O usuário aceitou assim.
+
+## Pontos de atenção
+
+- O pacote também tem a versão `0.0.0-stage`, sem licença, que veio antes da 0.1.0. Se ela foi só um marcador, vale deprecá-la (`npm deprecate`), por decisão do usuário.
+- O npm avisa que tokens com "Bypass 2FA" passam a ter restrição (contas em ago/2026, publicação direta em jan/2027). Antes de jan/2027, a publicação deve migrar para Trusted Publishing (OIDC), sem `NPM_TOKEN`.
+- As actions `checkout@v4`, `setup-node@v4` e `pnpm/action-setup@v4` rodam forçadas no Node 24, e o GitHub avisa que elas têm como alvo o Node 20, que foi descontinuado.

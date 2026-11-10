@@ -1,0 +1,89 @@
+.root {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-start;
+  gap: var(--s3);
+  padding: var(--s4);
+  border: calc(var(--space) / 4) solid transparent;
+  border-radius: var(--radius-md);
+  color: var(--text);
+  font-family: var(--font-body);
+  line-height: var(--line-height-relaxed);
+}
+
+.icon {
+  flex: none;
+  margin-top: calc(var(--space) / 2);
+}
+
+.body {
+  flex: 1;
+  min-width: 0;
+}
+
+.title {
+  margin: 0 0 var(--space);
+  font-family: var(--font-display);
+  font-weight: var(--font-weight-semibold);
+}
+
+.action {
+  flex-basis: 100%;
+}
+
+@media (min-width: 480px) {
+  .action {
+    flex-basis: auto;
+    margin-left: auto;
+  }
+}
+
+.neutral {
+  background: var(--surface-muted);
+  border-color: var(--border);
+}
+
+.accent {
+  background: var(--accent-soft);
+}
+
+.info {
+  background: var(--info-soft);
+}
+
+.success {
+  background: var(--success-soft);
+}
+
+.warning {
+  background: var(--warning-soft);
+}
+
+.danger {
+  background: var(--danger-soft);
+}
+
+.accent .icon,
+.accent .title {
+  color: var(--accent);
+}
+
+.info .icon,
+.info .title {
+  color: var(--info);
+}
+
+.success .icon,
+.success .title {
+  color: var(--success);
+}
+
+.warning .icon,
+.warning .title {
+  color: var(--warning);
+}
+
+.danger .icon,
+.danger .title {
+  color: var(--danger);
+}

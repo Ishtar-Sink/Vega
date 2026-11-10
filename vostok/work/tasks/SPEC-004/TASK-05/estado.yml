@@ -10,7 +10,7 @@ wave: 3
 covers: [RF-20, CT-15]
 type: tarefa
 labels: [SPEC-004, julgamento]
-status: approved
+status: in_progress
 content_hash: 232ce4b5a6c3515d17948dae23de3ee11d4b6ea002114ffc6c655cbbe7a6ded5
 adjustments: 0
 adjusted_at: null
@@ -25,4 +25,6 @@ waiting_reason: null
 execution_hash: dd9b557c004a09b7fc637fc74270e1a42354bf0bde6aaea9be7d1f0384f68d25
 verification_hash: 96cccd22f9570b53a8c5eebc9586d675adaa017b2d0351d8f80d9a2291bb1966
 criteria_hash: f3d99acc5c1dd63b61d64e9cef93bf30d0034702f7ad0cde12e2933b0ccf53c9
-state_hash: 7ac542328d1bb69d5b2e03280f902e3cfd349452c9a03bfa206c71e8f6a2b7ca
+state_hash: a8836568b069fa8d496272c8fe7b751fe785e4037b85b476cfdc3dd2dc32120b
+executive_hash: df9c6a9ea63a56ce2100e9b1d3a146572cb98cbd28599d5fee0df66295e9bdb3
+technical_hash: d468c8dc702bbc6a40694f251a538a9a08359f9d60be30643d2d2df172f1576e

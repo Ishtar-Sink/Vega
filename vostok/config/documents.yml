@@ -1,0 +1,114 @@
+# Configurações dos documentos HTML gerados pela finalização de specs (`vostok finalize`).
+# Os valores seguem o subconjunto de YAML lido pelo vostok: sem níveis além de `grupo.chave`
+# e com listas em itens `- valor`. Cores e fontes são a única fonte da identidade visual dos documentos.
+
+# Limite, em megabytes, para embutir uma evidência (imagem ou vídeo) no HTML em base64.
+# Acima dele, o arquivo vai para `assets/` ao lado do documento e é citado por link.
+embed_max_mb: 10
+
+# Extensões (sem o ponto) de cada tipo de evidência. O texto aparece escapado num bloco de código;
+# imagens e vídeos são embutidos até o limite; qualquer outra extensão vai para `assets/`.
+text_extensions:
+  - out
+  - txt
+  - log
+  - md
+  - json
+
+image_extensions:
+  - png
+  - jpg
+  - jpeg
+  - gif
+  - webp
+  - svg
+
+video_extensions:
+  - mp4
+  - webm
+
+# Tokens de cor da identidade Ishtar Sink, revisão 2026-10. Origem: Ishtar-Sink/.github,
+# docs/identidade-ecossistema.md (espelhados em atria/packages/theme/src/tokens.css). Cada chave vira a
+# variável CSS `--<chave com hífens>` (ex.: surface_muted vira `--surface-muted`). Os documentos abrem no
+# tema claro (`:root`); o escuro entra pela preferência do sistema e por `data-theme="dark"`. `*_soft` são
+# fundos suaves da mesma cor, com o texto na cor cheia; `primary_on` é o texto sobre a cor principal;
+# `calm_*` e `brand_*` são os gradientes suave e de marca. Toda cor dos documentos sai daqui.
+light:
+  bg: "#f3f0fa"
+  bg_elevated: "#faf8fe"
+  surface: "#ffffff"
+  surface_muted: "#eae5f6"
+  surface_hover: "#e1daf2"
+  border: "#d9d1ec"
+  border_strong: "#bfb3dd"
+  primary: "#6d28d9"
+  primary_hover: "#5b21b6"
+  primary_soft: "#ebe0fd"
+  primary_on: "#ffffff"
+  accent: "#0e7490"
+  accent_soft: "#d8f1f6"
+  text: "#1a1230"
+  text_muted: "#4f4469"
+  text_faint: "#8b84a3"
+  success: "#047857"
+  success_soft: "#d9f3e7"
+  warning: "#92400e"
+  warning_soft: "#fcefcf"
+  danger: "#be123c"
+  danger_soft: "#fde2e9"
+  info: "#0369a1"
+  info_soft: "#daeefb"
+  code_bg: "#eae5f6"
+  calm_from: "#f3ebff"
+  calm_to: "#e0f7fb"
+  brand_from: "#7c3aed"
+  brand_to: "#06b6d4"
+  shadow_sm: "0 1px 2px rgba(42, 24, 96, 0.08)"
+  shadow_md: "0 4px 12px rgba(42, 24, 96, 0.1), 0 1px 3px rgba(42, 24, 96, 0.06)"
+
+dark:
+  bg: "#0b0816"
+  bg_elevated: "#110b21"
+  surface: "#181028"
+  surface_muted: "#130d22"
+  surface_hover: "#241a3d"
+  border: "#2f2250"
+  border_strong: "#45337a"
+  primary: "#a78bfa"
+  primary_hover: "#c4b5fd"
+  primary_soft: "#2b1d52"
+  primary_on: "#12082b"
+  accent: "#22d3ee"
+  accent_soft: "#0f3342"
+  text: "#f5f1ff"
+  text_muted: "#b1a5cf"
+  text_faint: "#7a6c9e"
+  success: "#34d399"
+  success_soft: "#0e2e27"
+  warning: "#fbbf24"
+  warning_soft: "#33260b"
+  danger: "#fb7185"
+  danger_soft: "#3a1222"
+  info: "#38bdf8"
+  info_soft: "#0c2c42"
+  code_bg: "#241a3d"
+  calm_from: "#1d1438"
+  calm_to: "#0f2a36"
+  brand_from: "#7c3aed"
+  brand_to: "#06b6d4"
+  shadow_sm: "0 1px 2px rgba(0, 0, 0, 0.45)"
+  shadow_md: "0 6px 16px rgba(0, 0, 0, 0.5), 0 0 0 1px rgba(167, 139, 250, 0.08)"
+
+# Fontes. Inter e Outfit vão embutidas em subconjunto (templates/finalize/fonts/), sem requisições
+# externas; as pilhas trazem as fontes do sistema como reserva. Valem nos dois temas e viram `--font-<chave>`.
+font:
+  text: '"Inter", system-ui, -apple-system, "Segoe UI", Roboto, sans-serif'
+  display: '"Outfit", "Inter", system-ui, -apple-system, "Segoe UI", sans-serif'
+  mono: 'ui-monospace, SFMono-Regular, Menlo, Consolas, monospace'
+
+# Identidade do repositório, gravada pelo `vostok documents brand`. Vazio usa a do harness.
+brand:
+  name: ""
+  icon: ""        # caminho relativo à raiz do projeto: .svg, .png ou .webp, até 256 KB
+  primary: ""
+  secondary: ""

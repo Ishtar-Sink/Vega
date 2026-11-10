@@ -1,6 +1,6 @@
 {
   "name": "@ishtar-sink/vega",
-  "version": "0.2.0",
+  "version": "0.3.0",
   "description": "Biblioteca de componentes React e temas do ecossistema Ishtar Sink.",
   "type": "module",
   "license": "AGPL-3.0-only",

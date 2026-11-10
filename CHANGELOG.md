@@ -2,6 +2,45 @@
 
 Este arquivo segue o [versionamento semântico](https://semver.org/lang/pt-BR/): cada versão agrupa as mudanças em Adicionado, Alterado, Corrigido e Removido, com o motivo de cada uma.
 
+## [0.3.0] - 2026-11-10
+
+Componentes de tempo e conexão, pedidos pelo Synestia (KT-002) para simulados, contagem até a prova e uso sem internet, mas genéricos para qualquer produto do ecossistema. A versão é compatível com a 0.2.0: nenhum componente existente perdeu prop nem mudou o padrão.
+
+### Adicionado
+
+- **`Timer`:** cronômetro em pílula, para provas e sessões com tempo.
+  - Funciona como regressivo, com `endsAt`, ou como progressivo, com a prop `direction` em `up` e `startedAt`, porque a mesma pílula serve a um simulado com prazo e a uma sessão livre.
+  - O tempo vem sempre do relógio (`now`, injetável), e não de uma contagem de ticks. Assim, uma aba em segundo plano não atrasa o número.
+  - No regressivo, `warnAt` define os minutos restantes que geram aviso: o aviso é anunciado ao leitor de tela, e a pílula muda para o tom de aviso. `onExpire` é chamado uma única vez quando o tempo chega a zero.
+  - `hideable` mostra o botão de ocultar o tempo, para quem se distrai com o número. Esse estado pode ser controlado pelo produto, com `hidden` e `onHiddenChange`.
+- **`Countdown`:** número grande de dias até uma data, para contagens como "faltam 40 dias para a prova".
+  - Conta dias de calendário entre `today` e `target`, as duas em `AAAA-MM-DD`. O produto passa `today` no fuso do usuário, então o componente não depende do fuso de quem renderiza.
+  - Tem os tamanhos `display` e `inline` e uma legenda opcional (`caption`).
+- **`ConnectionStatus`:** selo do estado da conexão e da sincronização, para produtos que funcionam sem internet.
+  - Mostra os cinco estados de `ConnectionState`: `online`, `offline`, `syncing`, `synced` e `error`. Também mostra o progresso (`progress`), os itens na fila (`pending`) e a última sincronização (`lastSyncedAt`).
+  - Tem as variantes `chip`, que some quando está `online`, e `detail`, para a tela de configurações.
+  - Uma `action` opcional transforma o selo inteiro num botão discreto, com o texto da ação no fim (como "Tentar de novo"). Assim, a ação não destoa das pílulas.
+  - A região viva anuncia só a troca de estado. O componente não consulta a rede: o produto informa o `state`.
+- **Utilitários:**
+  - `formatDuration` formata milissegundos como `mm:ss`, abaixo de uma hora, ou `h:mm:ss`, o mesmo formato do `Timer`.
+  - `daysBetween` conta os dias de calendário entre duas datas `AAAA-MM-DD`, a mesma conta do `Countdown`.
+  - Os dois ficam disponíveis para o produto repetir o cálculo fora dos componentes.
+- **Tipos públicos:** `TimerProps`, `TimerCountdownProps`, `TimerElapsedProps`, `TimerLabels`, `DurationParts`, `CountdownProps`, `CountdownLabels`, `ConnectionStatusProps`, `ConnectionStatusLabels`, `ConnectionStatusAction` e `ConnectionState`.
+  - Todo texto visível pode ser trocado por `labels`, com padrão em pt-br.
+  - Nenhum componente traz regra de produto: os limites, as datas e o estado vêm do produto.
+
+### Alterado
+
+- Nenhuma mudança em componentes existentes; compatível com a 0.2.0.
+
+### Corrigido
+
+- Nenhuma correção nesta versão.
+
+### Removido
+
+- Nada removido nesta versão.
+
 ## [0.2.0] - 2026-11-10
 
 Lote 1 de componentes, pedido pelo Synestia (KT-001) para começar o produto, mas genérico para qualquer produto do ecossistema: ícones de interface, campos, estrutura, avisos, navegação da aplicação e texto formatado. A versão é compatível com a 0.1.0: nenhum componente existente perdeu prop nem mudou o padrão.

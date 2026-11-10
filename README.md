@@ -28,8 +28,9 @@ A Vega nasce da extração do `@atria/ui` e do `@atria/theme`, a biblioteca e o 
 | Ícones de interface | Os 36 da seção [Ícones](#ícones), na 0.2.0 |
 | Navegação | `AppShell`, `Sidebar`, `BottomNav`, `Topbar`, na 0.2.0 |
 | Conteúdo | `Prose`, na 0.2.0, pela entrada `@ishtar-sink/vega/prose` |
+| Tempo e conexão | `Timer`, `Countdown`, `ConnectionStatus`, `formatDuration`, `daysBetween`, na 0.3.0 |
 
-Os grupos Ações, Campos, Data e hora, Dinheiro, Estrutura, Diálogos e avisos, Estados e Marca e itens entraram na 0.1.0; o que a tabela marca com 0.2.0, e os grupos Ícones de interface, Navegação e Conteúdo, entraram na 0.2.0.
+Os grupos Ações, Campos, Data e hora, Dinheiro, Estrutura, Diálogos e avisos, Estados e Marca e itens entraram na 0.1.0; o que a tabela marca com 0.2.0, e os grupos Ícones de interface, Navegação e Conteúdo, entraram na 0.2.0; o grupo Tempo e conexão entrou na 0.3.0.
 
 ## Princípios
 
@@ -104,6 +105,28 @@ export function Licao({ texto }: { texto: string }) {
 ```
 
 Extensões do produto, como fórmulas de matemática, entram por `remarkPlugins` (sintaxe nova) e `components` (como cada elemento é renderizado), sem mudar a Vega.
+
+## Tempo e conexão
+
+O `Timer` calcula o tempo pelo relógio, e não por ticks. Ele funciona como regressivo, com `endsAt`, ou como progressivo, com `direction="up"` e `startedAt`.
+
+O `Countdown` conta os dias de calendário entre `today` e `target`. O produto passa `today` já no fuso do usuário.
+
+O `ConnectionStatus` mostra o estado em `chip` ou `detail`. Ele não consulta a rede: o produto informa o `state`.
+
+```tsx
+import { ConnectionStatus, Countdown, Timer } from '@ishtar-sink/vega';
+
+export function Simulado({ fim, hoje, entregar }: { fim: number; hoje: string; entregar: () => void }) {
+  return (
+    <>
+      <Timer endsAt={fim} warnAt={[30, 10, 5]} onExpire={entregar} />
+      <Countdown target="2026-12-20" today={hoje} caption="para a prova" />
+      <ConnectionStatus state="syncing" progress={{ done: 3, total: 8 }} />
+    </>
+  );
+}
+```
 
 ## Tema próprio
 

@@ -10,20 +10,23 @@ wave: 4
 covers: [RF-15, RF-19, RF-20, CT-09, CT-13]
 type: historia
 labels: [SPEC-001, padrao]
-status: approved
-content_hash: 363f65b3eb995da36b1eb38f061cc5fed468d5f527cefe898972aca59f858607
+status: done
+content_hash: 0e75d878d37ff831a628bf1a69a00db0080e6a7bc4162cc6f5b953021035efdf
 adjustments: 1
 adjusted_at: 2026-11-10T16:01:40Z
 approved_at: 2026-11-10T16:02:42Z
 approved_hash: 363f65b3eb995da36b1eb38f061cc5fed468d5f527cefe898972aca59f858607
 attempts: 0
-tests_result: null
-regression_result: null
-evidence_result: null
+tests_result: passed
+regression_result: passed
+evidence_result: passed
 waiting_on: []
 waiting_reason: null
 execution_hash: f0219780c0244ebe1bc5aee73e13ab973092c11aa38d2c37f61e9eb58920defd
 verification_hash: c91273e3c99542d096546def8fc2f70772b328f6ad1ba82995847ba3adc03455
-criteria_hash: b4da7d4e18f8b3bff13e3c048d3575dbe3893cff91bd7281b4eafab4efeb1d46
-state_hash: 496bd752868cf25d712b6e94d663b616b68fc35257869a66cd6a5fbe09007884
+criteria_hash: 9832cad6446f84cf72866f5c77d8167bab3c0676c11c0999ef9cc260b93b9754
+state_hash: 62b184abe8a1471e7c8a2315781470a6165280b292beeb258a6e64e928a7a928
 updated_at: 2026-11-10T16:01:40Z
+model: sonnet
+executive_hash: d163d3c894e418e74a8e4237dc94fb59158854675c44dbc681c060d988ce2006
+technical_hash: 9de681daf2b3b2f04bf6705c566ba8a263c24dd171a1ef73b4db6af48ca093c1

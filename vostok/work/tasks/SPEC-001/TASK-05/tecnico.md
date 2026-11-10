@@ -39,3 +39,21 @@ RF-10, RF-19, RF-20, RNF-01, RNF-02, RNF-06, RN-02, RN-03, RN-05, CT-09, CT-12, 
 ## Arquivos em comum com a onda
 
 Onda 4: TASK-06, TASK-07, TASK-08, TASK-09 e TASK-10. Nenhum arquivo em comum: a tarefa só cria `src/color-field/` e lê `src/button/` (TASK-03, sem alterar).
+
+## O que foi feito
+
+- **Criado em `src/color-field/`:**
+  - `color.ts`: as funções de conversão de cor (`hexToRgb`, `rgbToHex`, `hslToRgb`, `rgbToHsl`) e `clamp`, agora uma função declarada e documentada.
+  - `color-picker.tsx`: o seletor, com `DEFAULT_COLOR_FIELD_LABELS` em português, `labels` parcial, `wheelValue` como função, `FALLBACK_RGB` com comentário e as props nativas no `<div>` raiz.
+  - `color-field.tsx`: o campo, com o gatilho em `<button>` (props nativas, `aria-describedby` somado e `aria-invalid` pelo erro), o `<dialog>` aberto com `showModal()` e o `Button` de `../button/button`. A `ref` vem de `useImperativeHandle`, porque o gatilho já usa uma `ref` interna para devolver o foco.
+  - `color-field.module.css`: estilos só com tokens. Os literais viraram múltiplos de `--space` e o peso 600 virou `--font-weight-semibold`. A regressão de `box-sizing` lê este arquivo e confere `box-sizing: border-box` em `.trigger` e `.input`.
+  - Três arquivos de teste (`color.test.ts`, `color-picker.test.tsx` e `color-field.test.tsx`), com os mocks do jsdom (`showModal`/`close` e `getContext` do canvas) dentro de cada teste que precisa deles.
+- **Ordem:** os três arquivos de teste falharam antes do código, porque os módulos ainda não existiam. Depois do código, 23 testes passaram.
+- **Verificação:** testes, regressão e evidências passaram (registro da execução).
+- **Evidências:** `cor-testes.txt` e `cor-temas.png`. A captura do tema saiu de manual para automática: um build temporário em `node_modules` roda no Chromium headless, sem arquivo novo no projeto. O usuário aceitou o `cor-temas.png` com a limitação de cena: o `<dialog>` modal cobre a mensagem de erro do segundo campo. O erro está comprovado pelos testes.
+
+## Pontos de atenção
+
+- O print do tema não mostra o erro do segundo campo (limitação de cena acima). Quem revisar a evidência visual deve considerar os testes para esse comportamento.
+- `FALLBACK_RGB` é um literal de cor no código, usado só quando o valor recebido não é HEX válido. Não acompanha uma marca sobrescrita.
+- O teste de teclado do diálogo espera o diálogo com `findByRole` antes de `{ArrowRight}`, porque o foco inicial vai para a roda num efeito.

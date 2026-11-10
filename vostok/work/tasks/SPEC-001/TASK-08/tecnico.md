@@ -35,8 +35,8 @@ Os nomes públicos (`Card`, `CardTone`, `PageHeader`, `Toolbar`, `Tabs`, `TabIte
 
 ## Riscos
 
-- Mudança de props do `FormActions` (snake_case para camelCase): o Atria terá de renomear na spec de troca; registrar no `CHANGELOG.md` (TASK-14).
-- Fonte do título compacto do `PageHeader`: o tema não tem tamanho de 24 px, e pela convenção comum ela usa o token mais próximo, `--font-size-xl` (21 px), 3 px menor que no Atria. Conferir no print; se a TASK-02 criar um token de 24 px, ele tem prioridade.
+- Mudança de props do `FormActions` (snake_case para camelCase): o Atria terá de renomear na spec de troca; registrar no `CHANGELOG.md` (TASK-14). Situação na conclusão: as props ficaram `cancelLabel`, `submitLabel` e `submitDisabled`, e o registro no `CHANGELOG.md` cabe à TASK-14.
+- Fonte do título compacto do `PageHeader`: o tema não tem tamanho de 24 px, e pela convenção comum ela usa o token mais próximo, `--font-size-xl` (21 px), 3 px menor que no Atria. Conferido no print, legível, e aceito pelo usuário. A TASK-02 não criou token de 24 px; se o tema ganhar um, ele substitui o `--font-size-xl` aqui.
 - Falta de tokens de espessura de borda e de `letter-spacing` (D-06): a forma com `--space` resolve sem literal, com o mesmo valor do Atria.
 - Dependência da TASK-02: os tokens `--font-weight-semibold`, `--font-weight-extrabold` e `--line-height-tight` precisam existir em `src/theme/tokens.css`.
 - O `tsc` precisa da declaração de tipos de `*.module.css` e dos tipos globais do Vitest, que vêm da TASK-01.
@@ -48,3 +48,13 @@ RF-13, RF-18, RF-19, RF-20; CT-09, CT-13; RN-01, RN-02, RN-03; RNF-01, RNF-02; [
 ## Arquivos em comum com a onda
 
 Nenhum. A onda 4 (TASK-05, TASK-06, TASK-07, TASK-09, TASK-10) cria só as próprias pastas. Como várias tarefas da onda rodam em paralelo, o baseline e a Verificação filtram a saída do `pnpm exec tsc --noEmit` pelas pastas medidas (`grep -E '^src/(...)/'`): um erro de tipo de outra tarefa da onda não bloqueia esta.
+
+## O que foi feito
+
+- Criados 21 arquivos novos, em sete pastas: `src/icons` (ícones de visualização, com `index.ts`), `src/card`, `src/page-header`, `src/view-switcher`, `src/toolbar`, `src/tabs` e `src/form-layout` (`FormGrid` e `FormActions`). Cada pasta tem componente, CSS de módulo e teste.
+- Os sete arquivos de teste foram rodados antes dos componentes e falharam porque os módulos ainda não existiam. Depois do código, 55 testes passaram.
+- Os testes cobrem papel e nome acessível, axe, teclado, textos padrão em pt-br e props nativas (`className`, `style` e atributos de dados chegam à raiz). Em `FormGrid`, o teste de `box-sizing` confere que a classe `.grid` tem `box-sizing: border-box` no CSS.
+- O CSS usa só tokens: literais de `px`, pesos, entrelinhas e `z-index` numéricos foram trocados pelos tokens de mesmo valor ou pela forma `calc(var(--space) * N)`. A única fonte sem token exato é a do título compacto do `PageHeader`, que usa `--font-size-xl` (21 px, no lugar dos 24 px do Atria).
+- `FormActions` ficou com `cancelLabel`, `submitLabel` e `submitDisabled` (camelCase), e o `Toolbar` tem `searchLabel` com padrão `'Buscar'`. Essa mudança de API vai para o `CHANGELOG.md` na TASK-14.
+- Verificação: testes passaram; regressão repetiu os três comandos do baseline e passou; evidências `testes-estrutura.txt` e `estrutura-temas.png` conferidas pelo usuário.
+- Ajuste 1: o print manual passou a ser gerado de forma automática, com um build temporário em `node_modules` e Chromium headless, sem arquivo novo no projeto. A captura `estrutura-temas.png` mostra os dois temas e a tela a 480 px, e foi aceita pelo usuário sem ressalvas.

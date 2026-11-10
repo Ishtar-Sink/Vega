@@ -19,7 +19,7 @@ Decisão: o polyfill fica local, num `beforeAll` no topo de `dialog.test.tsx` e 
 |---|---|---|---|
 | D-01 | `DialogProps extends Omit<ComponentPropsWithRef<'dialog'>, 'title' \| 'open' \| 'onClose' \| 'role' \| 'children'>`: `title`, `open`, `onClose` e `role` mantêm o significado do Atria; `open` controla o `showModal()` e não é repassado ao elemento. | Usar o `open` nativo do `<dialog>`. | O atributo `open` abre o diálogo como não modal; a modalidade exige `showModal()` (RN-05). |
 | D-02 | `described_by` sai; o chamador usa o `aria-describedby` nativo, que o `Dialog` lê e aplica, com o corpo como padrão em `alertdialog`. `close_on_backdrop` vira `closeOnBackdrop`. | Renomear para `describedBy`. | Com as props nativas, `aria-describedby` já existe; uma prop paralela seria duplicada ([project/code-style-03], [project/naming-convention-09]). |
-| D-03 | O `ref` recebido é ligado ao `ref` interno do `<dialog>` com `useImperativeHandle(ref, () => dialogRef.current as HTMLDialogElement, [])`, convenção comum das tarefas de componente. | Função local de mesclar refs num `ref` de callback; mover o `ref` interno para o `div` interno. | O efeito chama `showModal()` no próprio `<dialog>`; sem utilitário compartilhado nem dependência nova. |
+| D-03 | O `ref` recebido é ligado ao `ref` interno do `<dialog>` com `useImperativeHandle(ref, () => dialogRef.current as HTMLDialogElement)`, sem array de dependências (ver "O que foi feito"), convenção comum das tarefas de componente. | Função local de mesclar refs num `ref` de callback; mover o `ref` interno para o `div` interno. | O efeito chama `showModal()` no próprio `<dialog>`; sem utilitário compartilhado nem dependência nova. |
 | D-04 | `ConfirmDialog` estende as props do `Dialog` (sem `children`, `actions`, `role` e `onClose`) e repassa o resto a ele; `confirmLabel` e `cancelLabel` ganham padrão `'Confirmar'` e `'Cancelar'`. | Props próprias, como no Atria. | [project/code-style-03] e [project/language-06]. |
 | D-05 | O `Toast` ganha um ícone por tom (SVG decorativo) e o nome do tom num texto visualmente oculto antes do conteúdo (`toneLabel`, padrão `Informação`, `Sucesso`, `Atenção`, `Erro`). | Manter só a cor; usar `role="alert"` no tom `danger`. | RN-04 e [project/theme-06]: um estado não depende só do matiz; mudar o papel do aviso mudaria o anúncio do `ToastRegion`, que já é `aria-live="polite"`. |
 | D-06 | O `aria-live="polite"` do `ToastRegion` é aplicado depois do `...rest`, como no Atria. | Deixar o chamador sobrescrever. | O anúncio é o propósito do componente. |
@@ -53,3 +53,20 @@ RF-14, RF-19, RF-20; CT-09, CT-12, CT-13; RN-02, RN-04, RN-05; RNF-01, RNF-02; [
 ## Arquivos em comum com a onda
 
 Nenhum. A onda 4 (TASK-05, TASK-06, TASK-07, TASK-08, TASK-10) cria só as próprias pastas, e esta tarefa não altera `src/test/setup.ts`. Como várias tarefas da onda rodam em paralelo, o baseline e a Verificação filtram a saída do `pnpm exec tsc --noEmit` pelas pastas medidas (`grep -E '^src/(...)/'`): um erro de tipo de outra tarefa da onda não bloqueia esta.
+
+## O que foi feito
+
+- Criados nove arquivos: `src/dialog/` (componente, CSS, teste), `src/confirm-dialog/` (componente, CSS, teste) e `src/toast/` (componente, CSS, teste). Os nomes públicos `Dialog`, `ConfirmDialog`, `Toast` e `ToastRegion` e o tipo `ToastTone` são os do Atria.
+- `Dialog` usa o `<dialog>` nativo e abre com `showModal()` no efeito. As props nativas do elemento são repassadas, com `className`, `style` e `ref` aplicados ao `<dialog>` raiz. `closeOnBackdrop` substitui `close_on_backdrop`, e `described_by` saiu em favor do `aria-describedby` nativo (o corpo é o padrão em `alertdialog`).
+- O `ref` recebido é ligado ao `<dialog>` com `useImperativeHandle` sem array de dependências. Com `[]` (planejado), o ref ficava `null` com o diálogo fechado; com `[open]`, o lint acusava aviso. Por isso a decisão D-03 foi corrigida acima.
+- `ConfirmDialog` repassa o resto das props ao `Dialog` e tem os rótulos padrão `Confirmar` e `Cancelar`. No teste de rótulos trocados, os botões são buscados dentro do diálogo, pois o gatilho também se chama `Excluir`.
+- `Toast` mostra um ícone SVG decorativo por tom e o nome do tom (`toneLabel`) num texto oculto para leitor de tela. `ToastRegion` aplica `aria-live="polite"` depois do `...rest`, como no Atria.
+- Os testes de `Dialog` e `ConfirmDialog` têm o polyfill local de `showModal` e `close` com `vi.fn`. No teste de `Dialog`, as duas funções ficam em constantes de módulo, para a regra de método sem vínculo do lint.
+- Sem `box-sizing`: nenhum controle da tarefa tem `width: 100%` com `padding`, então a regra não foi adicionada.
+- Verificação: os três arquivos de teste falharam antes do código, porque os módulos não existiam. Depois do código, 30 testes passaram. Testes, regressão e evidências terminaram sem falhas.
+- Print `dialogos-temas.png`: começou manual e virou automático (build temporário em `node_modules` e Chromium headless, sem arquivo novo no projeto). O usuário aceitou a imagem com uma limitação de cena: o anel de foco do botão `Cancelar` não aparece no print, porque o foco dentro do iframe não é aplicado no Chromium headless. O foco real é coberto pelos testes.
+
+## Pontos de atenção
+
+- Mudança de API para o `CHANGELOG.md` (TASK-14): `close_on_backdrop` vira `closeOnBackdrop`, e `described_by` sai em favor de `aria-describedby`. A spec de troca do Atria precisa conhecer as duas mudanças.
+- O print não prova o foco visual do `Cancelar`; quem revisar o visual do foco deve olhar os testes ou o componente em tela.

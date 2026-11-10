@@ -53,3 +53,31 @@ RF-11, RF-19, RF-20; CT-09, CT-12, CT-13, CT-16; CB-03; RN-01, RN-02, RN-05; RNF
 ## Arquivos em comum com a onda
 
 Nenhum. A onda 4 (TASK-05, TASK-07, TASK-08, TASK-09, TASK-10) cria só as próprias pastas. Como várias tarefas da onda rodam em paralelo, o baseline e a Verificação filtram a saída do `pnpm exec tsc --noEmit` pelas pastas medidas (`grep -E '^src/(...)/'`): um erro de tipo de outra tarefa da onda não bloqueia esta.
+
+## O que foi feito
+
+Criadas as cinco pastas de componentes, com 18 arquivos novos: `time-field` (`parse-time.ts`, `time-field.tsx`, estilos e testes), `calendar` (componente, estilos e testes), `date-field`, `date-time-field` e `period-field` (`period.ts`, componente, estilos e testes). `parseTime` e `maskTime` vieram do Atria sem mudança de comportamento.
+
+A migração seguiu a ordem de dependência: `time-field`, `calendar`, `date-field`, `date-time-field` e `period-field`. Em cada pasta, o teste do Atria foi copiado, adaptado ao contrato novo e completado. Os 6 arquivos de teste falharam antes do código, com "Failed to resolve import", e depois passaram. Ao todo, 80 testes passaram; com a regressão do título do calendário, acrescentada no ajuste 3, são 81. Em outro fuso (`TZ=Pacific/Kiritimati`), a evidência de datas roda 68 testes de datas.
+
+Além dos testes do Atria, foram acrescentados testes de papel e nome acessível, axe, teclado com `user-event`, props nativas (`className`, `style`, `data-*` e `ref` no controle), textos sobrescritos, locale `en-US` e data do sistema falsa. Há também teste de box-sizing no `.control` do `TimeField` e do `DateField`.
+
+Decisões aplicadas (tabela "Decisões"):
+- O relógio continua sendo a prop `today`; a data do sistema só entra quando ela falta. Um teste por componente falsifica `Date` e prova que a data do sistema é ignorada.
+- `PeriodField` recebe presets por prop (`id`, `label` e `range`, com inteiro ou função). `resolvePeriod` ganhou o terceiro parâmetro `presets`.
+- Textos em pt-br por padrão, com `labels` parcial; `locale` padrão `'pt-BR'`. Com outro locale, só as datas mudam.
+- `className`, `style`, `ref` e `...rest` vão para o controle: `input` no `TimeField`, botão gatilho no `DateField` e no `PeriodField`, `fieldset` no `DateTimeField` e `div` raiz no `Calendar`. Foi decisão do usuário.
+- Campos ocultos do `PeriodField` usam `name`, `<name>From` e `<name>To`.
+- CSS: `px` virou token de mesmo valor ou `calc(var(--space) * N)`; pesos, entrelinhas e `z-index` usam os tokens da TASK-02. A condição de `@media (max-width: 560px)` continua em `px`.
+
+Ajustes feitos durante a execução (Histórico de ajustes):
+1. O print manual virou automático: é gerado por um build temporário em `node_modules` e Chromium headless, sem arquivo novo no projeto.
+2. A cena do print passou a abrir só o `PeriodField` no painel claro e só o `DateField` no escuro, porque um popover cobria o outro.
+3. O primeiro print foi rejeitado: o título do calendário saía "Novembro De 2026", porque `text-transform: capitalize`, herdado do Atria, capitaliza todas as palavras. A correção usa `.title::first-letter { text-transform: uppercase }` no lugar do `capitalize`, com teste de regressão visto falhando antes da correção. O nome acessível continua "novembro de 2026". O novo print foi aceito.
+
+Pontos de atenção para quem mantém:
+- Os popovers do `DateField` e do `PeriodField` são `div role="dialog"` não modais (D-04). Se o revisor entender que a regra de acessibilidade vale para popovers, a mudança vira ajuste desta tarefa.
+- A mudança de contrato do `PeriodField`, do `resolvePeriod` e das props dos campos precisa ir ao `CHANGELOG.md` (TASK-14), e o Atria terá de declarar os próprios presets na troca.
+- Os testes falsificam só `Date` (`toFake: ['Date']`); falsificar todos os timers trava o `user-event`.
+- Onde não há token de mesmo valor, a forma `calc(var(--space) / N)` fica menos legível que o literal; a TASK-02 não criou tokens de espessura de borda nem de anel de foco, então um tema futuro com esses tokens deve substituir essa forma.
+- A verificação da tarefa passou sem falhas, e as três evidências (`testes-data-hora.txt`, `datas-outro-fuso.txt` e `data-hora-temas.png`) foram conferidas pelo usuário.

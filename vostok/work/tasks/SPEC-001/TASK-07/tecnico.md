@@ -37,3 +37,27 @@ RF-12, RF-19, RF-20, RNF-01, RNF-02, RNF-06, RN-01, RN-02, RN-03, CB-03, CT-09, 
 ## Arquivos em comum com a onda
 
 Onda 4: TASK-05, TASK-06, TASK-08, TASK-09 e TASK-10. Nenhum arquivo em comum: a tarefa só cria `src/money-field/` e lê `src/text-field/` (TASK-04, sem alterar).
+
+## O que foi feito
+
+Criei os cinco arquivos de `src/money-field/` a partir do Atria. Os testes falharam antes do código (módulos ausentes) e passaram depois.
+
+- `money-mask.ts`: `maskMoneyInput` (formata o texto digitado sem completar os decimais), `parseMoneyInput` (extrai os centavos inteiros, ou `null` se vazio ou fora do inteiro seguro) e `formatCents` (valor em centavos com duas casas). As três recebem `locale` e `currency` obrigatórios e mantêm o cache do Atria. O comentário do topo não cita mais o Atria, e as três funções têm JSDoc.
+- `money-mask.test.ts`: testes trazidos do Atria, com os casos de en-US/USD (prefixo), de-DE/EUR (sufixo) e valor acima do inteiro seguro. Os prefixos e sufixos são calculados pelo `Intl` dentro do próprio teste.
+- `money-field.tsx`: `MoneyField` estende `TextFieldProps` (sem `value`, `defaultValue`, `onChange`, `type` e `inputMode`), recebe `valueCents`, `locale` (padrão `pt-BR`) e `currency` (padrão `BRL`) e renderiza o `TextField` com `inputMode="decimal"` e `autoComplete="off"`. O `className` recebido é somado ao estilo do próprio módulo, e o `onBlur` nativo é chamado depois da formatação. O ajuste do texto quando valor, locale ou moeda mudam de fora foi mantido.
+- `money-field.test.tsx`: testes trazidos do Atria com `valueCents`, mais os casos de en-US/USD, rótulo e erro recebidos em outro locale, teclado, mudança de valor vinda de fora e props nativas, `ref` e `data-*` chegando ao `<input>`.
+- `money-field.module.css`: `.root` com `font-variant-numeric: tabular-nums`, sem cor, tamanho ou duração literais.
+
+Verificação e evidências:
+
+- Testes: sem falhas. Regressão: os três comandos repetem o baseline.
+- Evidências: `dinheiro-testes.txt`, `dinheiro-locale.txt` (automática) e `dinheiro-temas.png` foram conferidas pelo usuário; o print de temas foi aceito sem ressalvas.
+- Ajuste 1 (histórico): o print manual virou automático, com build temporário em `node_modules` e Chromium headless, sem arquivo novo no projeto.
+
+Mudanças de API a registrar no `CHANGELOG.md` (TASK-14):
+
+- `value_cents` virou `valueCents`.
+- `onBlur` passou a ser o nativo do campo, chamado com o evento.
+- Moedas sem duas casas decimais continuam fora do escopo (ver Riscos).
+
+Ponto de atenção: o módulo de estilo não define largura nem espaçamento, então não tem `box-sizing` próprio.

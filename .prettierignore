@@ -1,0 +1,4 @@
+vostok/
+.claude/
+pnpm-lock.yaml
+*.md

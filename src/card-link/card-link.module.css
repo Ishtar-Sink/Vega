@@ -1,0 +1,31 @@
+.interactive {
+  display: block;
+  box-sizing: border-box;
+  min-height: calc(var(--space) * 11);
+  text-decoration: none;
+  color: inherit;
+  cursor: pointer;
+  transition:
+    border-color var(--motion-fast) var(--motion-ease-standard),
+    box-shadow var(--motion-fast) var(--motion-ease-standard);
+}
+
+.interactive:hover {
+  border-color: var(--primary);
+  box-shadow: var(--shadow-lg);
+}
+
+.interactive:focus-visible {
+  outline: calc(var(--space) / 2) solid var(--primary);
+  outline-offset: calc(var(--space) / 2);
+}
+
+.interactive:active {
+  box-shadow: var(--shadow-sm);
+}
+
+.button {
+  width: 100%;
+  font: inherit;
+  text-align: start;
+}

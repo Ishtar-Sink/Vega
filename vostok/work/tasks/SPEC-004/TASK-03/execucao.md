@@ -11,7 +11,6 @@
 - `src/theme/tokens.ts` e `src/theme/contrast.ts` (`contrastRatio`, `warning`, `info`, `success`, `danger`, `*Soft`, `text`, `surfaceMuted`)
 - `src/theme/tokens.css` (`--motion-fast` zerado em `prefers-reduced-motion`)
 - `src/badge/badge.test.tsx` (como um teste lê o `.module.css` com `readFileSync`)
-- `src/button/button.tsx` (o botão que o Synestia passa em `action`)
 
 ### Mudar
 
@@ -48,7 +47,9 @@ Regras comuns a todos os passos (decididas em `tecnico.md`, seção "Decisões")
    - `it('uses the locale for the relative time')` (RF-16): `locale="en"` mostra `Tudo sincronizado · 2 minutes ago`.
    - `it('treats a future lastSyncedAt as now')` (CB-07): `lastSyncedAt={NOW + 60_000}` mostra `Tudo sincronizado · agora`.
    - `it('ignores lastSyncedAt outside the synced state')`: `state="offline"` com `lastSyncedAt` mostra só `Offline`.
-   - `it('renders the action at the end in both variants')` (CT-12, RF-17): `action={<button type="button">Tentar de novo</button>}` é o último filho da raiz no `chip` e no `detail`, e o botão é achado por `getByRole('button', { name: 'Tentar de novo' })`.
+   - `it('turns the whole box into a button with the action text in both variants')` (CT-16, RF-17): com `state="error"` e `action={{ label: 'Tentar de novo', onAction }}`, no `chip` e no `detail`, existe um único `button` (`type="button"`) cujo nome inclui `Tentar de novo`; ele contém o ícone, a palavra, a fila e o texto da ação, separado por `·`; clique e `Enter` chamam `onAction` uma vez cada; o CSS tem `.actionText` com `text-decoration: underline` e `color: currentColor`, e nenhuma regra de fundo preenchido (`--primary`) no botão.
+   - `it('keeps the status region outside the action button')` (RF-15, RF-17): com `action`, o `role="status"` não tem o `button` como ancestral, e trocar o estado ainda anuncia só a palavra estável.
+   - `it('keeps a plain box without an action')` (RF-17): sem `action`, não há `button` no componente.
    - `it('passes className, style, data attributes and ref to the root')`.
    - `it('has no axe violations in every state and variant')` (RNF-03): `it.each` dos cinco estados nas duas variantes, com `online` só no `detail`, com `progress`, `pending`, `lastSyncedAt` e `action`.
    - `it('meets AA on every state in both themes')` (RNF-05): para `light` e `dark`, `contrastRatio` de `warning`, `info`, `success` e `danger` sobre o `*Soft` respectivo, de `text` sobre cada `*Soft` e de `text` sobre `surfaceMuted` maior ou igual a 4.5.
@@ -64,7 +65,7 @@ Regras comuns a todos os passos (decididas em `tecnico.md`, seção "Decisões")
 6. `src/connection-status/connection-status.module.css` (criar):
    - `.root`: `display: inline-flex`, `flex-wrap: wrap`, `align-items: center`, `gap: var(--s2)`, `box-sizing: border-box`, `max-width: 100%`, `padding: var(--s1) var(--s3)`, `border-radius: var(--radius-pill)`, `background: var(--surface-muted)`, `color: var(--text)`, `font-family: var(--font-body)`, `font-size: var(--font-size-sm)`, `font-weight: var(--font-weight-semibold)`, `line-height: var(--line-height-tight)`, `transition: background var(--motion-fast) var(--motion-ease-standard), color var(--motion-fast) var(--motion-ease-standard)`.
    - `.detail`: `display: flex`, `padding: var(--s3) var(--s4)`, `border-radius: var(--radius-md)`, `font-size: var(--font-size-md)`, `line-height: var(--line-height-relaxed)`.
-   - `.status`: `display: inline-flex`, `align-items: center`, `gap: var(--s2)`; `.icon`: `flex: none`; `.text`: `min-width: 0`, `overflow-wrap: anywhere`; `.meta`: `color: var(--text)`; `.action`: `flex: none`, `margin-left: auto`.
+   - `.status`: `display: inline-flex`, `align-items: center`, `gap: var(--s2)`; `.icon`: `flex: none`; `.text`: `min-width: 0`, `overflow-wrap: anywhere`; `.meta`: `color: var(--text)`; `.button` (caixa clicável, só com `action`): herda o fundo, a cor, o raio e o padding da caixa (`.root`, `.chip`/`.detail` e o tom), com `border: 0`, `font: inherit`, `cursor: pointer`, `text-align: start`, `width: 100%` no `detail`, foco visível com `outline` em `--primary` e hover com `filter`/`color-mix` do próprio tom, sem fundo `--primary`; `.actionText`: `color: currentColor`, `text-decoration: underline`, `text-underline-offset`, `font-weight: var(--font-weight-semibold)`. No `chip`, a área de toque chega a 44 px por um `::after` absoluto (`inset` negativo), sem aumentar a pílula.
    - `.srOnly`: o mesmo bloco de `.srOnly` de `src/toast/toast.module.css`.
    - Um bloco por estado: `.offline`, `.syncing`, `.synced` e `.error` com `background: var(--<tom>-soft)` e `color: var(--<tom>)` (`warning`, `info`, `success`, `danger`), mais `.<estado> .meta { color: var(--text); }`; `.online` não precisa de bloco (usa o fundo neutro do `.root`).
    Confira: `pnpm vitest run src/connection-status` passa inteiro, inclusive o teste do CSS.

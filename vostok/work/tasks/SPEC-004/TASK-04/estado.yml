@@ -11,18 +11,19 @@ covers: [RF-19, CT-14]
 type: tarefa
 labels: [SPEC-004, padrao]
 status: approved
-content_hash: bea0cd912265d626076770817aa5f9fb5b621d9392ff4461b50963c9eb610bfa
-adjustments: 0
-adjusted_at: null
-approved_at: 2026-11-10T21:29:10Z
-approved_hash: bea0cd912265d626076770817aa5f9fb5b621d9392ff4461b50963c9eb610bfa
+content_hash: 09f4ab923880b6b5f3f01014c37f212e61b7dca5206857972b7060aa4e85a9fa
+adjustments: 1
+adjusted_at: 2026-11-10T21:52:17Z
+approved_at: 2026-11-10T21:52:17Z
+approved_hash: 09f4ab923880b6b5f3f01014c37f212e61b7dca5206857972b7060aa4e85a9fa
 attempts: 0
 tests_result: null
 regression_result: null
 evidence_result: null
 waiting_on: []
 waiting_reason: null
-execution_hash: ecc9f8e6b95e06785103b38783c3806086e9a8617348ffb0f31c592e4352bab0
+execution_hash: a7ecba2caa5aeb5a57e8157052a57a5cf50fe255ba6125a8f11e7312e6b49dfe
 verification_hash: ef9e8b6143a0200a85e536eb0a2d0304d4228456924858b5469cb94d4fb769dc
-criteria_hash: 1244841f955d117adc1cf92e6fadb8011f98b6981ab3570aac04e3f0b4e2914e
-state_hash: f9b40bda1b51cba5b4489a519a65e4c32b6c57315e7c346b210190b00cef4a1c
+criteria_hash: ba5fa1477f8b780e7e5c4b5092e3d315f8f0ad8efa84870469a054d5cdd5e18a
+state_hash: 22f563cac1b3ff0f1a7f041d8e04c6f1833fa00858e24f170aa1474a3525f21c
+updated_at: 2026-11-10T21:52:17Z

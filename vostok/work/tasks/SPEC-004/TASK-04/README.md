@@ -22,7 +22,7 @@ Arquivo gerado pelo vostok a cada mudança de estado; não edite.
 - **Tipo:** tarefa
 - **Descrição:** Exporta os três componentes, os dois utilitários e os tipos pelo `src/index.ts`, com a suíte inteira e o build verdes.
 - **Critérios de aceite:**
-  - [ ] O índice exporta `Timer`, `Countdown`, `ConnectionStatus`, `formatDuration`, `daysBetween` e os 10 tipos públicos, e nada além da lista (RF-19, CT-14).
+  - [ ] O índice exporta `Timer`, `Countdown`, `ConnectionStatus`, `formatDuration`, `daysBetween` e os 11 tipos públicos, e nada além da lista (RF-19, CT-14).
   - [ ] Os dois utilitários funcionam pelo pacote gerado (RF-19, CT-14).
   - [ ] Com os componentes da 0.3.0 juntos, a suíte inteira e o lint passam (RF-19).
   - [ ] O código gerado não faz requisição de rede nem tem URL externa (RNF-08).

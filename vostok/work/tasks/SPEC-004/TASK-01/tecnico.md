@@ -38,3 +38,35 @@ RF-01 a RF-09, RF-18; CT-01 a CT-07, CT-13; CB-01 a CB-04, CB-08; RN-01, RN-03, 
 ## Arquivos em comum com a onda
 
 Nenhum. Na onda 1, a TASK-02 (`src/countdown/`) e a TASK-03 (`src/connection-status/`) não mudam `src/timer/`; as três só leem `src/icons/` e `src/theme/`. O índice `src/index.ts` fica para a TASK-04.
+
+## O que foi feito
+
+- `src/timer/timer.types.ts`: `TimerLabels`, `DurationParts`, `TimerCountdownProps` (`endsAt` obrigatório, `warnAt` e `onExpire`), `TimerElapsedProps` (`direction: 'up'` e `startedAt`) e o union `TimerProps`. `TimerBaseProps` não é exportado e omite o `hidden` nativo. `TimerState` é o tipo interno do estado.
+- `src/timer/timer.constants.ts`: `DEFAULT_TIMER_LABELS` em pt-br e `DEFAULT_WARNING_MINUTES = 5`.
+- `src/timer/timer.utils.ts`: funções puras `toDurationParts`, `formatDuration` (público, reexportado por `timer.tsx`), `describeDuration`, `normalizeWarnAt`, `msToNextSecond`, `evaluateLimits`, `startTimerState`, `stepTimerState` e `withoutTimerProps`. `expiredState` e `nextMessage` são internas.
+- `src/timer/use-timer.ts`: `useTimer`, que guarda o `TimerState`, agenda o tique e chama `onExpire`.
+- `src/timer/timer.tsx`: `Timer`, com 92 linhas. A raiz é um `div` com `role="timer"`, `aria-label` com o nome (`remaining` ou `elapsed`) e `lang` vindo de `locale`. Dentro há a pílula com o tempo, o `ClockIcon` só quando está no tom de aviso (`data-tone="warning"`), o `IconButton` com `EyeIcon` quando `hideable` e a região `aria-live="polite"` com `srOnly` contendo a mensagem.
+- `src/timer/timer.module.css`: só tokens. `font-variant-numeric: tabular-nums` no tempo, `--motion-fast` na troca de cor, botão de 44 px (`calc(var(--space) * 11)`), sem `animation` nem `@keyframes`.
+- Testes: `timer.utils.test.ts` (16) e `timer.test.tsx` (27), 43 no total.
+
+## Como foi feito
+
+- TDD: os testes foram escritos antes do código e falharam por falta de `./timer.constants` e `./timer`.
+- Relógio: `useTimer` agenda um `setTimeout` a cada virada do segundo (`msToNextSecond`), e não um `setInterval`. Cada tique relê `now()`, para no fim e não acumula atraso.
+- O número é derivado de `endsAt - state.at` no render. O estado guarda só a última leitura do relógio, então um `endsAt` novo recalcula na hora.
+- Avisos: `announced` guarda os limites já anunciados como lista. Um limite que volta a ficar acima sai da lista e pode ser anunciado de novo. Vários limites cruzados de uma vez anunciam só o menor. Na montagem, os já cruzados entram sem anúncio.
+- A mensagem é esvaziada quando um limite é re-armado, para que o mesmo texto seja anunciado de novo.
+- Regras do ESLint do projeto: o estado só muda dentro do callback do `setTimeout` (`react-hooks/set-state-in-effect`), e `onExpire` roda num efeito que observa `state.expired`.
+- Arredondamento: no regressivo, o número arredonda para cima em segundos, então `00:00` só aparece no fim.
+- `withoutTimerProps` remove as props próprias do Timer com `Object.entries` e `Object.fromEntries`, sem `delete`, que o ESLint estrito recusa.
+- Desvio no teste: `userEvent.setup({ advanceTimers: vi.advanceTimersByTime })` travava 5 s, porque o `asyncWrapper` do Testing Library só avança timers falsos do Jest. O auxiliar `setupUser()` usa `vi.useFakeTimers({ shouldAdvanceTime: true })`, com o `now` ainda injetado.
+- Verificação: testes, regressão (3 comandos do baseline, código 0) e evidências (`testes-timer.txt` e `timer-360.png`) conferidas pelo usuário.
+
+## Pontos de atenção
+
+- O botão de ocultar usa sempre o `EyeIcon`, porque a 0.2.0 não tem ícone de olho riscado. Só o nome acessível muda entre `Esconder o tempo` e `Mostrar o tempo`. O usuário aceitou isso no print.
+- O `FocusHeader` não tem slot de filhos (`focus-header.tsx` não recebe `children`). No print, o `Timer` fica ao lado dele, não dentro.
+- Em aba em segundo plano, o navegador pode atrasar o `setTimeout`. O número vem da última leitura (`state.at`), então pode ficar parado até o próximo tique. O tempo não se perde, porque cada tique relê `now()`.
+- Com o tempo oculto, o nome acessível continua com o tempo e o relógio continua a cada segundo (D-12). Os avisos seguem normais.
+- Sem `warnAt`, a pílula muda para o tom de aviso aos 5 minutos. Com `warnAt`, muda no menor limite.
+- Os testes de CSS leem o texto do `.module.css` e conferem as regras; não renderizam a transição. O efeito visual foi conferido no print.

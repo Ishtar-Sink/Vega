@@ -10,19 +10,22 @@ wave: 1
 covers: [RF-10, RF-11, RF-12, RF-18, CT-08, CT-09, CT-13, CB-05]
 type: tarefa
 labels: [SPEC-004, padrao]
-status: approved
-content_hash: db99e26b835fb82bbc3f55770dddd108d47f5fd4d266b46e04216f37f5bf1f8b
+status: done
+content_hash: 720d340e2ef3f4c99b4191ffce2f7d53c05979b090b90a97052e8018592c3f0a
 adjustments: 0
 adjusted_at: null
 approved_at: 2026-11-10T21:29:10Z
 approved_hash: db99e26b835fb82bbc3f55770dddd108d47f5fd4d266b46e04216f37f5bf1f8b
 attempts: 0
-tests_result: null
-regression_result: null
-evidence_result: null
+tests_result: passed
+regression_result: passed
+evidence_result: passed
 waiting_on: []
 waiting_reason: null
 execution_hash: e09803c2b4527f11f668a8d6e425f589e9d57d345cb4e526a2629849f4b9bad0
 verification_hash: 3482dcb1a632f6cac71a7168787c801a287fa321bf3fb5707dc4a4c42885b895
-criteria_hash: 9db65d748a2bde5b0ee93d29da7b742ec0aacf2c4d62a2678cfeb7a3688b0e3f
-state_hash: c07dfac71fcc9a6efe1d215a1521d41a7cb9bd3ef4d78dacf88d7bff43d805b1
+criteria_hash: e212257ad402074e5cd44c908e3027d9d9c2fdbdb482b31ebf858411ba31917f
+state_hash: bc677c87f4e9e23b95e5a2b0d91717b2c50fab2d46e54c2a9570f7287790b298
+model: sonnet
+executive_hash: 89582b408ba02a4c9d2c886e4fc8cb6d5ebae4034c09797a4a0e7097f58da8dd
+technical_hash: bd2646a0fc537bef1867ccd828de06503da4c89f71af81c7a41fbb30bba62849

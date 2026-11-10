@@ -1,6 +1,6 @@
 ### Concluída quando
 
-- [ ] O índice exporta `Timer`, `Countdown`, `ConnectionStatus`, `formatDuration`, `daysBetween` e os 10 tipos públicos, e nada além da lista (RF-19, CT-14).
+- [ ] O índice exporta `Timer`, `Countdown`, `ConnectionStatus`, `formatDuration`, `daysBetween` e os 11 tipos públicos, e nada além da lista (RF-19, CT-14).
 
   > Como comprovar: abrir `exportacoes.txt` e ver um teste aprovado para cada um dos 5 nomes novos e "exporta só a superfície pública" aprovado; em `build-0-3.txt`, ver "novos no dist/index.js" com os 5 nomes.
 

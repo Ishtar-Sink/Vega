@@ -4,17 +4,18 @@ title: "Timer, Countdown e ConnectionStatus"
 status: planned
 author: "Victor Batalha"
 created_at: 2026-11-10T21:08:49Z
-updated_at: 2026-11-10T21:28:50Z
+updated_at: 2026-11-10T21:51:18Z
 tags: []
 type: feature
 source: "draft/SPEC-004-timer-countdown-e-connectionstatus.md"
 refined_at: 2026-11-10T21:11:35Z
-adjustments: 0
-adjusted_at: null
-content_hash: 18a9572dd66bfa03d47a6a1ce59a88740e6c277281e4eb466f1c507f4d6c6c47
-approved_at: 2026-11-10T21:13:35Z
-approved_hash: 18a9572dd66bfa03d47a6a1ce59a88740e6c277281e4eb466f1c507f4d6c6c47
-status_history: 2026-11-10T21:13:35Z approved; 2026-11-10T21:28:50Z planned
+adjustments: 1
+adjusted_at: 2026-11-10T21:49:59Z
+content_hash: 0bae8e7e268c675262104d5f560a055d3f27d91ae0052dd3465a78944e8ba818
+approved_at: 2026-11-10T21:51:18Z
+approved_hash: 0bae8e7e268c675262104d5f560a055d3f27d91ae0052dd3465a78944e8ba818
+status_history: 2026-11-10T21:13:35Z approved; 2026-11-10T21:28:50Z planned; 2026-11-10T21:49:59Z refined; 2026-11-10T21:51:18Z planned
+changed_ids: []
 ---
 
 # Timer, Countdown e ConnectionStatus - Especificação Refinada
@@ -63,7 +64,7 @@ O Synestia precisa do cronômetro do simulado e da contagem até a prova até 17
 | RF-14 | O `ConnectionStatus` `online` deve não renderizar nada na variante `chip` e mostrar `labels.online` na variante `detail`. |
 | RF-15 | O `ConnectionStatus` deve ter `role="status"` e anunciar a troca de estado, sem anunciar cada mudança de `progress`. |
 | RF-16 | O `ConnectionStatus` deve mostrar `progress` no estado `syncing`, `pending` com `labels.pending(count)` e `lastSyncedAt` como tempo relativo com `Intl.RelativeTimeFormat` sobre o `now` injetado. |
-| RF-17 | O `ConnectionStatus` deve aceitar uma `action` no fim, nas duas variantes. |
+| RF-17 | O `ConnectionStatus` com `action` (`label` e `onAction`) deve tornar a caixa inteira um `<button>` e mostrar `action.label` como texto no tom do estado, sublinhado, depois de um `·`, nas duas variantes, sem botão preenchido. |
 | RF-18 | O sistema deve exportar `formatDuration(ms)`, que devolve `mm:ss` ou `h:mm:ss`, e `daysBetween(fromIso, toIso)`, que devolve a diferença em dias de calendário. |
 | RF-19 | O sistema deve exportar pelo `src/index.ts` `Timer`, `Countdown`, `ConnectionStatus`, `formatDuration`, `daysBetween` e os tipos das props, dos `*Labels` e `ConnectionState`. |
 | RF-20 | O sistema deve publicar a versão 0.3.0 pela tag `v0.3.0`, com a entrada no `CHANGELOG.md` e o `README.md` atualizado. |
@@ -220,6 +221,11 @@ export interface ConnectionStatusLabels {
   pending: (count: number) => string;
 }
 
+export interface ConnectionStatusAction {
+  label: string;
+  onAction: () => void;
+}
+
 export interface ConnectionStatusProps extends Omit<ComponentPropsWithRef<'div'>, 'children'> {
   state: ConnectionState;
   progress?: { done: number; total: number };
@@ -230,7 +236,8 @@ export interface ConnectionStatusProps extends Omit<ComponentPropsWithRef<'div'>
   now?: () => number;
   /** Padrão: `chip`. */
   variant?: 'chip' | 'detail';
-  action?: ReactNode;
+  /** Ação configurada por fora: a caixa inteira vira um botão, com o `label` no fim do texto. */
+  action?: ConnectionStatusAction;
   locale?: string;
   labels?: Partial<ConnectionStatusLabels>;
 }
@@ -244,15 +251,33 @@ export function formatDuration(ms: number): string;
 export function daysBetween(fromIso: string, toIso: string): number;
 ```
 
-Índice (`src/index.ts`), acrescentado: `Timer`, `Countdown`, `ConnectionStatus`, `formatDuration`, `daysBetween` e os tipos `TimerProps`, `TimerCountdownProps`, `TimerElapsedProps`, `TimerLabels`, `DurationParts`, `CountdownProps`, `CountdownLabels`, `ConnectionStatusProps`, `ConnectionStatusLabels` e `ConnectionState`.
+Índice (`src/index.ts`), acrescentado: `Timer`, `Countdown`, `ConnectionStatus`, `formatDuration`, `daysBetween` e os tipos `TimerProps`, `TimerCountdownProps`, `TimerElapsedProps`, `TimerLabels`, `DurationParts`, `CountdownProps`, `CountdownLabels`, `ConnectionStatusProps`, `ConnectionStatusLabels`, `ConnectionStatusAction` e `ConnectionState`.
 
 ## Componentes afetados
 
 | Caminho | Ação | Motivo |
 |---|---|---|
-| `src/timer/` | criar | `Timer`, tipos, constantes, hook do relógio e `formatDuration` (RF-01 a RF-09, RF-18) |
-| `src/countdown/` | criar | `Countdown`, tipos, constantes e `daysBetween` (RF-10 a RF-12, RF-18) |
-| `src/connection-status/` | criar | `ConnectionStatus`, tipos e constantes (RF-13 a RF-17) |
+| `src/timer/timer.constants.ts` | alterar | `Timer`, tipos, constantes, hook do relógio e `formatDuration` (RF-01 a RF-09, RF-18) |
+| `src/timer/timer.module.css` | alterar | `Timer`, tipos, constantes, hook do relógio e `formatDuration` (RF-01 a RF-09, RF-18) |
+| `src/timer/timer.test.tsx` | alterar | `Timer`, tipos, constantes, hook do relógio e `formatDuration` (RF-01 a RF-09, RF-18) |
+| `src/timer/timer.tsx` | alterar | `Timer`, tipos, constantes, hook do relógio e `formatDuration` (RF-01 a RF-09, RF-18) |
+| `src/timer/timer.types.ts` | alterar | `Timer`, tipos, constantes, hook do relógio e `formatDuration` (RF-01 a RF-09, RF-18) |
+| `src/timer/timer.utils.test.ts` | alterar | `Timer`, tipos, constantes, hook do relógio e `formatDuration` (RF-01 a RF-09, RF-18) |
+| `src/timer/timer.utils.ts` | alterar | `Timer`, tipos, constantes, hook do relógio e `formatDuration` (RF-01 a RF-09, RF-18) |
+| `src/timer/use-timer.ts` | alterar | `Timer`, tipos, constantes, hook do relógio e `formatDuration` (RF-01 a RF-09, RF-18) |
+| `src/countdown/countdown.constants.ts` | alterar | `Countdown`, tipos, constantes e `daysBetween` (RF-10 a RF-12, RF-18) |
+| `src/countdown/countdown.module.css` | alterar | `Countdown`, tipos, constantes e `daysBetween` (RF-10 a RF-12, RF-18) |
+| `src/countdown/countdown.test.tsx` | alterar | `Countdown`, tipos, constantes e `daysBetween` (RF-10 a RF-12, RF-18) |
+| `src/countdown/countdown.tsx` | alterar | `Countdown`, tipos, constantes e `daysBetween` (RF-10 a RF-12, RF-18) |
+| `src/countdown/countdown.types.ts` | alterar | `Countdown`, tipos, constantes e `daysBetween` (RF-10 a RF-12, RF-18) |
+| `src/countdown/countdown.utils.test.ts` | alterar | `Countdown`, tipos, constantes e `daysBetween` (RF-10 a RF-12, RF-18) |
+| `src/countdown/countdown.utils.ts` | alterar | `Countdown`, tipos, constantes e `daysBetween` (RF-10 a RF-12, RF-18) |
+| `src/connection-status/connection-status.constants.ts` | alterar | `ConnectionStatus`, tipos e constantes (RF-13 a RF-17) |
+| `src/connection-status/connection-status.module.css` | alterar | `ConnectionStatus`, tipos e constantes (RF-13 a RF-17) |
+| `src/connection-status/connection-status.test.tsx` | alterar | `ConnectionStatus`, tipos e constantes (RF-13 a RF-17) |
+| `src/connection-status/connection-status.tsx` | alterar | `ConnectionStatus`, tipos e constantes (RF-13 a RF-17) |
+| `src/connection-status/connection-status.types.ts` | alterar | `ConnectionStatus`, tipos e constantes (RF-13 a RF-17) |
+| `src/connection-status/connection-status.utils.ts` | alterar | `ConnectionStatus`, tipos e constantes (RF-13 a RF-17) |
 | `src/index.ts` | alterar | Exporta os componentes, os utilitários e os tipos (RF-19) |
 | `src/index.test.ts` | alterar | Superfície pública com os nomes novos (RF-19) |
 | `package.json` | alterar | Versão 0.3.0 (RF-20) |
@@ -291,7 +316,8 @@ export function daysBetween(fromIso: string, toIso: string): number;
 | CT-09 | Hoje e passado | `target` igual a `today` e um dia antes | Mostra "É hoje" e "Já passou" | RF-11 |
 | CT-10 | Estados da conexão | Renderizar os cinco estados nas duas variantes e nos dois temas | Ícone e palavra em cada estado, axe sem violação e AA; `online` em `chip` sem nada | RF-13, RF-14 |
 | CT-11 | Anúncio da troca | Trocar `offline` para `syncing` e mudar `progress` de 1/5 para 2/5 | A troca é anunciada uma vez e o progresso não é anunciado | RF-15, RF-16 |
-| CT-12 | Tempo relativo e fila | `synced` com `lastSyncedAt` 2 min antes do `now` e `pending=3` no `detail` | Mostra "Tudo sincronizado · há 2 minutos" e "3 na fila", com ação no fim | RF-16, RF-17 |
+| CT-12 | Tempo relativo e fila | `synced` com `lastSyncedAt` 2 min antes do `now` e `pending=3` no `detail` | Mostra "Tudo sincronizado · há 2 minutos" e "3 na fila" | RF-16 |
+| CT-16 | Ação na pílula | `error` com `action={{ label: 'Tentar de novo', onAction }}` no `chip` e no `detail`; clique e Enter | A caixa inteira é um `button` com o nome que inclui "Tentar de novo", o texto da ação fica no tom do estado e `onAction` é chamado; a região `role="status"` fica fora do botão | RF-17 |
 | CT-13 | Utilitários | `formatDuration(-1)`, `formatDuration(3599000)`, `daysBetween("2026-11-10","2026-12-06")` | `00:00`, `59:59` e `26` | RF-18 |
 | CT-14 | Índice | Importar o índice | Os nomes novos existem e a superfície é exatamente a lista | RF-19 |
 | CT-15 | Publicação | Tag `v0.3.0` e `npm view` | 0.3.0 como `latest`, com provenance, CHANGELOG e README atualizados | RF-20 |
@@ -304,7 +330,8 @@ export function daysBetween(fromIso: string, toIso: string): number;
 - [ ] CA-04: O botão de ocultar tem nome acessível, funciona por teclado e tem 44 px (RF-09).
 - [ ] CA-05: O `Countdown` de 06/12/2026 a partir de 10/11/2026 mostra "Faltam 26 dias", mostra `labels.today` no dia e `labels.past` depois, sem região viva (RF-10, RF-11, RF-12).
 - [ ] CA-06: Os cinco estados do `ConnectionStatus` passam no axe e em AA nos dois temas, e `online` em `chip` não renderiza nada (RF-13, RF-14).
-- [ ] CA-07: A troca de estado é anunciada uma vez, o progresso não é anunciado a cada item e o tempo relativo usa o `now` injetado (RF-15, RF-16, RF-17).
+- [ ] CA-07: A troca de estado é anunciada uma vez, o progresso não é anunciado a cada item e o tempo relativo usa o `now` injetado (RF-15, RF-16).
+- [ ] CA-11: Com `action`, a pílula inteira do `ConnectionStatus` é um botão discreto, com o texto da ação no tom do estado, sem botão preenchido (RF-17).
 - [ ] CA-08: `formatDuration` e `daysBetween` são exportados e passam nos casos do CT-13 (RF-18).
 - [ ] CA-09: O índice exporta os três componentes, os dois utilitários e os tipos (RF-19).
 - [ ] CA-10: A `@ishtar-sink/vega` 0.3.0 está publicada com provenance pelo workflow da tag `v0.3.0`, com o `CHANGELOG.md` e o `README.md` atualizados (RF-20).
@@ -349,6 +376,7 @@ export function daysBetween(fromIso: string, toIso: string): number;
 | 9 | Tom `warning` no menor `warnAt` ou 5 min (inferência F) | Sempre 5 min | Texto do KT: "nos últimos 5 minutos (ou no menor valor de `warnAt`)" |
 | 10 | Progresso de `syncing` fora da região `role="status"` (inferência G) | Região viva com o texto todo | O KT pede anúncio só ao começar e ao terminar |
 | 11 | Utilitários nas pastas dos componentes: `formatDuration` em `src/timer/`, `daysBetween` em `src/countdown/` (inferência H) | Pasta comum `src/time-format/` | As tarefas ficam independentes e rodam em paralelo |
+| 12 | `action` do `ConnectionStatus` como `{ label, onAction }`, com a caixa inteira clicável e o texto da ação no tom do estado (usuário, ajuste 1) | `action: ReactNode` com um `Button` preenchido | No print, o botão preenchido destoava das pílulas e vazava delas; o Material orienta ação de aviso curto como texto colorido, nunca preenchido |
 
 ## Pendências
 
@@ -360,3 +388,4 @@ export function daysBetween(fromIso: string, toIso: string): number;
 
 | # | Data | Origem | Resumo |
 |---|---|---|---|
+| 1 | 2026-11-10 | agente | RF-17: action vira { label, onAction }, com a pílula inteira clicável e o texto da ação no tom do estado; CT-12 sem a ação; CT-16 e CA-11 novos; CA-07 sem RF-17; ConnectionStatusAction no contrato e no índice; componentes afetados listados por arquivo |

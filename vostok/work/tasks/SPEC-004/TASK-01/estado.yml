@@ -10,19 +10,22 @@ wave: 1
 covers: [RF-01, RF-02, RF-03, RF-04, RF-05, RF-06, RF-07, RF-08, RF-09, RF-18, CT-01, CT-02, CT-03, CT-04, CT-05, CT-06, CT-07, CT-13, CB-01, CB-02, CB-03, CB-04, CB-08]
 type: tarefa
 labels: [SPEC-004, julgamento]
-status: approved
-content_hash: d649b2e0d4fc98eb3e613afb3b927abace15616dd9e41fcdfb07dd3fd24e5559
+status: done
+content_hash: 4c159ac61cd7f13400a87124fab2a2b57e7e670836e2e9ac2b8be167f3e5d238
 adjustments: 0
 adjusted_at: null
 approved_at: 2026-11-10T21:29:10Z
 approved_hash: d649b2e0d4fc98eb3e613afb3b927abace15616dd9e41fcdfb07dd3fd24e5559
 attempts: 0
-tests_result: null
-regression_result: null
-evidence_result: null
+tests_result: passed
+regression_result: passed
+evidence_result: passed
 waiting_on: []
 waiting_reason: null
 execution_hash: dd8f302650768c3bd7b94abb714ced1f34e8fdb663ddf42e98da4f0bc88ca8cc
 verification_hash: c50c64d6c27ae2e9073ffb67153c65b746b93c89aecbc8cdfcb6c03436ff9159
-criteria_hash: ec28a77f26e105a3e54631b1fbdfca3a8cab05289d87b7ce3a87dbea6ccbdadd
-state_hash: 6f73609bf4d6d33fb029802f0155322e90f09489bce2b154cbf9bb841aefc8c7
+criteria_hash: da1bc5760fb2e4f3c1535256709c8438df5bc0aa96ada9c93b3fe9c679acb64d
+state_hash: dbc731432aef3413b9625bc6a024641f48c78df8984bcfadac570115ac425387
+model: opus
+executive_hash: d09512b5bba25aeca7737d1fc8bc5fdf8267114dc41edafc5bab9bb4959af5b5
+technical_hash: b4db9a94f0ccafbfbb6a516beb651c61329c9ede3f51c27259c36bf763c0f27c

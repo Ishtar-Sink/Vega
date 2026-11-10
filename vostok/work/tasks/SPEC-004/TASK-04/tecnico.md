@@ -7,7 +7,7 @@ TDD, como na TASK-15 da SPEC-003: o `src/index.test.ts` ganha os nomes novos e f
 ## Superfície nova
 
 - Valores (5): `Timer` (`src/timer/timer.tsx`), `formatDuration` (`src/timer/timer.utils.ts`), `Countdown` (`src/countdown/countdown.tsx`), `daysBetween` (`src/countdown/countdown.utils.ts`), `ConnectionStatus` (`src/connection-status/connection-status.tsx`).
-- Tipos (10): `TimerProps`, `TimerCountdownProps`, `TimerElapsedProps`, `TimerLabels`, `DurationParts` (`src/timer/timer.types.ts`); `CountdownProps`, `CountdownLabels` (`src/countdown/countdown.types.ts`); `ConnectionStatusProps`, `ConnectionStatusLabels`, `ConnectionState` (`src/connection-status/connection-status.types.ts`).
+- Tipos (11): `TimerProps`, `TimerCountdownProps`, `TimerElapsedProps`, `TimerLabels`, `DurationParts` (`src/timer/timer.types.ts`); `CountdownProps`, `CountdownLabels` (`src/countdown/countdown.types.ts`); `ConnectionStatusProps`, `ConnectionStatusLabels`, `ConnectionStatusAction`, `ConnectionState` (`src/connection-status/connection-status.types.ts`).
 - Contagem esperada: 122 + 5 = 127 valores, e 132 testes no arquivo (127 nomes, mais superfície exata, paleta do Atria, `Prose` fora e tipos). O passo 1 acrescenta o que as tarefas de componente registrarem a mais.
 - Ficam fora do índice, por não constarem do contrato: constantes e hooks internos de cada pasta (por exemplo, relógio e rótulos padrão) e tipos que a spec não lista.
 

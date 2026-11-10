@@ -1,10 +1,10 @@
 ---
 id: SPEC-004
 title: "Timer, Countdown e ConnectionStatus"
-status: planned
+status: implemented
 author: "Victor Batalha"
 created_at: 2026-11-10T21:08:49Z
-updated_at: 2026-11-10T21:51:18Z
+updated_at: 2026-11-10T22:56:12Z
 tags: []
 type: feature
 source: "draft/SPEC-004-timer-countdown-e-connectionstatus.md"
@@ -14,7 +14,7 @@ adjusted_at: 2026-11-10T21:49:59Z
 content_hash: 0bae8e7e268c675262104d5f560a055d3f27d91ae0052dd3465a78944e8ba818
 approved_at: 2026-11-10T21:51:18Z
 approved_hash: 0bae8e7e268c675262104d5f560a055d3f27d91ae0052dd3465a78944e8ba818
-status_history: 2026-11-10T21:13:35Z approved; 2026-11-10T21:28:50Z planned; 2026-11-10T21:49:59Z refined; 2026-11-10T21:51:18Z planned
+status_history: 2026-11-10T21:13:35Z approved; 2026-11-10T21:28:50Z planned; 2026-11-10T21:49:59Z refined; 2026-11-10T21:51:18Z planned; 2026-11-10T22:56:12Z implemented
 changed_ids: []
 ---
 

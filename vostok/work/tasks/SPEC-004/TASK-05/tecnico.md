@@ -34,3 +34,34 @@ RF-20, CT-15, RNF-08; [project/development-methodology-05], [project/development
 ## Arquivos em comum na onda
 
 Onda 3 só tem esta tarefa. `package.json`, `CHANGELOG.md` e `README.md` não são mudados por outras tarefas da SPEC-004.
+
+## O que foi feito
+
+- `package.json`: versão `0.3.0`.
+- `CHANGELOG.md`: entrada `[0.3.0] - 2026-11-10`, com parágrafo de abertura (KT-002, compatível com a 0.2.0) e os quatro grupos.
+  - Adicionado: `Timer`, `Countdown`, `ConnectionStatus`, os utilitários e os tipos.
+  - Alterado: "Nenhuma mudança...".
+  - Corrigido: "Nenhuma correção...".
+  - Removido: "Nada removido...".
+- **Diferença do plano:** os tipos públicos são 11, e não 10. Entrou o `ConnectionStatusAction`, criado no ajuste 1 da TASK-03 (a pílula inteira clicável com `action: { label, onAction }`) e exportado pela TASK-04. O item do `ConnectionStatus` descreve a `action` nesse formato.
+- **Formato da prop `direction`:** na primeira rodada, o `changelog.txt` reprovou com 9 de 10 itens, porque a prop aparecia só como `direction="up"`. A frase passou a citar a `direction` entre crases ("a prop `direction` em `up`").
+- **Formato do `formatDuration`:** o CHANGELOG segue o JSDoc. A saída é `mm:ss` abaixo de uma hora e `h:mm:ss` a partir dela; por exemplo, `formatDuration(3725000)` dá `1:02:05`.
+- `README.md`: linha "Tempo e conexão" na tabela de componentes; a frase de versões cita a 0.3.0; seção `## Tempo e conexão` entre "Texto formatado (Prose)" e "Tema próprio", com o exemplo `Simulado`.
+- **Publicação:** os commits `2c13d80` (`chore(release): 0.3.0`) e `ee47d5f` foram enviados à `main`, e o usuário criou a tag `v0.3.0`.
+  - O Release ([execução 42917568055](https://github.com/Ishtar-Sink/Vega/actions/runs/42917568055)) terminou com `success` em 1m18s.
+  - A CI da tag e a da `main` também terminaram com `success`. A da `main` voltou a passar com o `.prettierignore` da TASK-04.
+  - O npm respondeu `E404` logo após o Release e liberou a versão cerca de 90 segundos depois. Na 0.2.0, foram cerca de 4 minutos.
+
+## Como foi verificado
+
+- `changelog.txt`: 10 de 10 itens.
+- `release-ensaio.txt`: os passos do `release.yml` passam com `GITHUB_REF_NAME=v0.3.0`.
+- `readme-pacote.txt`: os imports do README existem no `dist/`.
+- `npm-view.txt`: versão 0.3.0, licença AGPL-3.0-only, provenance SLSA v1 e `latest` na 0.3.0.
+- `release-ci.txt`: a execução do Release da tag.
+- Regressão: o Prettier dá o mesmo resultado do baseline. A versão e os títulos mudaram, como esperado.
+
+## Pendências que seguem fora desta spec
+
+- 0.2.1: exportar `BottomSheetLabels` e `FocusHeaderLabels`, overlay no tema claro e rádio no tema escuro.
+- Migrar para Trusted Publishing no npm antes de jan/2027.

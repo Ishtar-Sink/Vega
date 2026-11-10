@@ -3,7 +3,7 @@
 Arquivo gerado pelo vostok a cada mudança de estado; não edite.
 
 - **Spec:** SPEC-004
-- **Status:** approved
+- **Status:** done
 - **Onda:** 2
 - **Dependências:** TASK-01, TASK-02, TASK-03
 
@@ -22,10 +22,10 @@ Arquivo gerado pelo vostok a cada mudança de estado; não edite.
 - **Tipo:** tarefa
 - **Descrição:** Exporta os três componentes, os dois utilitários e os tipos pelo `src/index.ts`, com a suíte inteira e o build verdes.
 - **Critérios de aceite:**
-  - [ ] O índice exporta `Timer`, `Countdown`, `ConnectionStatus`, `formatDuration`, `daysBetween` e os 11 tipos públicos, e nada além da lista (RF-19, CT-14).
-  - [ ] Os dois utilitários funcionam pelo pacote gerado (RF-19, CT-14).
-  - [ ] Com os componentes da 0.3.0 juntos, a suíte inteira e o lint passam (RF-19).
-  - [ ] O código gerado não faz requisição de rede nem tem URL externa (RNF-08).
+  - [x] O índice exporta `Timer`, `Countdown`, `ConnectionStatus`, `formatDuration`, `daysBetween` e os 11 tipos públicos, e nada além da lista (RF-19, CT-14).
+  - [x] Os dois utilitários funcionam pelo pacote gerado (RF-19, CT-14).
+  - [x] Com os componentes da 0.3.0 juntos, a suíte inteira e o lint passam (RF-19).
+  - [x] O código gerado não faz requisição de rede nem tem URL externa (RNF-08).
 - **Rótulos:** SPEC-004, padrao
 - **Estimativa:** padrao
 - **Bloqueada por:** TASK-01, TASK-02, TASK-03

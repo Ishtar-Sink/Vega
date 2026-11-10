@@ -33,3 +33,18 @@ RF-41, CT-38, CT-24, RNF-03, RNF-06, RNF-09; decisão 2; [project/architecture-0
 ## Arquivos em comum na onda
 
 Onda 4 só tem esta tarefa: nenhum arquivo em comum.
+
+## O que foi feito
+
+- TDD: o `src/index.test.ts` ganhou primeiro os 36 ícones e os 14 componentes em `RUNTIME_EXPORTS` (depois de `TimelineIcon`, antes do tema), os 18 tipos no `import type` e em `PublicTypes`, e o teste `não exporta o Prose, que tem entrada própria`. Rodado antes do índice, falhou em 51 testes (os 50 `exporta <Nome>` novos e `exporta só a superfície pública`), e o `tsc` acusou os tipos ausentes.
+- `src/index.ts`: os ícones novos entraram na linha existente de `./icons`, e `IconProps` ao lado de `ViewIconProps`. Cada componente tem uma linha de valor (do `<nome>.tsx`) e uma de tipo (do `<nome>.types.ts`); `Disclosure` e `Accordion` vêm de arquivos separados com os tipos em `disclosure.types.ts`, `CardLink` e `CardButton` com os tipos em `card-link.types.ts`, e `NavItem` e `RenderNavLink` de `app-shell/nav.types.ts`. Sem `export *` e nada de `src/prose/`. O arquivo ficou com 176 linhas.
+- Passo 1: todos os 50 valores e 18 tipos foram encontrados com o nome do contrato. Nenhuma tarefa de componente trocou um nome nem registrou valor ou tipo público a mais.
+- Resultado: 126 testes do índice aprovados; suíte inteira com 59 arquivos e 744 testes; lint, Prettier e `typecheck` sem erro; `dist/index.js` com 122 exportações, sem o parser de Markdown e sem o `Prose`; `@ishtar-sink/vega/prose` devolve o `Prose` como `function`; nenhuma API de rede nem URL externa no JS e no CSS do `dist/`.
+- Regressão: o único comando com diferença é a lista de testes do índice, com acréscimo de 51 linhas (os testes novos), sem bloqueio.
+- O `import` do `dist/index.js` no Node funcionou: nenhum componente acessa o DOM ao carregar.
+
+## Pontos de atenção
+
+- O teste `exporta só a superfície pública` compara a lista exata de chaves: qualquer valor novo no índice precisa entrar em `RUNTIME_EXPORTS`, e um tipo novo, em `PublicTypes`.
+- `ProseSize` (exportado pela entrada `prose`, TASK-13) também fica fora do índice principal, como os outros tipos do `Prose`.
+- `createIcon` continua interno; a fábrica não aparece no índice.

@@ -2,6 +2,51 @@
 
 Este arquivo segue o [versionamento semântico](https://semver.org/lang/pt-BR/): cada versão agrupa as mudanças em Adicionado, Alterado, Corrigido e Removido, com o motivo de cada uma.
 
+## [0.2.0] - 2026-11-10
+
+Lote 1 de componentes, pedido pelo Synestia (KT-001) para começar o produto, mas genérico para qualquer produto do ecossistema: ícones de interface, campos, estrutura, avisos, navegação da aplicação e texto formatado. A versão é compatível com a 0.1.0: nenhum componente existente perdeu prop nem mudou o padrão.
+
+### Adicionado
+
+- **Ícones de interface:** 36 ícones sobre o `lucide-react`, para que os produtos não desenhem nem importem ícones por conta própria: `HomeIcon`, `BookOpenIcon`, `LayersIcon`, `TimerIcon`, `UsersIcon`, `MenuIcon`, `ChevronLeftIcon`, `ChevronRightIcon`, `ChevronDownIcon`, `ArrowLeftIcon`, `CloseIcon`, `PlusIcon`, `MinusIcon`, `DownloadIcon`, `UploadIcon`, `FlagIcon`, `RefreshIcon`, `EyeIcon`, `CheckIcon`, `CircleCheckIcon`, `InfoIcon`, `AlertTriangleIcon`, `CircleAlertIcon`, `WifiOffIcon`, `CloudCheckIcon`, `UserIcon`, `SettingsIcon`, `LogOutIcon`, `SunIcon`, `MoonIcon`, `LightbulbIcon`, `ClockIcon`, `CalendarIcon`, `PencilIcon`, `SearchIcon` e `TrashIcon`. São sempre decorativos (`aria-hidden` fixo), com traço `currentColor` e tamanho 16, 20 ou 24 (padrão 20), e têm o tipo `IconProps`.
+- **Campos:**
+  - `Switch`, um `button` com `role="switch"`, para ligar e desligar uma opção com efeito imediato.
+  - `RadioGroup`, um `fieldset` com rádios nativos, nas variantes `default` e `card` (com marcador, descrição e tom com ícone), `readOnly`, ajuda e erro, para escolhas únicas como as alternativas de uma questão.
+  - `TextAreaField`, com o mesmo visual do `TextField`, contador montado pelo produto (`counter`) e `autoResize`, para textos longos.
+- **Estrutura:**
+  - `CardLink` e `CardButton`, cartões inteiros clicáveis sobre o visual do `Card`, com destaque no hover e foco visível, para índices e menus.
+  - `FocusHeader`, o cabeçalho das telas de foco (uma lição, um simulado), com botão de sair (`Sair` por padrão), título com reticências, posição e progresso opcional.
+  - `Disclosure`, sobre o `<details>` nativo, e `Accordion`, nos modos `single` e `multiple`, para mostrar e esconder conteúdo sem JavaScript de abertura.
+- **Diálogos e avisos:**
+  - `BottomSheet`, uma folha sobre o `<dialog>` nativo com `showModal()`, com foco preso, fechamento por Esc, pelo fundo e pelo botão (`Fechar` por padrão), rodapé fixo, área segura, e as posições `auto`, `bottom` e `side` (no `auto`, vira painel lateral a partir de 720 px).
+  - `Callout`, o aviso dentro da página, em seis tons com ícone trocável (ou removido com `icon={false}`), ação opcional no fim e `live="polite"` para anunciar mudanças.
+- **Navegação:** `AppShell`, `Sidebar`, `BottomNav` e `Topbar`, para que todo produto tenha a mesma casca:
+  - `AppShell` com link para pular ao conteúdo e troca abaixo de 720 px entre gaveta (`drawer`) e barra inferior (`bottom`).
+  - `Sidebar` com marca, navegação "Principal", rodapé e gaveta com foco preso, Esc e `inert` quando fechada.
+  - `BottomNav` de 3 a 5 destinos, com selo de contagem e aviso no console fora de produção quando a contagem sai da faixa.
+  - `Topbar` com os espaços de início, centro e fim.
+  - O link é do roteador do produto, por `renderLink` (`RenderNavLink`); sem ele, são `<a>` comuns. Os itens são `NavItem`.
+- **Texto formatado:** `Prose`, na entrada própria `@ishtar-sink/vega/prose`, para que quem não usa Markdown não carregue o parser.
+  - Renderiza a prop `markdown` com `react-markdown` e `remark-gfm`, ou estiliza os `children`, nos tamanhos `base` e `reading` (medida de 68 caracteres), com tabelas que rolam na horizontal.
+  - É seguro com Markdown de qualquer origem: HTML cru é ignorado, o `rehype-sanitize` aplica a lista do que é permitido e URLs `javascript:`, `data:` e `vbscript:` são bloqueadas. Links externos saem com `rel="noopener noreferrer"` e imagens com `loading="lazy"`.
+  - O produto estende por `components` e `remarkPlugins` (por exemplo, matemática). Os tipos são `ProseProps`, `ProseComponents`, `ProsePlugin` e `ProseSize`.
+- **Tipos públicos:** `IconProps`, `SwitchProps`, `RadioOption`, `RadioGroupProps`, `TextAreaFieldProps`, `DisclosureProps`, `AccordionProps`, `CalloutProps`, `BottomSheetProps`, `CardLinkProps`, `CardButtonProps`, `FocusHeaderProps`, `NavItem`, `RenderNavLink`, `TopbarProps`, `SidebarProps`, `BottomNavProps` e `AppShellProps`.
+- **Dependências:** `lucide-react` (ícones, licença ISC), `react-markdown`, `remark-gfm` e `rehype-sanitize` (o `Prose`). Entram em `dependencies` e ficam externas no build, para que o projeto que instala a Vega receba uma única cópia de cada uma.
+
+### Alterado
+
+- **`Button`:** ganha `size` (`md` ou `lg`, com 48 px de altura mínima e fonte base) e `block` (largura total do contêiner), para as ações principais das telas de celular. O padrão continua `md` e em linha.
+- **`ProgressBar`:** ganha `valueText`, o texto visível e anunciado ao lado da barra (ex.: `3 de 8`), e `indeterminate`, para quando o fim não é conhecido; nesse modo o `value` é ignorado. Sem as props novas, a barra é a mesma da 0.1.0.
+- **`package.json`:** o `exports` de `.` passa a declarar `types` e `import`, e ganha `./prose`, para que o TypeScript encontre os tipos das duas entradas.
+
+### Corrigido
+
+- Nenhuma correção nesta versão.
+
+### Removido
+
+- Nada removido nesta versão.
+
 ## [0.1.0] - 2026-11-10
 
 Primeira versão da Vega, extraída do `@atria/ui` e do `@atria/theme` do Atria (commit `139d036`) e adequada às regras da biblioteca: props nativas, textos sobrescrevíveis com padrão em pt-br, estilos só com tokens e componentes sem nada fixo de um produto.

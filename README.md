@@ -17,16 +17,19 @@ A Vega nasce da extração do `@atria/ui` e do `@atria/theme`, a biblioteca e o 
 
 | Grupo | Componentes e funções |
 |---|---|
-| Ações | `Button`, `IconButton`, `MenuButton` |
-| Campos | `TextField`, `SelectField`, `Checkbox`, `SegmentedField`, `Autocomplete`, `TagField`, `ColorField`, `ColorPicker`, `DEFAULT_COLOR_FIELD_LABELS`, `hexToRgb`, `rgbToHex`, `hslToRgb`, `rgbToHsl` |
+| Ações | `Button` (com `size` e `block` desde a 0.2.0), `IconButton`, `MenuButton` |
+| Campos | `TextField`, `SelectField`, `Checkbox`, `SegmentedField`, `Autocomplete`, `TagField`, `ColorField`, `ColorPicker`, `DEFAULT_COLOR_FIELD_LABELS`, `hexToRgb`, `rgbToHex`, `hslToRgb`, `rgbToHsl`; na 0.2.0, `Switch`, `RadioGroup`, `TextAreaField` |
 | Data e hora | `Calendar`, `DateField`, `TimeField`, `DateTimeField`, `PeriodField`, `parseTime`, `maskTime`, `resolvePeriod` |
 | Dinheiro | `MoneyField`, `maskMoneyInput`, `parseMoneyInput`, `formatCents` |
-| Estrutura | `Card`, `PageHeader`, `Toolbar`, `Tabs`, `ViewSwitcher`, `FormGrid`, `FormActions` |
-| Diálogos e avisos | `Dialog`, `ConfirmDialog`, `Toast`, `ToastRegion` |
-| Estados | `EmptyState`, `LoadingState`, `Skeleton`, `ErrorState`, `ProgressBar` |
+| Estrutura | `Card`, `PageHeader`, `Toolbar`, `Tabs`, `ViewSwitcher`, `FormGrid`, `FormActions`; na 0.2.0, `CardLink`, `CardButton`, `FocusHeader`, `Disclosure`, `Accordion` |
+| Diálogos e avisos | `Dialog`, `ConfirmDialog`, `Toast`, `ToastRegion`; na 0.2.0, `BottomSheet`, `Callout` |
+| Estados | `EmptyState`, `LoadingState`, `Skeleton`, `ErrorState`, `ProgressBar` (com `valueText` e `indeterminate` desde a 0.2.0) |
 | Marca e itens | `BrandLogo`, `Badge`, `ItemSwatch`, `ListIcon`, `GridIcon`, `ShelfIcon`, `TableIcon`, `DayIcon`, `TimelineIcon` |
+| Ícones de interface | Os 36 da seção [Ícones](#ícones), na 0.2.0 |
+| Navegação | `AppShell`, `Sidebar`, `BottomNav`, `Topbar`, na 0.2.0 |
+| Conteúdo | `Prose`, na 0.2.0, pela entrada `@ishtar-sink/vega/prose` |
 
-Todos os componentes da tabela estão na 0.1.0.
+Os grupos Ações, Campos, Data e hora, Dinheiro, Estrutura, Diálogos e avisos, Estados e Marca e itens entraram na 0.1.0; o que a tabela marca com 0.2.0, e os grupos Ícones de interface, Navegação e Conteúdo, entraram na 0.2.0.
 
 ## Princípios
 
@@ -68,6 +71,39 @@ export function Exemplo() {
   );
 }
 ```
+
+## Ícones
+
+Os 36 ícones de interface vêm do [Lucide](https://lucide.dev), pelo pacote `lucide-react` (licença ISC), com os nomes da Vega: `HomeIcon`, `BookOpenIcon`, `LayersIcon`, `TimerIcon`, `UsersIcon`, `MenuIcon`, `ChevronLeftIcon`, `ChevronRightIcon`, `ChevronDownIcon`, `ArrowLeftIcon`, `CloseIcon`, `PlusIcon`, `MinusIcon`, `DownloadIcon`, `UploadIcon`, `FlagIcon`, `RefreshIcon`, `EyeIcon`, `CheckIcon`, `CircleCheckIcon`, `InfoIcon`, `AlertTriangleIcon`, `CircleAlertIcon`, `WifiOffIcon`, `CloudCheckIcon`, `UserIcon`, `SettingsIcon`, `LogOutIcon`, `SunIcon`, `MoonIcon`, `LightbulbIcon`, `ClockIcon`, `CalendarIcon`, `PencilIcon`, `SearchIcon` e `TrashIcon`.
+
+Os ícones são sempre decorativos (`aria-hidden`), usam a cor do texto (`currentColor`) e têm tamanho 16, 20 ou 24, com 20 por padrão. O nome acessível fica no elemento que contém o ícone.
+
+```tsx
+import { Button, HomeIcon } from '@ishtar-sink/vega';
+
+export function Inicio() {
+  return (
+    <Button variant="primary">
+      <HomeIcon size={16} />
+      Início
+    </Button>
+  );
+}
+```
+
+## Texto formatado (Prose)
+
+O `Prose` sai numa entrada própria, `@ishtar-sink/vega/prose`, para que quem não usa Markdown não carregue o parser. O HTML cru do texto é ignorado, e links com `javascript:`, `data:` ou `vbscript:` são bloqueados.
+
+```tsx
+import { Prose } from '@ishtar-sink/vega/prose';
+
+export function Licao({ texto }: { texto: string }) {
+  return <Prose markdown={texto} size="reading" />;
+}
+```
+
+Extensões do produto, como fórmulas de matemática, entram por `remarkPlugins` (sintaxe nova) e `components` (como cada elemento é renderizado), sem mudar a Vega.
 
 ## Tema próprio
 

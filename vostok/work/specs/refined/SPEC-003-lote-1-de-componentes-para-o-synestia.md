@@ -1,10 +1,10 @@
 ---
 id: SPEC-003
 title: "Lote 1 de componentes para o Synestia"
-status: planned
+status: implemented
 author: "Victor Batalha"
 created_at: 2026-11-10T17:44:48Z
-updated_at: 2026-11-10T18:27:56Z
+updated_at: 2026-11-10T20:37:37Z
 tags: []
 type: feature
 source: "draft/SPEC-003-lote-1-de-componentes-para-o-synestia.md"
@@ -14,7 +14,7 @@ adjusted_at: 2026-11-10T18:14:25Z
 content_hash: 8cf3864f6c914b59e1ce2ca89584f93d5f7add7e257fc2cf67185db166706842
 approved_at: 2026-11-10T18:27:56Z
 approved_hash: 8cf3864f6c914b59e1ce2ca89584f93d5f7add7e257fc2cf67185db166706842
-status_history: 2026-11-10T18:01:34Z approved; 2026-11-10T18:14:13Z planned; 2026-11-10T18:14:25Z refined; 2026-11-10T18:27:56Z planned
+status_history: 2026-11-10T18:01:34Z approved; 2026-11-10T18:14:13Z planned; 2026-11-10T18:14:25Z refined; 2026-11-10T18:27:56Z planned; 2026-11-10T20:37:37Z implemented
 changed_ids: []
 ---
 

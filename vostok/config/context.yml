@@ -1,0 +1,83 @@
+# Contexto carregado para o agente.
+
+# Carregado por `vostok context load` no início do trabalho, sempre.
+# Pastas (carregadas por inteiro) e arquivos específicos, relativos à raiz do harness,
+# na ordem em que aparecem aqui.
+required:
+  - context
+  - rules/agent
+  - rules/project/language.md
+  - templates/responses
+  # Persona do chat fora das skills (RF-25); o vostok update a acrescenta se faltar.
+  - personas/coordenador.md
+  - rules/project/architecture.md
+  - rules/project/stack.md
+  - rules/project/theme.md
+  - rules/project/development-methodology.md
+
+# Carregado sob demanda por `vostok context load --skill <nome>`, no passo 1 de cada skill.
+# Cada entrada lista os arquivos que a skill carrega além de `required`, na ordem em que aparecem aqui.
+# Skills sem entrada carregam só o contexto obrigatório.
+skills:
+  adjust-plan:
+    - config/tasks.yml
+    - skills/default/plan-tasks/SKILL.md
+  adjust-spec:
+    - rules/project/naming-convention.md
+    - skills/default/refine-spec/references/sections.md
+  adjust-task:
+    - config/tasks.yml
+    - skills/default/approve-plan/SKILL.md
+    - rules/project/code-style.md
+    - rules/project/security.md
+    - rules/project/testing.md
+    - rules/project/accessibility.md
+  approve-plan:
+    - config/tasks.yml
+    - rules/project/naming-convention.md
+    - rules/project/code-style.md
+    - rules/project/security.md
+    - rules/project/testing.md
+    - rules/project/accessibility.md
+  approve-task:
+    - config/tasks.yml
+  create-skill:
+    - rules/project/naming-convention.md
+    - templates/skill/skill.md
+  execute-task:
+    - config/tasks.yml
+    - rules/project/naming-convention.md
+    - rules/project/code-style.md
+    - rules/project/security.md
+    - rules/project/testing.md
+    - rules/project/accessibility.md
+  finalize-spec:
+    - config/specs.yml
+    - config/documents.yml
+  finish-task:
+    - config/tasks.yml
+    - rules/project/testing.md
+    - rules/project/accessibility.md
+  plan-tasks:
+    - config/tasks.yml
+  refine-spec:
+    - rules/project/naming-convention.md
+  init-harness:
+    - rules/project/naming-convention.md
+    - templates/rules/category.md
+  adjust-rules:
+    - rules/project/naming-convention.md
+    - templates/rules/category.md
+  report-harness-bug:
+    - config/main.yml
+    - templates/bug/report.md
+  validate-harness-bug:
+    - config/main.yml
+  suggest-harness-improvement:
+    - config/main.yml
+    - templates/suggestion/improvement.md
+  suggest-harness-feature:
+    - config/main.yml
+    - templates/suggestion/feature.md
+  customize-documents:
+    - config/documents.yml

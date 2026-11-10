@@ -10,7 +10,7 @@ wave: 5
 covers: [RF-42, CT-39]
 type: tarefa
 labels: [SPEC-003, julgamento]
-status: approved
+status: in_progress
 content_hash: 7e59feed7994b95c4d40be5088f4d680f96820ac398e285865653a43d2ec679c
 adjustments: 1
 adjusted_at: 2026-11-10T18:14:59Z
@@ -25,5 +25,8 @@ waiting_reason: null
 execution_hash: f1ae66c994186a0b02808148558b26dd43c0274da26bf81295c11d6741537f79
 verification_hash: 6b3beb1bbc4e20d4ba9dde38ba31f2cab57a15f0205ddef4e5bb45fba8d8bec9
 criteria_hash: 3b60a25ca678bc38e8eea2579a6cd5adca8120f3e95152eea25724f823d78e05
-state_hash: e8c38cea9f20ddb17020bbfad475f4eb7017fd8147357be95d320b25e3b61be0
+state_hash: 20c55f4feea7aa283491bb43198b5bfe990a135f4ba81553bd800c4acda05c65
 updated_at: 2026-11-10T18:14:59Z
+model: opus
+executive_hash: fab8c2845d6926d0c80ded5b6393cbf8b64e7a9df88be164b3fdd8cfecf92f78
+technical_hash: e8f8df0eb0afda5490e1bd6caf6832e4f26ddc65222405ef8a34958a7cf9eb2e

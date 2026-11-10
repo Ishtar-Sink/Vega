@@ -3,7 +3,7 @@
 Arquivo gerado pelo vostok a cada mudança de estado; não edite.
 
 - **Spec:** SPEC-003
-- **Status:** approved
+- **Status:** in_progress
 - **Onda:** 5
 - **Dependências:** TASK-15
 

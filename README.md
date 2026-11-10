@@ -4,7 +4,7 @@ Biblioteca de componentes React e temas do ecossistema [Ishtar Sink](https://git
 
 Código aberto (AGPL-3.0) e aberto a qualquer projeto, dentro ou fora do ecossistema.
 
-> **Em desenvolvimento.** Este repositório ainda não tem código. A Vega nasce da extração do `@atria/ui` e do `@atria/theme`, a biblioteca e o tema que o [Atria](https://github.com/Ishtar-Sink/Atria) construiu para a própria interface, e será publicada como `@ishtar-sink/vega`.
+A Vega nasce da extração do `@atria/ui` e do `@atria/theme`, a biblioteca e o tema que o [Atria](https://github.com/Ishtar-Sink/Atria) construiu para a própria interface, e é publicada como `@ishtar-sink/vega`. As mudanças de cada versão estão no [CHANGELOG](CHANGELOG.md).
 
 ## Temas
 
@@ -13,20 +13,20 @@ Código aberto (AGPL-3.0) e aberto a qualquer projeto, dentro ou fora do ecossis
 - **Contraste verificado.** A Vega traz as verificações de contraste que o tema padrão usa (AA para texto), para que um tema próprio passe pelas mesmas regras nos testes da aplicação.
 - **Troca em tempo de execução.** A camada de marca pode ser sobrescrita sem rebuild, o que permite o white label por instância nos produtos que o oferecem.
 
-## O que vem do Atria
+## Componentes
 
-| Grupo | Componentes |
+| Grupo | Componentes e funções |
 |---|---|
 | Ações | `Button`, `IconButton`, `MenuButton` |
-| Campos | `TextField`, `SelectField`, `Checkbox`, `SegmentedField`, `Autocomplete`, `TagField`, `ColorField` |
-| Data e hora | `Calendar`, `DateField`, `TimeField`, `DateTimeField`, `PeriodField` |
-| Dinheiro | `MoneyField`, com as funções de máscara e formatação em centavos |
+| Campos | `TextField`, `SelectField`, `Checkbox`, `SegmentedField`, `Autocomplete`, `TagField`, `ColorField`, `ColorPicker`, `DEFAULT_COLOR_FIELD_LABELS`, `hexToRgb`, `rgbToHex`, `hslToRgb`, `rgbToHsl` |
+| Data e hora | `Calendar`, `DateField`, `TimeField`, `DateTimeField`, `PeriodField`, `parseTime`, `maskTime`, `resolvePeriod` |
+| Dinheiro | `MoneyField`, `maskMoneyInput`, `parseMoneyInput`, `formatCents` |
 | Estrutura | `Card`, `PageHeader`, `Toolbar`, `Tabs`, `ViewSwitcher`, `FormGrid`, `FormActions` |
 | Diálogos e avisos | `Dialog`, `ConfirmDialog`, `Toast`, `ToastRegion` |
 | Estados | `EmptyState`, `LoadingState`, `Skeleton`, `ErrorState`, `ProgressBar` |
-| Marca e itens | `BrandLogo`, `Badge`, `ItemSwatch`, ícones de visualização |
+| Marca e itens | `BrandLogo`, `Badge`, `ItemSwatch`, `ListIcon`, `GridIcon`, `ShelfIcon`, `TableIcon`, `DayIcon`, `TimelineIcon` |
 
-O que parte dessa lista entra na primeira versão, e com que nome, é decidido na extração. Um componente que só faz sentido para o Atria fica no Atria.
+Todos os componentes da tabela estão na 0.1.0.
 
 ## Princípios
 
@@ -36,11 +36,26 @@ O que parte dessa lista entra na primeira versão, e com que nome, é decidido n
 - **Sem dependência de serviço externo.** Fontes e ícones vêm junto com o pacote, nunca de um CDN em tempo de execução.
 - **Nenhum produto do ecossistema recria um componente que já existe aqui.** Se faltar algo, o componente entra na Vega, não no produto.
 
-## Uso previsto
+## Instalação
 
 ```bash
-pnpm add @ishtar-sink/vega
+pnpm add @ishtar-sink/vega react react-dom
 ```
+
+`react` e `react-dom` `^19.3.1` são peer dependencies.
+
+## Estilos
+
+```ts
+import '@ishtar-sink/vega/tokens.css';
+import '@ishtar-sink/vega/styles.css';
+```
+
+O `tokens.css` traz as variáveis dos dois temas e as fontes; o `styles.css`, o CSS dos componentes. Importe os dois uma vez, na entrada da aplicação, nessa ordem.
+
+O tema claro é o padrão. Para o escuro, use `data-theme="dark"` num elemento ancestral, como o `<html>`. A marca pode ser sobrescrita por variáveis como `--primary` num contêiner, sem rebuild.
+
+## Uso
 
 ```tsx
 import { Button, Card } from '@ishtar-sink/vega';
@@ -54,7 +69,27 @@ export function Exemplo() {
 }
 ```
 
-O pacote e a forma de importar os estilos podem mudar até a primeira versão.
+## Tema próprio
+
+```ts
+import { dark, defineTheme, light } from '@ishtar-sink/vega';
+
+export const meuTema = defineTheme({
+  light: { ...light, primary: '#115e59' },
+  dark: { ...dark, primary: '#5eead4' },
+});
+```
+
+Um teste da aplicação confere que o tema passa nas mesmas regras de contraste do tema padrão:
+
+```ts
+import { checkThemeContrast } from '@ishtar-sink/vega';
+import { meuTema } from './tema';
+
+it('o tema próprio passa no contraste AA', () => {
+  expect(checkThemeContrast(meuTema)).toEqual([]);
+});
+```
 
 ## Sobre o nome
 

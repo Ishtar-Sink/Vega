@@ -1,0 +1,4 @@
+/* Algarismos de largura fixa: os valores ficam alinhados enquanto se digita e numa coluna de formulário. */
+.root {
+  font-variant-numeric: tabular-nums;
+}

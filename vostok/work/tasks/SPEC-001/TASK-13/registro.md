@@ -10,6 +10,12 @@
 | 6 | 2026-11-10 | conferência | usuário | evidência actionlint.txt conferida pelo usuário (sha256 3d79605f) |
 | 7 | 2026-11-10 | conferência | usuário | evidência ci-local-passa.txt conferida pelo usuário (sha256 68342bf7) |
 | 8 | 2026-11-10 | conferência | usuário | evidência ci-local-falha-lint.txt conferida pelo usuário (sha256 750457a8) |
+| 9 | 2026-11-10 | testes | passed | Verificação sem falhas; saída em validation/tests.out |
+| 10 | 2026-11-10 | regressão | passed | 2 comando(s) iguais ao baseline |
+| 11 | 2026-11-10 | evidências | pending | evidência sem conferência humana; conferida(s) mantida(s): actionlint.txt, ci-local-passa.txt, ci-local-falha-lint.txt |
+| 12 | 2026-11-10 | conferência | usuário | evidência ci-github.png conferida pelo usuário (sha256 122ae155) |
+| 13 | 2026-11-10 | evidências | passed | 4 evidência(s) em TASK-13/evidencias/ |
+| 14 | 2026-11-10 | conclusão | done | testes, regressão e evidências passed; critérios de conclusão marcados |
 
 ## Histórico de ajustes
 

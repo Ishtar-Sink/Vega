@@ -3,7 +3,7 @@
 Arquivo gerado pelo vostok a cada mudança de estado; não edite.
 
 - **Spec:** SPEC-001
-- **Status:** executed
+- **Status:** done
 - **Onda:** 2
 - **Dependências:** TASK-01
 
@@ -22,9 +22,9 @@ Arquivo gerado pelo vostok a cada mudança de estado; não edite.
 - **Tipo:** tarefa
 - **Descrição:** Cria a CI com lint, typecheck, testes e `pnpm audit`.
 - **Critérios de aceite:**
-  - [ ] A CI roda lint, typecheck, testes e `pnpm audit --audit-level high` a cada push e pull request (RF-21).
-  - [ ] Uma falha de lint faz a CI falhar; sem ela, a CI passa (CT-14).
-  - [ ] O `pnpm audit` da CI não aceita vulnerabilidade alta ou crítica (RF-21).
+  - [x] A CI roda lint, typecheck, testes e `pnpm audit --audit-level high` a cada push e pull request (RF-21).
+  - [x] Uma falha de lint faz a CI falhar; sem ela, a CI passa (CT-14).
+  - [x] O `pnpm audit` da CI não aceita vulnerabilidade alta ou crítica (RF-21).
 - **Rótulos:** SPEC-001, padrao
 - **Estimativa:** padrao
 - **Bloqueada por:** TASK-01

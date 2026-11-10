@@ -29,3 +29,20 @@ RF-21, RNF-08, CT-14; [project/development-methodology-03], [project/security-02
 ## Arquivos em comum na onda
 
 Onda 2 tem também a TASK-02 (`src/theme/`, `fonts/`): nenhum arquivo em comum. A Verificação lê, sem alterar, os arquivos da TASK-01.
+
+## O que foi feito
+
+- `.github/workflows/ci.yml` (novo): workflow `CI` com `on: push` e `pull_request`, `permissions: contents: read` e `concurrency` por ref, e um job `check` (`ubuntu-latest`, Node 22, cache do pnpm) com os passos `pnpm install --frozen-lockfile`, `pnpm lint`, `pnpm typecheck`, `pnpm test` e `pnpm audit --audit-level high`.
+- **Verificação local:** `actionlint` 1.7.7 sem problemas. Os passos `run` do `ci.yml` rodaram numa cópia temporária do projeto: passaram todos sem erro e, com um `any` explícito de propósito, pararam em `pnpm lint`.
+- **Ajuste 1:** as linhas de evidência viraram subshells autocontidas, porque o `vostok task evidence` roda só a linha depois do rótulo (KNW-001).
+- **Prova no GitHub (`ci-github.png`):** com o aval do usuário, a `main` foi enviada ao `origin` (run #1 verde) e o PR em rascunho Ishtar-Sink/Vega#1 foi aberto a partir da branch `ci/prova-lint`.
+  - O commit `426d860` (`src/ci-probe.ts` com `any`) deixou o run #3 vermelho, parado em `pnpm lint` com `Unexpected any`.
+  - O commit `681b00c`, que remove o arquivo, deixou o run #5 verde, com os cinco passos `run` aprovados.
+  - O PR foi fechado sem merge e a branch, apagada. O usuário liberou os dois commits que saíram do histórico.
+- **Verificação:** testes e regressão (2 comandos iguais ao baseline) passaram. `actionlint.txt`, `ci-local-passa.txt`, `ci-local-falha-lint.txt` e `ci-github.png` foram conferidas pelo usuário.
+
+## Pontos de atenção
+
+- `on: push` sem filtro de branch: num PR, cada push roda o CI duas vezes, uma por `push` (#2 e #4) e outra por `pull_request` (#3 e #5). Isso não afeta o bloqueio, mas dobra os minutos gastos; restringir o `push` à `main` resolve.
+- O GitHub avisa que as actions `checkout@v4`, `setup-node@v4` e `pnpm/action-setup@v4` têm como alvo o Node 20, que foi descontinuado, e são forçadas a rodar no Node 24. Elas devem ser atualizadas quando houver versões novas.
+- A falha de lint só impede a integração se a `main` tiver a proteção de branch com o check `check` obrigatório, configurada nas opções do repositório, fora do código.

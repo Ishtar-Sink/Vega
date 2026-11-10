@@ -1,4 +1,4 @@
-import { readFileSync } from 'node:fs';
+import { existsSync, readFileSync } from 'node:fs';
 import { fileURLToPath } from 'node:url';
 import react from '@vitejs/plugin-react';
 import type { Plugin } from 'vite';
@@ -23,6 +23,11 @@ function themeCss(): Plugin {
   };
 }
 
+// A entrada `prose` só existe quando o componente existe: o parser de Markdown fica fora do índice principal.
+const entries: Record<string, string> = existsSync('src/prose/index.ts')
+  ? { index: 'src/index.ts', prose: 'src/prose/index.ts' }
+  : { index: 'src/index.ts' };
+
 export default defineConfig({
   plugins: [
     react(),
@@ -36,13 +41,17 @@ export default defineConfig({
   css: { modules: { localsConvention: 'camelCaseOnly' } },
   build: {
     lib: {
-      entry: 'src/index.ts',
+      entry: entries,
       formats: ['es'],
-      fileName: 'index',
+      fileName: (_format, name) => `${name}.js`,
       cssFileName: 'style',
     },
     rolldownOptions: {
-      external: [/^react($|\/)/, /^react-dom($|\/)/],
+      external: [
+        /^react($|\/)/,
+        /^react-dom($|\/)/,
+        /^(lucide-react|react-markdown|remark-gfm|rehype-sanitize)($|\/)/,
+      ],
     },
   },
   test: {

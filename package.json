@@ -15,7 +15,14 @@
   "homepage": "https://github.com/Ishtar-Sink/Vega#readme",
   "types": "./dist/index.d.ts",
   "exports": {
-    ".": "./dist/index.js",
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js"
+    },
+    "./prose": {
+      "types": "./dist/prose/index.d.ts",
+      "import": "./dist/prose.js"
+    },
     "./styles.css": "./dist/style.css",
     "./tokens.css": "./dist/tokens.css"
   },
@@ -63,5 +70,11 @@
     "vite-plugin-dts": "^5.1.2",
     "vitest": "^5.0.5",
     "vitest-axe": "^0.1.0"
+  },
+  "dependencies": {
+    "lucide-react": "^1.71.0",
+    "react-markdown": "^10.1.0",
+    "rehype-sanitize": "^6.0.0",
+    "remark-gfm": "^4.0.1"
   }
 }

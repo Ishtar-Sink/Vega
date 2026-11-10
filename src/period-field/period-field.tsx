@@ -1,0 +1,321 @@
+import { useEffect, useId, useImperativeHandle, useLayoutEffect, useRef, useState } from 'react';
+import type { ComponentPropsWithRef, SyntheticEvent } from 'react';
+import { Button } from '../button/button';
+import { Calendar, type CalendarValue } from '../calendar/calendar';
+import { resolvePeriod, type PeriodPreset, type PeriodValue } from './period';
+import styles from './period-field.module.css';
+
+export interface PeriodFieldLabels {
+  /** Nome do popover. */
+  title: string;
+  /** Título da área do intervalo personalizado e texto do gatilho sem datas. */
+  custom: string;
+  /** Botão que aplica o intervalo personalizado. */
+  apply: string;
+  /** Instrução quando nenhum dia foi escolhido. */
+  firstDay: string;
+  /** Sufixo depois do primeiro dia, pedindo o último. */
+  lastDay: string;
+  /** Erro ao aplicar sem o primeiro dia. */
+  firstDayError: string;
+  /** Nome do botão do mês anterior. */
+  previous: string;
+  /** Nome do botão do próximo mês. */
+  next: string;
+  /** Sufixo do dia atual no nome acessível. */
+  todayMarker: string;
+}
+
+const DEFAULT_LABELS: PeriodFieldLabels = {
+  title: 'Escolher período',
+  custom: 'Personalizado',
+  apply: 'Aplicar',
+  firstDay: 'Escolha o primeiro dia.',
+  lastDay: 'escolha o último dia',
+  firstDayError: 'Escolha o primeiro dia no calendário.',
+  previous: 'Mês anterior',
+  next: 'Próximo mês',
+  todayMarker: 'hoje',
+};
+
+export interface PeriodFieldProps extends Omit<
+  ComponentPropsWithRef<'button'>,
+  'onChange' | 'value' | 'defaultValue' | 'children' | 'name' | 'type'
+> {
+  /** Rótulo do campo. */
+  label?: string;
+  /** `false` deixa o rótulo só para leitores de tela. Padrão: `true`. */
+  labelVisible?: boolean;
+  /** Período atual: o `id` de um preset ou `custom` com `from` e `to`. */
+  value: PeriodValue;
+  /** Chamado com o período escolhido. */
+  onChange: (value: PeriodValue) => void;
+  /** Períodos oferecidos, definidos por quem usa o componente. */
+  presets: readonly PeriodPreset[];
+  /** Mostra a área de intervalo personalizado. Padrão: `true`. */
+  allowCustom?: boolean;
+  /** Onde o popover se ancora: alinhado à direita na barra, centrado no formulário. */
+  placement: 'toolbar' | 'form';
+  /** Dia atual (`YYYY-MM-DD`); padrão: a data do navegador, lida só quando a prop falta. */
+  today?: string;
+  /** Locale das datas. Padrão: `pt-BR`. */
+  locale?: string;
+  /** Textos do campo; o que faltar usa o padrão em pt-br, qualquer que seja o `locale`. */
+  labels?: Partial<PeriodFieldLabels>;
+  /** Com `name`, o campo envia `name`, `<name>From` e `<name>To` em um formulário. */
+  name?: string;
+}
+
+const MARGIN = 8;
+
+function localToday(): string {
+  const now = new Date();
+  const pad = (n: number) => String(n).padStart(2, '0');
+  return `${String(now.getFullYear())}-${pad(now.getMonth() + 1)}-${pad(now.getDate())}`;
+}
+
+function CalendarIcon() {
+  return (
+    <svg
+      viewBox="0 0 24 24"
+      width="16"
+      height="16"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="2"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      aria-hidden="true"
+      focusable="false"
+    >
+      <rect x="3" y="4" width="18" height="18" rx="2" />
+      <path d="M16 2v4M8 2v4M3 10h18" />
+    </svg>
+  );
+}
+
+export function PeriodField({
+  label,
+  labelVisible = true,
+  value,
+  onChange,
+  presets,
+  allowCustom = true,
+  placement,
+  today: todayProp,
+  locale = 'pt-BR',
+  labels,
+  name,
+  className,
+  style,
+  ref,
+  ...rest
+}: PeriodFieldProps) {
+  const generated = useId();
+  const today = todayProp ?? localToday();
+  const periodLabels = { ...DEFAULT_LABELS, ...labels };
+  const root = useRef<HTMLDivElement>(null);
+  const trigger = useRef<HTMLButtonElement>(null);
+  useImperativeHandle(ref, () => trigger.current as HTMLButtonElement, []);
+  const popover = useRef<HTMLDivElement>(null);
+  const [open, setOpen] = useState(false);
+  const [draft, setDraft] = useState<CalendarValue>({ from: '' });
+  const [month, setMonth] = useState(today.slice(0, 7));
+  const [error, setError] = useState(false);
+
+  const fmt = new Intl.DateTimeFormat(locale);
+  const show = (iso: string) => {
+    const [y = 1970, m = 1, d = 1] = iso.split('-').map(Number);
+    return fmt.format(new Date(y, m - 1, d));
+  };
+  const range = resolvePeriod(value, today, presets);
+  const text =
+    value.preset === 'custom' && value.from && value.to
+      ? `${show(value.from)} – ${show(value.to)}`
+      : value.preset === 'custom'
+        ? periodLabels.custom
+        : (presets.find((preset) => preset.id === value.preset)?.label ?? '');
+
+  function close(focus: boolean) {
+    setOpen(false);
+    if (focus) trigger.current?.focus();
+  }
+
+  function openPopover() {
+    const base = value.preset === 'custom' && value.from ? value.from : today;
+    setDraft(
+      value.preset === 'custom' && value.from
+        ? { from: value.from, ...(value.to ? { to: value.to } : {}) }
+        : { from: '' },
+    );
+    setMonth(base.slice(0, 7));
+    setError(false);
+    setOpen(true);
+  }
+
+  // Como no protótipo: popover fixo, preso à janela com 8 px de margem. No formulário fica
+  // centrado no campo; na barra, alinhado à direita. Se não cabe, rola por dentro.
+  useLayoutEffect(() => {
+    if (!open) return;
+    const place = () => {
+      const pop = popover.current;
+      const anchor = trigger.current;
+      if (!pop || !anchor) return;
+      const b = anchor.getBoundingClientRect();
+      pop.style.maxHeight = `${String(window.innerHeight - MARGIN * 2)}px`;
+      const width = pop.offsetWidth;
+      const height = pop.offsetHeight;
+      const wanted = placement === 'form' ? b.left + (b.width - width) / 2 : b.right - width;
+      const left = Math.max(MARGIN, Math.min(wanted, window.innerWidth - width - MARGIN));
+      const below = b.bottom + 6;
+      const top =
+        below + height <= window.innerHeight - MARGIN
+          ? below
+          : Math.max(MARGIN, window.innerHeight - MARGIN - height);
+      pop.style.left = `${String(left)}px`;
+      pop.style.top = `${String(top)}px`;
+    };
+    place();
+    window.addEventListener('resize', place);
+    document.addEventListener('scroll', place, true);
+    return () => {
+      window.removeEventListener('resize', place);
+      document.removeEventListener('scroll', place, true);
+    };
+  }, [open, placement]);
+
+  useEffect(() => {
+    if (!open) return;
+    popover.current?.querySelector<HTMLElement>('[aria-pressed="true"]')?.focus();
+    const onPointer = (event: PointerEvent) => {
+      if (!root.current?.contains(event.target as Node)) setOpen(false);
+    };
+    const onKey = (event: globalThis.KeyboardEvent) => {
+      if (event.key === 'Escape') {
+        event.preventDefault();
+        event.stopPropagation();
+        close(true);
+      }
+    };
+    document.addEventListener('pointerdown', onPointer, true);
+    document.addEventListener('keydown', onKey, true);
+    return () => {
+      document.removeEventListener('pointerdown', onPointer, true);
+      document.removeEventListener('keydown', onKey, true);
+    };
+  }, [open]);
+
+  function pick(preset: PeriodPreset) {
+    onChange({ preset: preset.id });
+    close(true);
+  }
+
+  function apply(event: SyntheticEvent) {
+    event.preventDefault();
+    if (!draft.from) {
+      setError(true);
+      return;
+    }
+    onChange({ preset: 'custom', from: draft.from, to: draft.to ?? draft.from });
+    close(true);
+  }
+
+  const summary = !draft.from
+    ? periodLabels.firstDay
+    : draft.to
+      ? `${show(draft.from)} – ${show(draft.to)}`
+      : `${show(draft.from)} · ${periodLabels.lastDay}`;
+
+  return (
+    <div className={styles.root} ref={root}>
+      {label ? (
+        <span id={`${generated}-label`} className={labelVisible ? styles.label : styles.srOnly}>
+          {label}
+        </span>
+      ) : null}
+      <div className={styles.wrap}>
+        <button
+          {...rest}
+          ref={trigger}
+          type="button"
+          className={[styles.control, className].filter(Boolean).join(' ')}
+          style={style}
+          aria-haspopup="dialog"
+          aria-expanded={open}
+          {...(label ? { 'aria-labelledby': `${generated}-label ${generated}-value` } : {})}
+          onClick={() => {
+            if (open) close(false);
+            else openPopover();
+          }}
+        >
+          <CalendarIcon />
+          <span id={`${generated}-value`}>{text}</span>
+        </button>
+        {open ? (
+          <div
+            ref={popover}
+            role="dialog"
+            aria-label={periodLabels.title}
+            className={styles.popover}
+          >
+            <div className={styles.presets}>
+              {presets.map((preset) => (
+                <Button
+                  key={preset.id}
+                  variant="ghost"
+                  className={styles.preset}
+                  aria-pressed={value.preset === preset.id}
+                  onClick={() => {
+                    pick(preset);
+                  }}
+                >
+                  {preset.label}
+                </Button>
+              ))}
+            </div>
+            {allowCustom ? (
+              <form className={styles.custom} noValidate onSubmit={apply}>
+                <p className={styles.customTitle}>{periodLabels.custom}</p>
+                <Calendar
+                  mode="range"
+                  month={month}
+                  onMonthChange={setMonth}
+                  value={draft}
+                  onChange={(next) => {
+                    setDraft(next);
+                    setError(false);
+                  }}
+                  today={today}
+                  locale={locale}
+                  labels={{
+                    previous: periodLabels.previous,
+                    next: periodLabels.next,
+                    today: periodLabels.todayMarker,
+                  }}
+                />
+                <p className={styles.summary} aria-live="polite">
+                  {summary}
+                </p>
+                {error ? (
+                  <p role="alert" className={styles.error}>
+                    {periodLabels.firstDayError}
+                  </p>
+                ) : null}
+                <Button variant="primary" type="submit">
+                  {periodLabels.apply}
+                </Button>
+              </form>
+            ) : null}
+          </div>
+        ) : null}
+      </div>
+      {name ? (
+        <>
+          <input type="hidden" name={name} value={value.preset} />
+          <input type="hidden" name={`${name}From`} value={range?.from ?? ''} />
+          <input type="hidden" name={`${name}To`} value={range?.to ?? ''} />
+        </>
+      ) : null}
+    </div>
+  );
+}

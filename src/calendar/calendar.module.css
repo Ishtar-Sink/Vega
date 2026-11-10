@@ -1,0 +1,89 @@
+.root {
+  display: flex;
+  flex-direction: column;
+  gap: calc(var(--space) * 2);
+  width: calc(var(--space) * 72);
+  max-width: 100%;
+}
+
+.head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.title {
+  color: var(--text);
+  font-family: var(--font-display);
+  font-size: var(--font-size-base);
+  font-weight: var(--font-weight-bold);
+}
+
+/* Só a primeira letra: `capitalize` subiria também o "de" de "novembro de 2026". */
+.title::first-letter {
+  text-transform: uppercase;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(7, minmax(0, 1fr));
+  gap: calc(var(--space) / 2);
+}
+
+.dow {
+  padding: var(--space) 0;
+  color: var(--text-muted);
+  font-size: var(--font-size-xs);
+  font-weight: var(--font-weight-semibold);
+  text-align: center;
+  text-transform: uppercase;
+}
+
+.day {
+  display: grid;
+  place-items: center;
+  aspect-ratio: 1;
+  padding: 0;
+  border: calc(var(--space) / 4) solid transparent;
+  border-radius: var(--radius-sm);
+  background: transparent;
+  color: var(--text);
+  font-family: var(--font-body);
+  font-size: var(--font-size-md);
+  font-variant-numeric: tabular-nums;
+  cursor: pointer;
+  transition: background var(--motion-fast) var(--motion-ease-standard);
+}
+
+.day:hover {
+  background: var(--surface-hover);
+}
+
+.day:focus-visible {
+  outline: calc(var(--space) / 2) solid var(--primary);
+  outline-offset: calc(var(--space) / 4);
+}
+
+.outside {
+  color: color-mix(in srgb, var(--text-muted) 55%, transparent);
+}
+
+.today {
+  border-color: var(--primary);
+}
+
+.inRange {
+  border-radius: 0;
+  background: var(--primary-soft);
+}
+
+.edge,
+.edge:hover {
+  background: var(--primary);
+  color: var(--primary-on);
+  opacity: 1;
+}
+
+.row {
+  display: contents;
+}

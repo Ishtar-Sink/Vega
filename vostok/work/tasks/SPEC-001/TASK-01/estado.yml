@@ -1,0 +1,32 @@
+id: TASK-01
+spec: SPEC-001
+title: "Estrutura do pacote"
+description: "Cria o manifesto, o workspace, TypeScript, ESLint, Prettier, Vitest e o build Vite do pacote."
+profile: padrao
+persona: desenvolvedor
+depends_on: []
+closes_after: []
+wave: 1
+covers: [RF-01]
+type: tarefa
+labels: [SPEC-001, padrao]
+status: done
+content_hash: a1d8cb1c3045b8660bd19942796e0d0db3f9bf203839f58c8ccd1eec1e0d6cf5
+adjustments: 1
+adjusted_at: 2026-11-10T14:08:46Z
+approved_at: 2026-11-10T14:00:44Z
+approved_hash: 4153f53f38d20c1c23510a66f5b6ea1747aba7441d6647f12e28ba0599d64d6f
+attempts: 0
+tests_result: passed
+regression_result: passed
+evidence_result: passed
+waiting_on: []
+waiting_reason: null
+execution_hash: af9d549c7ed937defb48ef3fb3be6124013b27f7f240d7b766973fe46fa6ccdf
+verification_hash: 93cb171efc01fa4cdfe717fb60fb917417d3819a56ec1800fc24e6139538c70f
+criteria_hash: 6f4c09e571441d11df1f252e3acbd4c8154577fce2973d195d273c8b6a08c901
+state_hash: 59a716ba469c37f45a6d91a284278e4931fc7ebd2706273d286771d0b774eaf7
+model: claude-opus-5-5
+executive_hash: 3a88c039c92f6a317f9ef1425e8d0dbb34f5606ed411d3136ea2e86f217b5dd2
+technical_hash: f581e0d5d55970a353c27cda5a6f4d474fdb08bfc45f3c3f05ae58f926c321b3
+updated_at: 2026-11-10T14:08:46Z

@@ -1,0 +1,28 @@
+id: TASK-07
+spec: SPEC-001
+title: "Campo de dinheiro"
+description: "Migra `MoneyField` e as funções de máscara em centavos, com `Intl` no locale recebido."
+profile: padrao
+persona: ui-ux-designer
+depends_on: [TASK-04]
+closes_after: []
+wave: 4
+covers: [RF-12, RF-19, RF-20, CT-09, CT-12, CT-13, CB-03]
+type: historia
+labels: [SPEC-001, padrao]
+status: approved
+content_hash: e5132beffcd37c0ac469f98f92efe57ec49cdce5c89f3031eb4c712a148fbbdc
+adjustments: 0
+adjusted_at: null
+approved_at: 2026-11-10T14:00:44Z
+approved_hash: e5132beffcd37c0ac469f98f92efe57ec49cdce5c89f3031eb4c712a148fbbdc
+attempts: 0
+tests_result: null
+regression_result: null
+evidence_result: null
+waiting_on: []
+waiting_reason: null
+execution_hash: 5c4a5cd556ccd1cca00a55184f5fbd7953277a8716c02f410b775a986537e2f0
+verification_hash: 6d81f5c23bbe4ed9c4a1c7da5c574c1727b6c0939c6fa016708bfd1ab3c73f70
+criteria_hash: d43334eb78a38b6ab428e82d3799a208cd4473b6b4f1b4de40864f73ee39ae59
+state_hash: ade1caa2d64f9b182dd5217cd744f16f52fa9808933f8985ede4d0b4dc9efac6

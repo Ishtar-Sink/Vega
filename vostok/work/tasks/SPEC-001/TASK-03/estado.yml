@@ -1,0 +1,28 @@
+id: TASK-03
+spec: SPEC-001
+title: "Componentes de ações"
+description: "Migra `Button`, `IconButton` e `MenuButton` em conformidade com as regras."
+profile: padrao
+persona: ui-ux-designer
+depends_on: [TASK-02]
+closes_after: []
+wave: 3
+covers: [RF-09, RF-20, CT-06, CT-09, CT-13]
+type: historia
+labels: [SPEC-001, padrao]
+status: approved
+content_hash: 15c1b6fd008c6c1c72fe8852aece2c756dfa251ee988abf471b1b0c8695ce325
+adjustments: 0
+adjusted_at: null
+approved_at: 2026-11-10T14:00:44Z
+approved_hash: 15c1b6fd008c6c1c72fe8852aece2c756dfa251ee988abf471b1b0c8695ce325
+attempts: 0
+tests_result: null
+regression_result: null
+evidence_result: null
+waiting_on: []
+waiting_reason: null
+execution_hash: fa13e6b2e051cad1e32c2f4d14771452c35604b9c4fe6daec0772718d57d12ec
+verification_hash: 748353251b83029dbd27e821c4b35dad59c72b1838b5e30d72dc196012156c22
+criteria_hash: 2034f7ed681dbaed10abd8c412f2bf394397d8bbc7b94413f53278852b020f75
+state_hash: 397919be1838fbc2dba49988cdbac8ed09483a679924ed85d70d9313ad47072e

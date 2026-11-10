@@ -1,0 +1,28 @@
+id: TASK-14
+spec: SPEC-001
+title: "Publicação da 0.1.0"
+description: "Cria o fluxo de publicação com provenance, o `CHANGELOG.md`, atualiza o `README.md` e publica a 0.1.0 pela CI."
+profile: julgamento
+persona: desenvolvedor
+depends_on: [TASK-12, TASK-13]
+closes_after: []
+wave: 6
+covers: [RF-22, RF-23, CT-15]
+type: tarefa
+labels: [SPEC-001, julgamento]
+status: approved
+content_hash: e31c496c6d13399547737ad61f9ccd44f11a5b7abceea0eec9cc8a87e7314a3b
+adjustments: 0
+adjusted_at: null
+approved_at: 2026-11-10T14:00:44Z
+approved_hash: e31c496c6d13399547737ad61f9ccd44f11a5b7abceea0eec9cc8a87e7314a3b
+attempts: 0
+tests_result: null
+regression_result: null
+evidence_result: null
+waiting_on: []
+waiting_reason: null
+execution_hash: 6595cce3b76d9104b240fbc474e5141d7baf024f0872f30027c4c24cae49ebcc
+verification_hash: 4eef1f04a92c1cfc3f137bd3345b776fb6ac6a6de10d156b8ae0e97fd9cb8731
+criteria_hash: 4c0a79853e65fa3d16d1917128ba2b55e2041b0c7a66355b1dce7df1ac8e2a37
+state_hash: 1974591125f29412c3deed8c661d99170bfd5b56b0e670772b46eb65ef625e77

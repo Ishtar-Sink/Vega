@@ -1,0 +1,28 @@
+id: TASK-12
+spec: SPEC-001
+title: "Índice público e build"
+description: "Registra todas as exportações no `src/index.ts` e confere o build da biblioteca."
+profile: padrao
+persona: desenvolvedor
+depends_on: [TASK-05, TASK-06, TASK-07, TASK-08, TASK-09, TASK-10, TASK-11]
+closes_after: []
+wave: 5
+covers: [RF-01, RF-02, CT-01, CT-02]
+type: tarefa
+labels: [SPEC-001, padrao]
+status: approved
+content_hash: db79b707e2fd9db47c4d3e06aa2100e2f4bae872ba3ac7afd9fe822e6f7f8095
+adjustments: 0
+adjusted_at: null
+approved_at: 2026-11-10T14:00:44Z
+approved_hash: db79b707e2fd9db47c4d3e06aa2100e2f4bae872ba3ac7afd9fe822e6f7f8095
+attempts: 0
+tests_result: null
+regression_result: null
+evidence_result: null
+waiting_on: []
+waiting_reason: null
+execution_hash: 3a92f4dc822ce3bfcc7314a317cd15382bab422fd251432c660428b7aa2a0797
+verification_hash: 6bce0bd74d170c819ec791644bb90d45e2fc9d55bc9df79cb61b97088d29b282
+criteria_hash: 695f61eaaf17fb4db9a26a725d7c42919b9abc467747f4474119db2ae94c702f
+state_hash: 01de3527d20a5e421f0ae7b927c40a3cefa984edcb97bf0840c3d71d1f13b997

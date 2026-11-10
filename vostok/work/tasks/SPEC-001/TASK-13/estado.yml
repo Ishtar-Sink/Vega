@@ -1,0 +1,28 @@
+id: TASK-13
+spec: SPEC-001
+title: "Integração contínua"
+description: "Cria a CI com lint, typecheck, testes e `pnpm audit`."
+profile: padrao
+persona: desenvolvedor
+depends_on: [TASK-01]
+closes_after: []
+wave: 2
+covers: [RF-21, CT-14]
+type: tarefa
+labels: [SPEC-001, padrao]
+status: approved
+content_hash: 9926cff2694e51d940a5ba270ec36152f2dce3a8a7133d6b7293431721585a37
+adjustments: 0
+adjusted_at: null
+approved_at: 2026-11-10T14:00:44Z
+approved_hash: 9926cff2694e51d940a5ba270ec36152f2dce3a8a7133d6b7293431721585a37
+attempts: 0
+tests_result: null
+regression_result: null
+evidence_result: null
+waiting_on: []
+waiting_reason: null
+execution_hash: 416f04f8fa7926a1ae1e43dbaed95691fe77970e4ab4389a3b290a2a6edc12ff
+verification_hash: a7f6735ba791198e8a9597176943d4104e783d9f3bc9e3cc0f0639d062dbc25e
+criteria_hash: d087bd8320c0bbb25dc1433a2224b9abc96a0f508c1495fcd69d169387681f3c
+state_hash: 2307ba8ab74bd8f3d1607eacbbe7a4d24a685067470dca9185ca13093be7b340

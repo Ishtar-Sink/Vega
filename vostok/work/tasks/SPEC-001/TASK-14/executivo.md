@@ -1,0 +1,3 @@
+<!-- Escrito no planejamento com o que a tarefa vai fazer e enriquecido na conclusão com o que foi feito. -->
+
+Publica a primeira versão da Vega no npm, para que todos os produtos do ecossistema passem a instalá-la. A publicação é feita só pelo GitHub, com um selo público de origem (provenance) que prova de qual código e de qual execução o pacote saiu. Também registra o histórico da versão, com o que mudou em relação ao Atria, e atualiza o README com a instalação real. Perfil `julgamento`; risco alto: depende de o usuário ter o escopo `@ishtar-sink` no npm, o segredo de publicação e criar a tag. Fecha a SPEC-001.

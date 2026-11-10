@@ -1,0 +1,3 @@
+<!-- Escrito no planejamento com o que a tarefa vai fazer e enriquecido na conclusão com o que foi feito. -->
+
+Criamos a base da biblioteca Vega: identificação do pacote, ferramentas de qualidade (checagem de código, formatação e tipos estritos), testes automatizados e geração para publicação. Isso desbloqueia o tema (TASK-02) e a integração contínua (TASK-13). As versões seguem as do Atria, e o pacote não traz dependências de execução além do React, que fica a cargo de quem o usa. Risco baixo: tudo passou nas verificações e a geração foi conferida com uma amostra mínima; a conferência completa fica para a TASK-12, quando houver componentes.

@@ -1,0 +1,28 @@
+id: TASK-04
+spec: SPEC-001
+title: "Campos de texto e seleção"
+description: "Migra `TextField`, `SelectField`, `Checkbox`, `SegmentedField`, `Autocomplete` e `TagField`."
+profile: padrao
+persona: ui-ux-designer
+depends_on: [TASK-02]
+closes_after: []
+wave: 3
+covers: [RF-10, RF-19, RF-20, CT-09, CT-12, CT-13]
+type: historia
+labels: [SPEC-001, padrao]
+status: approved
+content_hash: b7c152af96ffff1fdde15dd1345b4c3ebc6aaa37b5465566ee2222af2edd3632
+adjustments: 0
+adjusted_at: null
+approved_at: 2026-11-10T14:00:44Z
+approved_hash: b7c152af96ffff1fdde15dd1345b4c3ebc6aaa37b5465566ee2222af2edd3632
+attempts: 0
+tests_result: null
+regression_result: null
+evidence_result: null
+waiting_on: []
+waiting_reason: null
+execution_hash: f65ecbdad3ac2b42822123088c2c6aa1e32f6722e0dac3f3c8166dc00f3d02e6
+verification_hash: dd28d74dcb23ff2941fe98875e539cafdb53d9d5300f9b6a6c0cd8fdd71e5502
+criteria_hash: 25c4b6cd77f2eb7804f76445b0e9b05f31c60cbd8a3b202a5f69849fd2cd0ee2
+state_hash: 11aa5cd468020ba158a1355c2f17a6524730f12c2d2aa052f3cb2c46dc419def

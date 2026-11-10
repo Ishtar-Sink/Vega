@@ -1,0 +1,28 @@
+id: TASK-02
+spec: SPEC-001
+title: "Tema Ishtar Sink"
+description: "Migra tokens, `tokens.css`, contraste, fontes e cria a API de tema com tipo completo e a camada de marca sobrescrevível."
+profile: padrao
+persona: desenvolvedor
+depends_on: [TASK-01]
+closes_after: []
+wave: 2
+covers: [RF-03, RF-04, RF-05, RF-06, RF-07, RF-08, CT-03, CT-04, CT-05, CT-07, CT-08, CB-01, CB-02, CB-04]
+type: historia
+labels: [SPEC-001, padrao]
+status: approved
+content_hash: 4f527828d14720aa572150e89a3ae9c1e158f4c2e60671077a19f99699b067fc
+adjustments: 0
+adjusted_at: null
+approved_at: 2026-11-10T14:00:44Z
+approved_hash: 4f527828d14720aa572150e89a3ae9c1e158f4c2e60671077a19f99699b067fc
+attempts: 0
+tests_result: null
+regression_result: null
+evidence_result: null
+waiting_on: []
+waiting_reason: null
+execution_hash: 0adaeba63e8d3cffb580fd9f1a472349718c48b42d7f9f668937c87694c08c89
+verification_hash: 50c0ab8307f74e1c79e51aafc96427ee713ce58109a63d833f7813f4bffcd6c8
+criteria_hash: e4b61701c698f6481533d3ffb4763438a02a087714f6f63304dfc94f8e689695
+state_hash: a72fcbb682f0661d809862e6902ecaf383dcecd4b22fa875972485d17cde0af2

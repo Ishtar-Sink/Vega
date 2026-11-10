@@ -1,0 +1,28 @@
+id: TASK-08
+spec: SPEC-001
+title: "Componentes de estrutura"
+description: "Migra `Card`, `PageHeader`, `Toolbar`, `Tabs`, `ViewSwitcher`, `FormGrid`, `FormActions` e os ícones de visualização."
+profile: padrao
+persona: ui-ux-designer
+depends_on: [TASK-03, TASK-04]
+closes_after: []
+wave: 4
+covers: [RF-13, RF-18, RF-19, RF-20, CT-09, CT-13]
+type: historia
+labels: [SPEC-001, padrao]
+status: approved
+content_hash: 899a08a3bf4bf91b11f5d26e2f62406ebfb90aa1ea784ad9b940ad2caedd23f9
+adjustments: 0
+adjusted_at: null
+approved_at: 2026-11-10T14:00:44Z
+approved_hash: 899a08a3bf4bf91b11f5d26e2f62406ebfb90aa1ea784ad9b940ad2caedd23f9
+attempts: 0
+tests_result: null
+regression_result: null
+evidence_result: null
+waiting_on: []
+waiting_reason: null
+execution_hash: 32deeae35d1abe5c44e88f905549c180b88e764f390be45b2df11e6ab2ef43d9
+verification_hash: c1c9049ea15c1d33e0cb49dc579ad8e6e5eeef25501a04ffe507c6dc7273fa26
+criteria_hash: 4ceb09fe4245dcd30a499ce8f008641568328ca9b3e0f2f7652a111d06d017d7
+state_hash: 4b1ed03a20dc0da3405d35b14110908bf2edb449fc830fa8358e6a59a44d49d5

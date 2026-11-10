@@ -1,0 +1,28 @@
+id: TASK-11
+spec: SPEC-001
+title: "Marca e itens"
+description: "Migra `Badge` e generaliza `BrandLogo` e `ItemSwatch`, com marca e paleta por prop."
+profile: padrao
+persona: ui-ux-designer
+depends_on: [TASK-02]
+closes_after: []
+wave: 3
+covers: [RF-16, RF-17, RF-20, CT-10, CT-11, CT-13, CB-05]
+type: historia
+labels: [SPEC-001, padrao]
+status: approved
+content_hash: 482a4d286c8c7806603de0119e5a65bf55d5daaa94fca5d7a892c6de0836e9a7
+adjustments: 0
+adjusted_at: null
+approved_at: 2026-11-10T14:00:44Z
+approved_hash: 482a4d286c8c7806603de0119e5a65bf55d5daaa94fca5d7a892c6de0836e9a7
+attempts: 0
+tests_result: null
+regression_result: null
+evidence_result: null
+waiting_on: []
+waiting_reason: null
+execution_hash: 856a07bd3501598e0badec194e7b7271edf68c4797f605b53230d1f2a619b818
+verification_hash: ca73076b59a2e0275f0894d575da1bf5ab57598af95ca41c625f551f5b709c72
+criteria_hash: 3c7d4238ba77b858aaeb07a2f39bebb75ca6d48e86960e4eed2097d4253f813a
+state_hash: 9c8f5569aa270321cc5db153e1db5c08b3f6bdf68fe01b5ae24228340b11a62d

@@ -1,0 +1,18 @@
+import type { ComponentPropsWithRef } from 'react';
+import styles from './card.module.css';
+
+export type CardTone = 'default' | 'primary' | 'accent' | 'success' | 'warning' | 'danger' | 'info';
+
+export interface CardProps extends ComponentPropsWithRef<'div'> {
+  /** Elemento HTML da raiz. Padrão: `div`. */
+  as?: 'div' | 'section' | 'article';
+  /** Tom do fundo e da borda. Padrão: `default`. */
+  tone?: CardTone;
+}
+
+export function Card({ as: Tag = 'div', tone = 'default', className, ...rest }: CardProps) {
+  const classes = [styles.root, tone === 'default' ? null : styles[tone], className]
+    .filter(Boolean)
+    .join(' ');
+  return <Tag {...rest} className={classes} />;
+}

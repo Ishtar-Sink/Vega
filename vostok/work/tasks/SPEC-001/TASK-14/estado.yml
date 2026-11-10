@@ -11,11 +11,11 @@ covers: [RF-22, RF-23, CT-15]
 type: tarefa
 labels: [SPEC-001, julgamento]
 status: approved
-content_hash: e31c496c6d13399547737ad61f9ccd44f11a5b7abceea0eec9cc8a87e7314a3b
-adjustments: 0
-adjusted_at: null
-approved_at: 2026-11-10T14:00:44Z
-approved_hash: e31c496c6d13399547737ad61f9ccd44f11a5b7abceea0eec9cc8a87e7314a3b
+content_hash: 70b7cef8ce6a39f05d680f01d9d86cfb7149171d29e85d9b9fd9ae2f228ddf46
+adjustments: 1
+adjusted_at: 2026-11-10T14:26:37Z
+approved_at: 2026-11-10T14:29:22Z
+approved_hash: 70b7cef8ce6a39f05d680f01d9d86cfb7149171d29e85d9b9fd9ae2f228ddf46
 attempts: 0
 tests_result: null
 regression_result: null
@@ -23,6 +23,7 @@ evidence_result: null
 waiting_on: []
 waiting_reason: null
 execution_hash: 6595cce3b76d9104b240fbc474e5141d7baf024f0872f30027c4c24cae49ebcc
-verification_hash: 4eef1f04a92c1cfc3f137bd3345b776fb6ac6a6de10d156b8ae0e97fd9cb8731
+verification_hash: 383d67cb4431217fba7c393d821836a78d8cf05371b50a00f36d14497eff88f6
 criteria_hash: 4c0a79853e65fa3d16d1917128ba2b55e2041b0c7a66355b1dce7df1ac8e2a37
-state_hash: 1974591125f29412c3deed8c661d99170bfd5b56b0e670772b46eb65ef625e77
+state_hash: b25848b8c4322eb8bdef0aeb1d7d5e3c09199806e04f18109b4c1fcdb6014fa1
+updated_at: 2026-11-10T14:26:37Z

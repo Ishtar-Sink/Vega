@@ -12,44 +12,17 @@
 pnpm exec prettier --check .github
 # evidência: actionlint.txt
 docker run --rm -v "$PWD:/repo" --workdir /repo rhysd/actionlint:1.7.7 -color=false .github/workflows/release.yml .github/workflows/ci.yml && echo 'OK: actionlint sem problemas nos workflows'
-release_dry_run() {
-  sed -n -E 's/^ +- run: (.*)$/\1/p' .github/workflows/release.yml > "$RELEASE_STEPS"
-  if ! grep -qx 'npm publish --provenance --access public' "$RELEASE_STEPS"; then echo 'ERRO: passo de publicação ausente'; return 1; fi
-  while IFS= read -r step; do
-    case "$step" in npm\ publish*) echo "(pulado localmente) \$ $step"; continue ;; esac
-    echo "\$ $step"
-    GITHUB_REF_NAME=v0.1.0 bash -c "$step" || { echo "Release falhou em: $step"; return 1; }
-  done < "$RELEASE_STEPS"
-  echo 'OK: todos os passos do release.yml antes da publicação passam com a tag v0.1.0'
-}
-RELEASE_STEPS=$(mktemp)
-trap 'rm -f "$RELEASE_STEPS"' EXIT
 # evidência: release-ensaio.txt
-release_dry_run
-readme_matches_package() {
-  node --input-type=module -e "
-import { readFileSync, statSync } from 'node:fs';
-const readme = readFileSync('README.md', 'utf8');
-if (readme.includes('Em desenvolvimento')) { console.log('ERRO: aviso Em desenvolvimento no README'); process.exit(1); }
-const vega = await import('@ishtar-sink/vega');
-const names = [...readme.matchAll(/import \{([^}]+)\} from '@ishtar-sink\/vega'/g)].flatMap((m) => m[1].split(',').map((n) => n.trim()).filter((n) => n && !n.startsWith('type ')));
-const styles = [...new Set([...readme.matchAll(/'(@ishtar-sink\/vega\/[a-z-]+\.css)'/g)].map((m) => m[1]))];
-const missing = names.filter((n) => !(n in vega));
-for (const s of styles) console.log(s, '->', statSync(new URL(import.meta.resolve(s))).size > 0 ? 'ok' : 'vazio');
-console.log('imports do README:', [...new Set(names)].sort().join(', '));
-if (missing.length > 0 || !styles.includes('@ishtar-sink/vega/styles.css') || !styles.includes('@ishtar-sink/vega/tokens.css')) { console.log('ERRO: README fora do pacote', missing.join(', ')); process.exit(1); }
-console.log('OK: imports e estilos do README existem no pacote');
-"
-}
+( set -e; RELEASE_STEPS=$(mktemp); trap 'rm -f "$RELEASE_STEPS"' EXIT; sed -n -E 's/^ +- run: (.*)$/\1/p' .github/workflows/release.yml > "$RELEASE_STEPS"; if ! grep -qx 'npm publish --provenance --access public' "$RELEASE_STEPS"; then echo 'ERRO: passo de publicação ausente'; exit 1; fi; while IFS= read -r step; do case "$step" in npm\ publish*) echo "(pulado localmente) \$ $step"; continue ;; esac; echo "\$ $step"; GITHUB_REF_NAME=v0.1.0 bash -c "$step" || { echo "Release falhou em: $step"; exit 1; }; done < "$RELEASE_STEPS"; echo 'OK: todos os passos do release.yml antes da publicação passam com a tag v0.1.0' )
 # evidência: readme-pacote.txt
-readme_matches_package
+node --input-type=module -e "import { readFileSync, statSync } from 'node:fs'; const readme = readFileSync('README.md', 'utf8'); if (readme.includes('Em desenvolvimento')) { console.log('ERRO: aviso Em desenvolvimento no README'); process.exit(1); } const vega = await import('@ishtar-sink/vega'); const names = [...readme.matchAll(/import \{([^}]+)\} from '@ishtar-sink\/vega'/g)].flatMap((m) => m[1].split(',').map((n) => n.trim()).filter((n) => n && !n.startsWith('type '))); const styles = [...new Set([...readme.matchAll(/'(@ishtar-sink\/vega\/[a-z-]+\.css)'/g)].map((m) => m[1]))]; const missing = names.filter((n) => !(n in vega)); for (const s of styles) console.log(s, '->', statSync(new URL(import.meta.resolve(s))).size > 0 ? 'ok' : 'vazio'); console.log('imports do README:', [...new Set(names)].sort().join(', ')); if (missing.length > 0 || !styles.includes('@ishtar-sink/vega/styles.css') || !styles.includes('@ishtar-sink/vega/tokens.css')) { console.log('ERRO: README fora do pacote', missing.join(', ')); process.exit(1); } console.log('OK: imports e estilos do README existem no pacote');"
 # evidência: npm-view.txt
 npm view @ishtar-sink/vega@0.1.0 name version dist.attestations.provenance.predicateType dist.tarball --json
 # evidência: release-ci.txt
 gh run list --repo Ishtar-Sink/Vega --workflow release.yml --json headBranch,event,status,conclusion,url --jq '.[] | select(.headBranch == "v0.1.0") | [.headBranch, .event, .status, .conclusion, .url] | @tsv' | grep -P '^v0\.1\.0\tpush\tcompleted\tsuccess\t'
 ```
 
-Resultado esperado: código 0. Os comandos até `readme_matches_package` são locais e passam logo depois dos passos 2 a 4; `npm view` e `gh run list` só passam depois dos passos manuais do passo 6 (antes, `npm view` responde `E404` e o `grep` não acha a execução). `npm-view.txt` com `"version": "0.1.0"` e `"dist.attestations.provenance.predicateType": "https://slsa.dev/provenance/v1"`; `release-ci.txt` com a linha `v0.1.0	push	completed	success	https://github.com/Ishtar-Sink/Vega/actions/runs/...`.
+Resultado esperado: código 0. Os comandos até a conferência do README (`readme-pacote.txt`) são locais e passam logo depois dos passos 2 a 4; `npm view` e `gh run list` só passam depois dos passos manuais do passo 6 (antes, `npm view` responde `E404` e o `grep` não acha a execução). `npm-view.txt` com `"version": "0.1.0"` e `"dist.attestations.provenance.predicateType": "https://slsa.dev/provenance/v1"`; `release-ci.txt` com a linha `v0.1.0	push	completed	success	https://github.com/Ishtar-Sink/Vega/actions/runs/...`.
 
 ### Evidências
 

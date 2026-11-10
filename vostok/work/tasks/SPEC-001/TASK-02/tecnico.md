@@ -44,3 +44,40 @@ RF-03, RF-04, RF-05, RF-06, RF-07, RF-08; CT-03, CT-04, CT-05, CT-07, CT-08; CB-
 ## Arquivos em comum com a onda
 
 Onda 2: TASK-02 e TASK-13. Nenhum arquivo em comum (a TASK-13 cria só `.github/workflows/ci.yml`).
+
+## O que foi feito
+
+Os valores de `tokens.ts` e `tokens.css` foram copiados do Atria sem mudança; a igualdade é comprovada por `tokens-iguais-atria.txt`. As fontes e as licenças OFL foram copiadas sem alteração de conteúdo, com nomes em `kebab-case`, e a igualdade está em `fontes-iguais-atria.txt`.
+
+### Arquivos criados
+
+- `src/theme/tokens.ts`: fonte única dos valores. Recebeu `itemPalette` (os 10 pares de `artPalettes`, na mesma ordem) e as escalas `fontWeights`, `lineHeights` e `zIndices` (nomes e valores fixados pelo usuário, já usados nos `*.module.css` do Atria).
+- `src/theme/tokens.css`: espelho de `tokens.ts` em variáveis CSS. Além dos tokens do Atria, traz `--deep-gradient`, `--font-weight-*`, `--line-height-*`, `--z-*` e `--item-palette-1-from` a `--item-palette-10-to`. Não usa `!important`.
+- `src/theme/theme.ts`: `ThemeTokens`, `Theme`, `ThemeName`, `defineTheme` (identidade tipada) e `ishtarSinkTheme`.
+- `src/theme/contrast.ts`: `contrastRatio`, `checkThemeContrast` e `CONTRAST_REQUIREMENTS` (20 pares: 18 em 4,5:1 e `textFaint` sobre `bg` e `surface` em 3:1).
+- `src/theme/fonts.css`: `@font-face` de Inter e Outfit apontando para `fonts/` por URL relativa, sem rede.
+- `src/theme/index.ts`: índice do tema; não importa os CSS.
+- `fonts/`: `inter-variable.woff2`, `outfit-variable.ttf`, `OFL-Inter.txt` e `OFL-Outfit.txt`.
+- Testes: `tokens.test.ts`, `contrast.test.ts`, `theme.test.ts` e `fonts.test.ts` (4 arquivos, 65 testes passando).
+
+### Decisões
+
+- Tipo e não validação em execução para tema incompleto: a recusa acontece na compilação, e o `theme.test.ts` confere com `@ts-expect-error` (CT-04, CB-01).
+- `contrastRatio` aceita só `#RGB` e `#RRGGBB` e lança `TypeError` para outros formatos, para que um tema com `rgb()` ou `var()` não passe num teste sem medir nada.
+- `checkThemeContrast` aplica a mesma lista de pares (`CONTRAST_REQUIREMENTS`) aos dois modos; no Atria, cada par era um teste escrito à mão para cada tema.
+- `palette.ts` saiu do tema; a paleta de itens virou o token `itemPalette`, espelhado em `--item-palette-*`, para o `ItemSwatch` (TASK-11) usá-la sem cor literal. `itemPalette`, `gradients` e as escalas ficam fora de `ThemeTokens`, porque são iguais nos dois modos.
+- Camada de marca: as variáveis `--primary*` e `--brand-gradient` continuam como no Atria, sem `!important`. Um contêiner (ou seletor carregado depois) troca a marca sem rebuild. O teste roda o `tokens.css` no jsdom e lê o valor computado nos dois modos.
+- `prototype-fidelity.test.ts` e o protótipo do Atria não vieram para a Vega; a fidelidade com o Atria é comprovada uma vez pela evidência `tokens-iguais-atria.txt`.
+- Fora do texto dos passos, dois ajustes para o ESLint passar: `String()` nas interpolações numéricas do `tokens.test.ts` e `digits.replace(/./g, ...)` no lugar do spread de string em `contrast.ts`.
+
+### Verificação
+
+- Testes da Verificação passaram sem falhas (saída em `validation/tests.out`); regressão igual ao baseline.
+- `checkThemeContrast(ishtarSinkTheme)` não devolve violações.
+- Evidências `tema-testes.txt`, `tokens-iguais-atria.txt`, `fontes-iguais-atria.txt` e `tema-claro-escuro.png` foram conferidas pelo usuário.
+- `package.json` e os arquivos da TASK-01 não foram alterados.
+
+### Pontos de atenção
+
+- O reflexo dos tokens novos (`itemPalette`, `--deep-gradient`, `fontWeights`, `lineHeights`, `zIndices`) e da mudança do comentário de origem em `docs/identidade-ecossistema.md` da organização fica para a TASK-14.
+- `fonts/` já está no campo `files` do `package.json` (TASK-01); a conferência do tarball com `npm pack --dry-run` é da TASK-12.

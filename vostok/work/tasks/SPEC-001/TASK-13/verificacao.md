@@ -9,17 +9,10 @@
 pnpm exec prettier --check .github
 # evidência: actionlint.txt
 docker run --rm -v "$PWD:/repo" --workdir /repo rhysd/actionlint:1.7.7 -color=false .github/workflows/ci.yml && echo 'OK: actionlint sem problemas em .github/workflows/ci.yml'
-CI_COPY=$(mktemp -d)
-trap 'rm -rf "$CI_COPY"' EXIT
-tar -cf - package.json pnpm-lock.yaml pnpm-workspace.yaml tsconfig.json eslint.config.js vite.config.ts .gitignore .prettierignore src/test .github | tar -xf - -C "$CI_COPY"
-printf "it('a CI roda os testes', () => {\n  expect(1 + 1).toBe(2);\n});\n" > "$CI_COPY/src/ci-probe.test.ts"
-sed -n -E 's/^ +- run: (.*)$/\1/p' .github/workflows/ci.yml > "$CI_COPY/ci-steps.txt"
-run_ci() { (cd "$CI_COPY" && while IFS= read -r step; do echo "\$ $step"; bash -c "$step" || { echo "CI falhou em: $step"; exit 1; }; done < ci-steps.txt && echo 'CI passou: todos os passos run do ci.yml'); }
-ci_with_lint_error() { printf 'export const broken: any = 1;\n' > "$CI_COPY/src/ci-lint-failure.ts"; if run_ci; then echo 'ERRO: a CI passou com a falha de lint'; return 1; fi; echo 'OK: a CI falhou com a falha de lint'; }
 # evidência: ci-local-passa.txt
-run_ci
+( set -e; CI_COPY=$(mktemp -d); trap 'rm -rf "$CI_COPY"' EXIT; tar -cf - package.json pnpm-lock.yaml pnpm-workspace.yaml tsconfig.json eslint.config.js vite.config.ts .gitignore .prettierignore src/test .github | tar -xf - -C "$CI_COPY"; printf "it('a CI roda os testes', () => {\n  expect(1 + 1).toBe(2);\n});\n" > "$CI_COPY/src/ci-probe.test.ts"; sed -n -E 's/^ +- run: (.*)$/\1/p' .github/workflows/ci.yml > "$CI_COPY/ci-steps.txt"; cd "$CI_COPY"; while IFS= read -r step; do echo "\$ $step"; bash -c "$step" || { echo "CI falhou em: $step"; exit 1; }; done < ci-steps.txt; echo 'CI passou: todos os passos run do ci.yml' )
 # evidência: ci-local-falha-lint.txt
-ci_with_lint_error
+( set -e; CI_COPY=$(mktemp -d); trap 'rm -rf "$CI_COPY"' EXIT; tar -cf - package.json pnpm-lock.yaml pnpm-workspace.yaml tsconfig.json eslint.config.js vite.config.ts .gitignore .prettierignore src/test .github | tar -xf - -C "$CI_COPY"; printf "it('a CI roda os testes', () => {\n  expect(1 + 1).toBe(2);\n});\n" > "$CI_COPY/src/ci-probe.test.ts"; sed -n -E 's/^ +- run: (.*)$/\1/p' .github/workflows/ci.yml > "$CI_COPY/ci-steps.txt"; printf 'export const broken: any = 1;\n' > "$CI_COPY/src/ci-lint-failure.ts"; cd "$CI_COPY"; if ( while IFS= read -r step; do echo "\$ $step"; bash -c "$step" || { echo "CI falhou em: $step"; exit 1; }; done < ci-steps.txt ); then echo 'ERRO: a CI passou com a falha de lint'; exit 1; fi; echo 'OK: a CI falhou com a falha de lint' )
 ```
 
 Resultado esperado: código 0. `actionlint.txt` só com a linha `OK: ...`; `ci-local-passa.txt` com `$ pnpm install --frozen-lockfile`, `$ pnpm lint`, `$ pnpm typecheck`, `$ pnpm test` (`Tests  1 passed (1)`), `$ pnpm audit --audit-level high` e `CI passou: ...`; `ci-local-falha-lint.txt` com o erro `@typescript-eslint/no-explicit-any`, `CI falhou em: pnpm lint` e `OK: a CI falhou com a falha de lint`. Precisa de rede (`pnpm audit`) e do Docker.

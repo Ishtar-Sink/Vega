@@ -10,12 +10,18 @@ export interface ButtonProps extends ComponentPropsWithRef<'button'> {
   loading?: boolean;
   /** Cor CSS usada pela variação `muted` (ex.: a cor de uma categoria). */
   tint?: string;
+  /** `lg`: altura mínima de 48 px. Padrão: `md`. */
+  size?: 'md' | 'lg';
+  /** Ocupa a largura toda do contêiner. */
+  block?: boolean;
 }
 
 export function Button({
   variant = 'secondary',
   loading = false,
   tint,
+  size = 'md',
+  block = false,
   type = 'button',
   disabled,
   className,
@@ -25,7 +31,14 @@ export function Button({
 }: ButtonProps) {
   const unavailable = disabled === true || loading;
   const tinted = variant === 'muted' && tint !== undefined;
-  const classes = [styles.root, styles[variant], tinted ? styles.tinted : '', className]
+  const classes = [
+    styles.root,
+    styles[variant],
+    tinted ? styles.tinted : '',
+    size === 'lg' ? styles.lg : '',
+    block ? styles.block : '',
+    className,
+  ]
     .filter(Boolean)
     .join(' ');
   return (

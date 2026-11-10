@@ -18,6 +18,18 @@
     color var(--motion-fast) var(--motion-ease-standard);
 }
 
+.lg {
+  min-height: calc(var(--space) * 12);
+  padding: calc(var(--space) * 3) calc(var(--space) * 5);
+  font-size: var(--font-size-base);
+}
+
+.block {
+  box-sizing: border-box;
+  display: flex;
+  width: 100%;
+}
+
 .root:hover:not(:disabled) {
   background: var(--surface-hover);
 }

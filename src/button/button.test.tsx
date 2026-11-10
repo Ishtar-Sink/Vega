@@ -115,6 +115,35 @@ describe('Button', () => {
     expect(css).not.toMatch(/--primary\s*:/);
     expect(css).not.toMatch(/var\(--primary(-[a-z]+)?\s*,/);
   });
+
+  it('keeps the md size by default without lg or block classes', () => {
+    render(<Button>Salvar</Button>);
+    const button = screen.getByRole('button', { name: 'Salvar' });
+    expect(button.className).not.toMatch(/\blg\b|block/);
+  });
+
+  it('applies the lg size', () => {
+    render(<Button size="lg">Salvar</Button>);
+    expect(screen.getByRole('button', { name: 'Salvar' }).className).toMatch(/lg/);
+  });
+
+  it('fills the width with block', () => {
+    render(<Button block>Salvar</Button>);
+    expect(screen.getByRole('button', { name: 'Salvar' }).className).toMatch(/block/);
+  });
+
+  it('uses a 48px minimum height in the lg size', () => {
+    const css = readFileSync(join(import.meta.dirname, 'button.module.css'), 'utf8');
+    const rule = /\.lg\s*\{([^}]*)\}/.exec(css)?.[1] ?? '';
+    expect(rule).toMatch(/min-height:\s*calc\(var\(--space\) \* 12\)/);
+  });
+
+  it('keeps the block button inside its container with box-sizing border-box', () => {
+    const css = readFileSync(join(import.meta.dirname, 'button.module.css'), 'utf8');
+    const rule = /\.block\s*\{([^}]*)\}/.exec(css)?.[1] ?? '';
+    expect(rule).toMatch(/width:\s*100%/);
+    expect(rule).toMatch(/box-sizing:\s*border-box/);
+  });
 });
 
 describe('Button styles', () => {

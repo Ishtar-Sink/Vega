@@ -14,6 +14,7 @@ required:
   - rules/project/stack.md
   - rules/project/theme.md
   - rules/project/development-methodology.md
+  - rules/project/interaction.md
 
 # Carregado sob demanda por `vostok context load --skill <nome>`, no passo 1 de cada skill.
 # Cada entrada lista os arquivos que a skill carrega além de `required`, na ordem em que aparecem aqui.

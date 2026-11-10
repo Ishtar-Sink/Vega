@@ -77,3 +77,50 @@ describe('ProgressBar track visibility', () => {
     }
   });
 });
+
+describe('ProgressBar valueText and indeterminate', () => {
+  const css = () => readFileSync(join(import.meta.dirname, 'progress-bar.module.css'), 'utf8');
+
+  it('shows valueText as visible text and aria-valuetext', () => {
+    render(<ProgressBar label="Lição" value={4} max={9} valueText="4 de 9" />);
+    expect(screen.getByRole('progressbar', { name: 'Lição' })).toHaveAttribute(
+      'aria-valuetext',
+      '4 de 9',
+    );
+    expect(screen.getByText('4 de 9')).toHaveAttribute('aria-hidden', 'true');
+  });
+
+  it('keeps className, style and data attributes on the progressbar with valueText', () => {
+    render(
+      <ProgressBar label="Lição" value={4} valueText="4" className="extra" data-testid="raiz" />,
+    );
+    const root = screen.getByTestId('raiz');
+    expect(root).toHaveAttribute('role', 'progressbar');
+    expect(root).toHaveClass('extra');
+  });
+
+  it('omits aria-valuenow when indeterminate', () => {
+    render(<ProgressBar label="Importação" value={0} indeterminate />);
+    const bar = screen.getByRole('progressbar', { name: 'Importação' });
+    expect(bar).not.toHaveAttribute('aria-valuenow');
+    expect(bar).toHaveAttribute('aria-busy', 'true');
+  });
+
+  it('ignores the value when indeterminate', () => {
+    render(<ProgressBar label="Importação" value={70} indeterminate />);
+    const bar = screen.getByRole('progressbar');
+    expect(bar).not.toHaveAttribute('aria-valuenow');
+    expect(bar.firstElementChild).not.toHaveStyle({ width: '70%' });
+  });
+
+  it('animates the indeterminate fill with motion tokens', () => {
+    const block = /\.indeterminate \.fill\s*\{([^}]*)\}/.exec(css())?.[1] ?? '';
+    expect(block).toMatch(/animation:[^;]*var\(--motion-slow\)/);
+  });
+
+  it('stops the indeterminate animation with reduced motion', () => {
+    expect(css()).toMatch(
+      /@media \(prefers-reduced-motion: reduce\)\s*\{\s*\.indeterminate \.fill\s*\{[^}]*animation:\s*none/,
+    );
+  });
+});

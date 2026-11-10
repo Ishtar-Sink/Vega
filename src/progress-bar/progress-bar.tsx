@@ -8,30 +8,53 @@ export interface ProgressBarProps extends ComponentPropsWithRef<'div'> {
   value: number;
   /** Valor que representa 100%. */
   max?: number;
+  /** Texto visível do valor (ex.: "4 de 9"), também usado em `aria-valuetext`. */
+  valueText?: string;
+  /** Progresso sem valor conhecido: não anuncia valor e anima a barra. */
+  indeterminate?: boolean;
 }
 
 export function ProgressBar({
   label,
   value,
   max = 100,
+  valueText,
+  indeterminate = false,
   className,
   style,
   ...rest
 }: ProgressBarProps) {
   const clamped = Math.min(Math.max(value, 0), max);
   const percent = max > 0 ? (clamped / max) * 100 : 0;
-  return (
+  const classes = [styles.root, indeterminate && styles.indeterminate, className]
+    .filter(Boolean)
+    .join(' ');
+  const bar = (
     <div
       {...rest}
-      className={[styles.root, className].filter(Boolean).join(' ')}
+      className={classes}
       style={style}
       role="progressbar"
       aria-label={label}
-      aria-valuenow={clamped}
+      aria-valuenow={indeterminate ? undefined : clamped}
       aria-valuemin={0}
       aria-valuemax={max}
+      aria-valuetext={valueText}
+      aria-busy={indeterminate ? true : undefined}
     >
-      <span className={styles.fill} style={{ width: `${String(percent)}%` }} />
+      <span
+        className={styles.fill}
+        style={indeterminate ? undefined : { width: `${String(percent)}%` }}
+      />
+    </div>
+  );
+  if (valueText === undefined) return bar;
+  return (
+    <div className={styles.labeled}>
+      {bar}
+      <span className={styles.valueText} aria-hidden="true">
+        {valueText}
+      </span>
     </div>
   );
 }

@@ -12,3 +12,35 @@
   background: var(--primary);
   transition: width var(--motion-slow) var(--motion-ease-standard);
 }
+
+.labeled {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space);
+}
+
+.valueText {
+  font-size: var(--font-size-sm);
+  color: var(--text-muted);
+  font-variant-numeric: tabular-nums;
+}
+
+.indeterminate .fill {
+  width: 40%;
+  animation: progress-indeterminate var(--motion-slow) var(--motion-ease-linear) infinite alternate;
+}
+
+@keyframes progress-indeterminate {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(150%);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .indeterminate .fill {
+    animation: none;
+  }
+}

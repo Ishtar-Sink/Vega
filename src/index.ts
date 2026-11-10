@@ -74,8 +74,78 @@ export { Badge } from './badge/badge';
 export type { BadgeProps, BadgeTone } from './badge/badge';
 export { ItemSwatch } from './item-swatch/item-swatch';
 export type { ItemSwatchProps } from './item-swatch/item-swatch';
-export { ListIcon, GridIcon, ShelfIcon, TableIcon, DayIcon, TimelineIcon } from './icons';
-export type { ViewIconProps } from './icons';
+export {
+  ListIcon,
+  GridIcon,
+  ShelfIcon,
+  TableIcon,
+  DayIcon,
+  TimelineIcon,
+  HomeIcon,
+  BookOpenIcon,
+  LayersIcon,
+  TimerIcon,
+  UsersIcon,
+  MenuIcon,
+  ChevronLeftIcon,
+  ChevronRightIcon,
+  ChevronDownIcon,
+  ArrowLeftIcon,
+  CloseIcon,
+  PlusIcon,
+  MinusIcon,
+  DownloadIcon,
+  UploadIcon,
+  FlagIcon,
+  RefreshIcon,
+  EyeIcon,
+  CheckIcon,
+  CircleCheckIcon,
+  InfoIcon,
+  AlertTriangleIcon,
+  CircleAlertIcon,
+  WifiOffIcon,
+  CloudCheckIcon,
+  UserIcon,
+  SettingsIcon,
+  LogOutIcon,
+  SunIcon,
+  MoonIcon,
+  LightbulbIcon,
+  ClockIcon,
+  CalendarIcon,
+  PencilIcon,
+  SearchIcon,
+  TrashIcon,
+} from './icons';
+export type { ViewIconProps, IconProps } from './icons';
+export { Switch } from './switch/switch';
+export type { SwitchProps } from './switch/switch.types';
+export { RadioGroup } from './radio-group/radio-group';
+export type { RadioOption, RadioGroupProps } from './radio-group/radio-group.types';
+export { TextAreaField } from './text-area-field/text-area-field';
+export type { TextAreaFieldProps } from './text-area-field/text-area-field.types';
+export { Disclosure } from './disclosure/disclosure';
+export { Accordion } from './disclosure/accordion';
+export type { DisclosureProps, AccordionProps } from './disclosure/disclosure.types';
+export { Callout } from './callout/callout';
+export type { CalloutProps } from './callout/callout.types';
+export { BottomSheet } from './bottom-sheet/bottom-sheet';
+export type { BottomSheetProps } from './bottom-sheet/bottom-sheet.types';
+export { CardLink } from './card-link/card-link';
+export { CardButton } from './card-link/card-button';
+export type { CardLinkProps, CardButtonProps } from './card-link/card-link.types';
+export { FocusHeader } from './focus-header/focus-header';
+export type { FocusHeaderProps } from './focus-header/focus-header.types';
+export { Topbar } from './app-shell/topbar';
+export type { TopbarProps } from './app-shell/topbar.types';
+export { Sidebar } from './app-shell/sidebar';
+export type { SidebarProps } from './app-shell/sidebar.types';
+export { BottomNav } from './app-shell/bottom-nav';
+export type { BottomNavProps } from './app-shell/bottom-nav.types';
+export { AppShell } from './app-shell/app-shell';
+export type { AppShellProps } from './app-shell/app-shell.types';
+export type { NavItem, RenderNavLink } from './app-shell/nav.types';
 export {
   light,
   dark,

@@ -11,11 +11,11 @@ covers: [RF-10, RF-19, RF-20, CT-09, CT-12, CT-13]
 type: historia
 labels: [SPEC-001, padrao]
 status: approved
-content_hash: 13ef7cd9dab6438d3cfbe87158415317a3e7d5b0972fe2228bcbd11580e9e730
-adjustments: 0
-adjusted_at: null
-approved_at: 2026-11-10T14:00:44Z
-approved_hash: 13ef7cd9dab6438d3cfbe87158415317a3e7d5b0972fe2228bcbd11580e9e730
+content_hash: eaed466f6baa56a703020fa3310b75ded2d35ff65d4bcbedf9aa02f21c971b2f
+adjustments: 1
+adjusted_at: 2026-11-10T16:01:40Z
+approved_at: 2026-11-10T16:02:42Z
+approved_hash: eaed466f6baa56a703020fa3310b75ded2d35ff65d4bcbedf9aa02f21c971b2f
 attempts: 0
 tests_result: null
 regression_result: null
@@ -23,6 +23,7 @@ evidence_result: null
 waiting_on: []
 waiting_reason: null
 execution_hash: 65aa351da037e8986754e765feb94052f06d90f4694bc84b08d31b8a06af0924
-verification_hash: ad40f00cd099655c434fa131730d04a955c246c2439bb4c07df391c0ac00647b
+verification_hash: 5ae6af1a3f56daaf5bdd0d0f89dcfc349cb15be435c0dc6ea0afb1762a4dc17c
 criteria_hash: b7b0fa0570525ffb116be9ea99f23dbf5f4f35f4d59a836e7941c8bab107b1e6
-state_hash: f347c0669564e932284989487c4a124821da614073a57d1c3709ecfb3b5938ed
+state_hash: 2ab31919881bc23de179c38528f585e65a084806a62272dc07aa5f64217d8090
+updated_at: 2026-11-10T16:01:40Z

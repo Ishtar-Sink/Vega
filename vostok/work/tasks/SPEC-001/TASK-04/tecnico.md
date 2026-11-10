@@ -4,6 +4,8 @@
 
 Migração com TDD ([project/development-methodology-01]) dos seis campos a partir de `../atria/packages/ui/src/` (commit `139d036`): primeiro os testes do Atria, adaptados e completados (teclado, erro, textos padrão e sobrescritos, props nativas), depois o código. Cada campo fica em `src/<componente>/` com `.tsx`, `.module.css` e `.test.tsx` ([project/architecture-02]); nenhum importa outro componente nem toca `src/index.ts` ou `package.json`.
 
+Na execução inicial, testes e código foram escritos na mesma rodada, sem confirmar que os testes falhavam antes do código. Essa falha de processo está registrada em Pontos de atenção; a correção posterior seguiu o TDD completo.
+
 ## O que muda em relação ao Atria (conformidade)
 
 | Componente | Atria hoje | Na Vega |
@@ -32,7 +34,7 @@ Textos padrão: `Nenhuma opção encontrada`, `{label} escolhidas`, `Remover {op
 
 ## Riscos
 
-- **`--font-size-base` no lugar de `15px`** muda em 1px o texto das opções do `SelectField`; conferir no print.
+- **`--font-size-base` no lugar de `15px`** muda em 1px o texto das opções do `SelectField`. A evidência visual (`campos-temas.png`) foi conferida pelo usuário.
 - **Tipos do `Autocomplete`:** as sobrecargas e a união das props com o `Omit` das props nativas são o ponto mais sensível do `tsc`; a regra do passo 15 lista exatamente o que não pode chegar ao `<input>` (`multiple` viraria atributo HTML).
 
 ## Referências da spec
@@ -42,3 +44,25 @@ RF-10, RF-19, RF-20, RNF-01, RNF-02, RNF-06, RN-01, RN-02, RN-03, CT-09, CT-12, 
 ## Arquivos em comum com a onda
 
 Onda 3: TASK-03 e TASK-11. Nenhum arquivo em comum. A TASK-07 (onda 4) importa `../text-field/text-field`, e a TASK-08 também usa o `TextField`.
+
+## O que foi feito
+
+**Criado:** seis pastas em `src/` (`text-field`, `select-field`, `checkbox`, `segmented-field`, `autocomplete`, `tag-field`), cada uma com o componente, a folha de estilos do módulo e o arquivo de testes. Os componentes foram trazidos do Atria e adaptados conforme a tabela de conformidade acima.
+
+**Como:** a adaptação seguiu os passos da execução: testes trazidos do Atria e completados, troca dos literais de CSS por tokens, props nativas no controle, textos padrão em pt-br e nomes em `camelCase`. A Verificação inteira passou sem falhas, com a regressão igual ao baseline e as três evidências (`campos-testes.txt`, `campos-textos-padrao.txt` e `campos-temas.png`) conferidas pelo usuário. A saída da verificação está em `validation/tests.out`.
+
+**Print automático:** o print manual virou automático, gerado com um build temporário em `node_modules` e Chromium headless, sem arquivo novo no projeto (ajuste 1 do histórico).
+
+**Correção do box-sizing (print rejeitado):** o primeiro `campos-temas.png` mostrou `TextField` e `TagField` passando da borda do contêiner. O input tinha `width: 100%` com `padding` sem `box-sizing: border-box`, e no Atria havia um reset global do app que resolvia isso; a Vega não pode depender disso. A correção seguiu TDD: quatro testes de regressão escritos antes e vistos falhando, depois `box-sizing: border-box` no `.control` de `TextField`, `TagField` e `SelectField` e no `.group` de `SegmentedField` (no `SelectField` e no `SegmentedField`, de forma preventiva, pela mesma causa). Resultado: 58 testes passando e novo print aceito pelo usuário.
+
+**Mudança de API:** `className`, `style`, `ref` e `data-*` agora vão ao controle, não ao `<div>` de fora. Os nomes `emptyText`, `listLabel` e `removeLabel` substituem `empty_text`, `list_label` e `remove_label`, e ficam opcionais com padrão em pt-br. Ambas as mudanças precisam entrar no `CHANGELOG.md` na TASK-14.
+
+**Autocomplete:** `value` e `onChange` saem do `...rest` com duas diretivas `eslint-disable` de `no-unused-vars`, porque são desestruturados só para não chegar ao `<input>`.
+
+## Pontos de atenção
+
+- **Processo de TDD não seguido na primeira rodada:** testes e código foram escritos juntos e a falha dos testes não foi confirmada antes do código. A correção do box-sizing foi feita com o ciclo completo (testes vistos falhando antes).
+- **Duas diretivas `eslint-disable`** no `Autocomplete` (`no-unused-vars`) para `value` e `onChange`; é a parte do código que merece revisão futura.
+- **Tipos do `Autocomplete`** continuam sendo o ponto mais sensível do `tsc` (ver Riscos).
+- **Quem posicionava o campo pelo `className`** precisa envolvê-lo num elemento próprio; a mudança está prevista para o `CHANGELOG.md` (TASK-14).
+- **Regra para as tarefas seguintes:** as TASK-05, TASK-06, TASK-07 e o `Toolbar` da TASK-08 devem seguir a mesma regra de props no controle e o mesmo padrão de `box-sizing`.

@@ -29,7 +29,7 @@ Migração de `badge`, `brand-logo` e `item-swatch` do `@atria/ui` (commit `139d
 - Diferença visual de 1 px no nome do `BrandLogo` (22 px para 21 px). Se o tema ganhar um token de 22 px numa versão futura, o componente passa a usá-lo.
 - O texto em `--primary-on` sobre o gradiente do `ItemSwatch` não tem contraste verificado (ex.: branco sobre ciano claro), como no Atria; o componente é decorativo e o texto dele não substitui o nome do item.
 - Depende dos nomes `itemPalette` e `--item-palette-1-from` a `--item-palette-10-to` da TASK-02; o teste `points only to variables declared in tokens.css` acusa qualquer divergência.
-- A evidência visual é manual: a Vega não tem app de demonstração e a spec não prevê um.
+- A evidência visual não usa app de demonstração, porque a Vega não tem um e a spec não prevê. Desde o ajuste 1, o print é automático: um build temporário em `node_modules` com Chromium headless, sem arquivo novo no projeto.
 
 ## Referências da spec
 
@@ -38,3 +38,19 @@ RF-16, RF-17, RF-20; CT-10, CT-11, CT-13; CB-05; RN-02, RN-04; RNF-01, RNF-02; [
 ## Arquivos em comum com a onda
 
 Onda 3: TASK-03, TASK-04 e TASK-11. Nenhum arquivo em comum; a TASK-11 só lê `src/theme/tokens.ts` e `src/theme/tokens.css`, também lidos pelas outras.
+
+## O que foi feito
+
+Os três componentes e a paleta interna foram criados junto com os testes: os testes do Atria foram trazidos, adaptados à generalização e completados.
+
+- `src/badge/`: `Badge` com os 7 tons e padrão `primary`, fundo no `*Soft` do tom e CSS só com tokens (espaçamento com `--space`, peso com `--font-weight-semibold`). Testes: axe em todos os tons, cor por tom, props nativas e `ref`, CSS sem literal.
+- `src/brand-logo/`: `BrandLogo` recebe `name` e `mark` por prop; o quadrado com o desenho é `aria-hidden` e o nome é o texto acessível. Saem o "A" e o estilo `.mark svg` do Atria. Testes: axe, desenho e nome renderizados, nenhum SVG fixo no componente, gradiente no CSS, props e `ref`.
+- `src/item-swatch/palette.ts`: `DEFAULT_ITEM_PALETTE` gerada a partir do token `itemPalette` como `var(--item-palette-N-from/to)`, e `pairFor` com o hash do `paletteFor` do Atria. Módulo interno, não exportado pelo índice.
+- `src/item-swatch/item-swatch.tsx`: `ItemSwatch` com `palette?`; sem ela, usa a paleta do tema. O `id` não vai para o DOM. Testes em `palette.test.ts` (derivação da paleta, variáveis declaradas em `tokens.css`, mesmo id com mesmo par, pares do Atria, paleta recebida, fallback) e em `item-swatch.test.tsx` (axe, padrão, paleta recebida, texto com `aria-hidden`, props e `ref`, CSS sem literal).
+
+Verificação: 4 arquivos de teste, 24 testes passando; CSS só com tokens. As decisões estão na tabela acima.
+
+Pontos de atenção:
+
+- A primeira verificação falhou só no tsc, por erros de outras tarefas da mesma onda que estavam em andamento. Passou ao rodar de novo, depois que essas tarefas terminaram.
+- Evidência: o ajuste 1 trocou o print manual pelo automático. `marca-e-itens.png` foi conferido pelo usuário, assim como a saída dos testes (`marca-itens-testes.txt`).

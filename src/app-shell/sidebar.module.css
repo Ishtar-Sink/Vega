@@ -1,0 +1,114 @@
+/* A barra lateral fica na altura da tela enquanto a página rola. */
+.root {
+  position: sticky;
+  top: 0;
+  align-self: start;
+  display: flex;
+  flex-direction: column;
+  gap: var(--s5);
+  box-sizing: border-box;
+  width: calc(var(--space) * 60);
+  height: 100dvh;
+  padding: var(--s5) var(--s3);
+  border-right: calc(var(--space) / 4) solid var(--border);
+  background: var(--bg-elevated);
+  color: var(--text);
+}
+
+.brand {
+  padding: 0 var(--s3);
+}
+
+.nav {
+  flex: 1;
+  min-height: 0;
+  overflow-y: auto;
+}
+
+.list {
+  display: flex;
+  flex-direction: column;
+  gap: var(--s1);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.link {
+  display: flex;
+  align-items: center;
+  gap: var(--s3);
+  box-sizing: border-box;
+  min-height: calc(var(--space) * 11);
+  padding: 0 var(--s3);
+  border-radius: var(--radius-md);
+  color: var(--text-muted);
+  font-family: var(--font-body);
+  font-size: var(--font-size-base);
+  text-decoration: none;
+  transition:
+    background var(--motion-fast) var(--motion-ease-standard),
+    color var(--motion-fast) var(--motion-ease-standard);
+}
+
+.link:hover {
+  background: var(--surface-hover);
+  color: var(--text);
+}
+
+.link:focus-visible {
+  outline: calc(var(--space) / 2) solid var(--primary);
+  outline-offset: calc(var(--space) / -2);
+}
+
+/* O item atual muda fundo, cor e peso, para não depender só do matiz. */
+.link[aria-current='page'] {
+  background: var(--primary-soft);
+  color: var(--primary);
+  font-weight: var(--font-weight-semibold);
+}
+
+.icon {
+  display: inline-grid;
+  flex: none;
+  place-items: center;
+}
+
+.badge {
+  margin-left: auto;
+  padding: 0 var(--s2);
+  border-radius: var(--radius-pill);
+  background: var(--primary-soft);
+  color: var(--primary);
+  font-size: var(--font-size-xs);
+  font-weight: var(--font-weight-semibold);
+}
+
+.link[aria-current='page'] .badge {
+  background: var(--primary);
+  color: var(--primary-on);
+}
+
+.footer {
+  padding-top: var(--s3);
+  border-top: calc(var(--space) / 4) solid var(--border);
+}
+
+/* Gaveta: fixa sobre o conteúdo, entra pela esquerda. */
+.drawer {
+  position: fixed;
+  inset: 0 auto 0 0;
+  z-index: var(--z-popover);
+  width: min(calc(var(--space) * 70), 85vw);
+  box-shadow: var(--shadow-lg);
+  transform: translateX(-100%);
+  visibility: hidden;
+  transition:
+    transform var(--motion-base) var(--motion-ease-standard),
+    visibility var(--motion-base);
+}
+
+.drawerOpen {
+  transform: none;
+  visibility: visible;
+}

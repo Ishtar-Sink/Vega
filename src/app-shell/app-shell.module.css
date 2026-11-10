@@ -1,0 +1,70 @@
+/* Barra lateral à esquerda e o conteúdo à direita. */
+.root {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  min-height: 100dvh;
+  background: var(--bg);
+  color: var(--text);
+}
+
+/* Fora da tela até receber o foco pelo teclado. */
+.skipLink {
+  position: absolute;
+  top: var(--s2);
+  left: var(--s2);
+  z-index: var(--z-toast);
+  padding: var(--s2) var(--s4);
+  border-radius: var(--radius-md);
+  background: var(--primary);
+  color: var(--primary-on);
+  font-family: var(--font-body);
+  font-weight: var(--font-weight-semibold);
+  text-decoration: none;
+  transform: translateY(-200%);
+}
+
+.skipLink:focus-visible {
+  outline: calc(var(--space) / 2) solid var(--primary-on);
+  outline-offset: calc(var(--space) / -1);
+  transform: none;
+}
+
+.column {
+  display: flex;
+  grid-column: 2;
+  flex-direction: column;
+  min-width: 0;
+  min-height: 0;
+}
+
+.main {
+  flex: 1;
+  min-width: 0;
+}
+
+.main:focus {
+  outline: none;
+}
+
+/* Fundo da gaveta aberta, o mesmo véu do fundo do `Dialog`. */
+.scrim {
+  position: fixed;
+  inset: 0;
+  z-index: var(--z-dropdown);
+  background: var(--bg);
+  opacity: 0.7;
+}
+
+@media (max-width: 719.98px) {
+  .root {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .column {
+    grid-column: 1;
+  }
+
+  .root[data-mobile-nav='bottom'] .main {
+    padding-bottom: calc(calc(var(--space) * 14) + env(safe-area-inset-bottom));
+  }
+}

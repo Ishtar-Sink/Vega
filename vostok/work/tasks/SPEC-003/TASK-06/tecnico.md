@@ -27,3 +27,34 @@ RF-05 a RF-09; CT-05 a CT-09; CB-02, CB-03; RN-02, RN-03; RNF-01 a RNF-05, RNF-0
 ## Arquivos em comum com a onda
 
 Nenhum. A onda 3 (TASK-06, TASK-08, TASK-09, TASK-11, TASK-12, TASK-14) cria só as próprias pastas; esta tarefa só lê `src/icons/interface-icons.tsx`, da TASK-02.
+
+## O que foi feito
+
+Arquivos criados em `src/radio-group/`:
+
+- `radio-group.types.ts`: `RadioTone` (`success`, `danger`, `neutral`), `RadioOption` e `RadioGroupProps`. Este último estende `ComponentPropsWithRef<'fieldset'>` sem `onChange` e `children`. JSDoc em pt-br.
+- `radio-group.constants.ts`: `TONE_ICONS`, com `success` para `CircleCheckIcon` e `danger` para `CircleAlertIcon`.
+- `radio-option.tsx`: `RadioOptionItem`, uma `<label>` com o `<input type="radio">` nativo dentro, o `marker`, o texto com a `description`, o ícone do tom (só para `success` e `danger`), o `CheckIcon` (só no cartão marcado) e o `adornment` no fim.
+- `radio-group.tsx`: `RadioGroup` com `<fieldset>` raiz, `<legend>` (classe `srOnly` quando `hideLabel`), `div role="radiogroup"` ligado à legenda por `aria-labelledby`, com `aria-readonly` e `aria-invalid`. Ajuda (`<p>`) e erro (`<p role="alert">`) têm ids gerados com `useId`. O `aria-describedby` do `<fieldset>` junta o valor recebido, o id da ajuda e o do erro.
+- `radio-group.module.css`: `.root`, `.legend`, `.srOnly`, `.help`, `.error`, `.options`, `.option`, as variantes `.card` e `.checked`, os tons `.success`, `.danger` e `.neutral`, o foco, `.marker`, `.description` e `.check`. Só tokens, com `@media (prefers-reduced-motion: reduce)` zerando a transição de `.option`.
+- `radio-group.test.tsx`: 13 testes.
+
+Como funciona:
+
+- Sem `name`, o grupo gera um nome com `useId`, para que os rádios de um mesmo grupo se agrupem entre si.
+- Na variante `card`, o `input` vai para `position: absolute` com `opacity: 0`, e o `<label>` inteiro recebe o clique.
+- Com `readOnly`, o `onChange` do rádio não chama `onSelect`. Como o `checked` vem da prop, o React mantém a escolha atual.
+
+## Como foi verificado
+
+- TDD: o teste foi escrito antes. Sem o componente, falhou porque `./radio-group` não resolvia.
+- Um teste falhou depois por defeito do próprio teste: ele contava a regra `transition: none` do `prefers-reduced-motion` como se fosse uma transição comum. O teste foi corrigido para ignorar essa regra. Os 13 testes passam.
+- Regressão: os 3 comandos do baseline foram rodados de novo, com código de saída 0.
+- Evidências: `testes-radio.txt` (saída dos testes, 13 passed), `linhas-radio.txt` e `radio-temas.png` (print nos temas), conferidas pelo usuário.
+
+## Pontos de atenção
+
+- No tema escuro, o rádio nativo desmarcado aparece como círculo branco cheio. O CSS do componente só define `accent-color: var(--primary)` no `input`, e não há `color-scheme` em `src/`, então a aparência do rádio segue o navegador. O usuário aceitou esse ponto no print.
+- `RadioOptionItem` aceita a prop `describedBy`, mas `RadioGroup` não a repassa. Hoje é uma prop sem uso; quem mexer no componente pode removê-la ou passá-la.
+- O foco visível do cartão usa `:has()`. Em navegadores sem suporte, o anel não aparece no cartão; o rádio continua focável pelo teclado.
+- O jsdom não aplica CSS. Os testes conferem as regras do `.module.css` lendo o texto do arquivo; o efeito visual do foco, da borda e do tom só foi conferido no print.

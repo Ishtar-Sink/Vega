@@ -22,6 +22,8 @@ Justificativa das dependências de runtime ([project/stack-07], RN-04):
 
 ## Riscos
 
+- Exceção de idade mínima: o `lucide-react` 1.71.0 saiu no mesmo dia da execução, e o `pnpm add` gravou `minimumReleaseAgeExclude: [lucide-react@1.71.0]` no `pnpm-workspace.yaml`. O usuário decidiu manter a exceção em vez de fixar a 1.70.0. Ao subir o `lucide-react`, a entrada pode ser removida quando a versão nova tiver passado da idade mínima.
+
 - A entrada condicional esconde um erro de digitação no caminho do `Prose`: a TASK-13 confere `dist/prose.js` no build dela (CT-24).
 - `pnpm audit` pode acusar vulnerabilidade transitiva do parser: o passo 6 para antes da verificação, e a troca de versão vira pergunta ao usuário.
 
@@ -32,3 +34,27 @@ RF-27, CT-24, RNF-06, RN-04; decisões 1, 2 e 6; [project/stack-07], [project/st
 ## Arquivos em comum na onda
 
 Onda 1 (com TASK-03, TASK-04, TASK-05, TASK-07 e TASK-10): nenhum arquivo em comum. O `package.json` também é mudado pela TASK-16, na onda 5.
+
+## O que foi feito
+
+- `package.json`: as quatro dependências entraram no campo `dependencies`, instaladas com `pnpm add`: `lucide-react` `^1.71.0`, `react-markdown` `^10.1.0`, `remark-gfm` `^4.0.1` e `rehype-sanitize` `^6.0.0`. Em `exports`, `.` e `./prose` usam o formato com `types` e `import`; `./prose` aponta para `dist/prose/index.d.ts` (tipos) e `dist/prose.js` (código). `./styles.css` e `./tokens.css` foram mantidos. O campo `types` do topo continua `./dist/index.d.ts`.
+- `pnpm-workspace.yaml`: o `pnpm add` gravou `minimumReleaseAgeExclude` com `lucide-react@1.71.0`, porque a versão saiu no mesmo dia da execução e não passava na trava de idade mínima do pnpm 11. O usuário decidiu manter a exceção.
+- `pnpm-lock.yaml`: resolução das quatro dependências novas, gerada pelo `pnpm add`.
+- `vite.config.ts`: `existsSync` foi importado de `node:fs`. A constante `entries` recebe `index` (`src/index.ts`) e, só quando `src/prose/index.ts` existir, também `prose`. Em `build.lib`, `entry` passou a receber `entries` e `fileName` passou a usar o nome de cada entrada (`index.js` e `prose.js`). Em `build.rolldownOptions.external`, uma regex nova marca as quatro dependências como externas, incluindo subcaminhos.
+- `docs/KT-001-vega-lote-1.md`: sem alteração. `git ls-files` confirma que o arquivo está versionado desde o commit `8a59b95`.
+
+Verificação:
+
+- Baseline coletado antes da mudança: 5 comandos, todos com código de saída 0.
+- Dependências: `dependencies` contém exatamente `lucide-react`, `react-markdown`, `rehype-sanitize` e `remark-gfm`; `exports` contém `.`, `./prose`, `./styles.css` e `./tokens.css`.
+- `pnpm build` termina com código 0 e gera os mesmos quatro arquivos em `dist/` (`index.d.ts`, `index.js`, `style.css`, `tokens.css`). O build segue verde com 72 exportações.
+- Prettier, ESLint com `--max-warnings 0`, `pnpm typecheck` e `pnpm audit --audit-level high` terminaram com código 0.
+- Evidências `dependencias.txt`, `audit.txt` e `build-entradas.txt` foram conferidas pelo usuário. A Verificação passou sem falhas; a regressão contra o baseline teve 2 mudanças esperadas (`dependencies` e `exports`).
+
+## Pontos de atenção
+
+- Exceção de idade mínima: `lucide-react@1.71.0` está em `minimumReleaseAgeExclude`. Quando a versão passar da idade mínima, a entrada pode ser removida.
+- Entrada `prose` condicional: enquanto `src/prose/index.ts` não existir, `exports` aponta para `./dist/prose.js` e esse arquivo não é gerado. A TASK-13 precisa conferir `dist/prose.js` no próprio build (CT-24).
+- Auditoria: `pnpm audit` mostra 1 vulnerabilidade moderada, no `minimatch`, transitiva do ESLint. É dependência de desenvolvimento e não aparece no nível `high` usado na verificação.
+- As quatro dependências são externas: quem instala a biblioteca recebe essas bibliotecas do próprio projeto, e o `dist/` não embute cópias delas.
+- O registro não guarda a saída do passo 1 (teste antes, com a falha esperada `ERRO: dependência ausente: lucide-react`).

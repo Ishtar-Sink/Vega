@@ -11,6 +11,7 @@
 
 - `package.json` (alterar): `dependencies` com `lucide-react`, `react-markdown`, `remark-gfm` e `rehype-sanitize`, e a entrada `./prose` no `exports` (RF-27, RN-04).
 - `pnpm-lock.yaml` (alterar): resolução das quatro dependências novas, gerada pelo `pnpm add`.
+- `pnpm-workspace.yaml` (alterar): `minimumReleaseAgeExclude` com `lucide-react@1.71.0`, gravado pelo `pnpm add`, porque a versão foi publicada em 2026-11-10 e não passava na trava de idade mínima do pnpm 11 (decisão do usuário: manter a exceção).
 - `vite.config.ts` (alterar): entradas `index` e `prose` (esta só quando `src/prose/index.ts` existir), nome de saída por entrada e as dependências novas como externas (RF-27, RNF-06).
 - `docs/KT-001-vega-lote-1.md` (alterar): sem mudança de conteúdo; o passo só confere que o arquivo está versionado (já entrou no commit `8a59b95`).
 

@@ -3,7 +3,7 @@
 Arquivo gerado pelo vostok a cada mudança de estado; não edite.
 
 - **Spec:** SPEC-003
-- **Status:** approved
+- **Status:** done
 - **Onda:** 1
 - **Dependências:** -
 
@@ -22,10 +22,10 @@ Arquivo gerado pelo vostok a cada mudança de estado; não edite.
 - **Tipo:** historia
 - **Descrição:** Acrescenta `valueText` e `indeterminate` ao `ProgressBar`.
 - **Critérios de aceite:**
-  - [ ] O `ProgressBar` mostra o `valueText` e o aplica em `aria-valuetext` (RF-37, CT-34).
-  - [ ] O modo indeterminado não anuncia valor e ignora o `value` recebido (RF-38, CT-35, CB-12).
-  - [ ] A animação indeterminada usa `--motion-*` e para com movimento reduzido (RF-38, RNF-04).
-  - [ ] O comportamento atual do `ProgressBar` não muda, e o arquivo de produção fica com até 200 linhas (RNF-08).
+  - [x] O `ProgressBar` mostra o `valueText` e o aplica em `aria-valuetext` (RF-37, CT-34).
+  - [x] O modo indeterminado não anuncia valor e ignora o `value` recebido (RF-38, CT-35, CB-12).
+  - [x] A animação indeterminada usa `--motion-*` e para com movimento reduzido (RF-38, RNF-04).
+  - [x] O comportamento atual do `ProgressBar` não muda, e o arquivo de produção fica com até 200 linhas (RNF-08).
 - **Rótulos:** SPEC-003, padrao
 - **Estimativa:** padrao
 - **Bloqueada por:** -

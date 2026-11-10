@@ -24,3 +24,23 @@ RF-37, RF-38, CT-34, CT-35, CB-12; RNF-04, RNF-08; regras [project/theme-07], [p
 ## Arquivos em comum com a onda
 
 Nenhum. Na onda 1, as TASK-01, TASK-03, TASK-05, TASK-07 e TASK-10 não mudam `src/progress-bar/`. A TASK-11, da onda 3, usa o `ProgressBar` estendido.
+
+## O que foi feito
+
+- `src/progress-bar/progress-bar.tsx`: `ProgressBarProps` ganhou `valueText` e `indeterminate`, com JSDoc em pt-br. A raiz continua sendo o `div` com papel `progressbar`, recebendo `className`, `style` e as demais props. Com `indeterminate`, a raiz recebe a classe `indeterminate` e `aria-busy="true"`, não tem `aria-valuenow`, o preenchimento não tem `width` inline e o `value` é ignorado. Com `valueText`, a raiz recebe `aria-valuetext` e é envolvida por um `div` `.labeled` com um `span` `aria-hidden` que mostra o texto. Sem `valueText`, a árvore é a mesma de antes.
+- `src/progress-bar/progress-bar.module.css`: acrescentadas as classes `.labeled` e `.valueText`, `.indeterminate .fill` com a animação `progress-indeterminate` (usa `--motion-slow` e `--motion-ease-linear`, em `infinite alternate`) e o bloco `@media (prefers-reduced-motion: reduce)` com `animation: none`. O `.root` não mudou.
+- `src/progress-bar/progress-bar.test.tsx`: seis testes novos no `describe('ProgressBar valueText and indeterminate')`, cobrindo o texto e `aria-valuetext`, a preservação das props na raiz com `valueText`, `aria-valuenow` omitido e `value` ignorado no modo indeterminado, e os dois testes que leem o CSS (animação com tokens de movimento e parada com movimento reduzido). Os testes antigos foram mantidos, inclusive `ProgressBar track visibility`.
+
+## Verificação
+
+- `pnpm vitest run src/progress-bar`: 15 testes passam (9 antigos e 6 novos).
+- `pnpm exec prettier --write src/progress-bar` aplicado; a Verificação da tarefa terminou sem falhas.
+- Regressão: a tarefa só acrescentou testes; nenhum teste existente foi alterado ou removido.
+- A animação não roda no jsdom, por isso é verificada lendo o CSS. O visual foi conferido pelo print de evidência `progresso-temas.png`, e a saída dos testes pela evidência `testes-progresso.txt`, ambas conferidas pelo usuário.
+
+## Pontos de atenção
+
+- Os testes foram escritos junto com o código e não foram vistos falhando antes da implementação; o ciclo de teste que falha primeiro não foi comprovado nesta tarefa.
+- O invólucro `.labeled` só aparece com `valueText`. Quem estiliza o pai do `ProgressBar` e passa `valueText` passa a ver um `div` a mais na árvore.
+- O ciclo da animação é de 320 ms, o limite da regra [project/theme-07]. Um valor maior exigiria ajustar a regra.
+- No modo indeterminado o `value` é ignorado por design (CB-12); quem precisa mostrar um valor conhecido deve usar o modo determinado.

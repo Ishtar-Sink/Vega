@@ -25,3 +25,24 @@ RF-36, CT-33; RNF-08; regras [project/code-style-02], [project/code-style-03], [
 ## Arquivos em comum com a onda
 
 Nenhum. Na onda 1, as TASK-01, TASK-04, TASK-05, TASK-07 e TASK-10 não mudam `src/button/`.
+
+## O que foi feito
+
+- `src/button/button.test.tsx`: 5 testes novos no `describe` existente: o padrão não recebe classes de `lg` nem de `block`; `size="lg"` aplica a classe `lg`; `block` aplica a classe `block`; a classe `.lg` do CSS define `min-height: calc(var(--space) * 12)`, ou seja, 48 px; a classe `.block` define `width: 100%` e `box-sizing: border-box`. Os dois últimos leem `button.module.css`, porque o jsdom não calcula layout. Com os testes antigos, são 22 testes passando.
+- `src/button/button.tsx`: `ButtonProps` ganhou `size?: 'md' | 'lg'` (padrão `md`) e `block?: boolean` (padrão `false`), com JSDoc em pt-br. As classes `lg` e `block` são acrescentadas só quando as props pedem; no padrão, nenhuma classe nova é aplicada. O arquivo segue abaixo de 200 linhas.
+- `src/button/button.module.css`: `.lg` com `min-height: calc(var(--space) * 12)`, padding próprio e `font-size: var(--font-size-base)`; `.block` com `box-sizing: border-box`, `display: flex` e `width: 100%`. Não há literal em `px`.
+
+Verificação:
+
+- Baseline coletado antes da mudança: 3 comandos, todos com código de saída 0.
+- `pnpm vitest run src/button` passa inteiro; Prettier sobre `src/button` e a Verificação inteira terminaram com código 0.
+- Evidências `testes-button.txt` e `button-tamanhos.png` foram conferidas pelo usuário. A Verificação passou sem falhas; a regressão teve 2 comandos iguais ao baseline e 1 com acréscimo (os testes novos).
+
+## Pontos de atenção
+
+- O TDD não foi seguido à risca: o subagente escreveu os testes junto com o código e não os viu falhar antes da implementação. O passo que pedia a falha inicial não tem registro de saída.
+- O jsdom não renderiza layout: a altura de 48 px e a largura de 100% são conferidas pelo texto do CSS. O comportamento visual real depende do print `button-tamanhos.png`.
+- `size="lg"` também muda a fonte (`--font-size-base`, em vez de `--font-size-md`). Quem usar o tamanho grande recebe as duas mudanças juntas.
+- `.block` troca `inline-flex` por `flex`: sem essa troca, o botão não ocuparia a largura do contêiner.
+- `size` não é atributo HTML de `<button>`, então não colide com as props nativas.
+- Os tipos ficam no próprio `button.tsx`; a divisão em arquivo de tipos é da SPEC-002.

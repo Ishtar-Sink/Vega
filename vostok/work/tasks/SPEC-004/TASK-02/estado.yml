@@ -1,0 +1,28 @@
+id: TASK-02
+spec: SPEC-004
+title: "Countdown"
+description: "Cria o `Countdown` em dias de calendário, com os tamanhos `display` e `inline` e o utilitário `daysBetween`."
+profile: padrao
+persona: ui-ux-designer
+depends_on: []
+closes_after: []
+wave: 1
+covers: [RF-10, RF-11, RF-12, RF-18, CT-08, CT-09, CT-13, CB-05]
+type: tarefa
+labels: [SPEC-004, padrao]
+status: approved
+content_hash: db99e26b835fb82bbc3f55770dddd108d47f5fd4d266b46e04216f37f5bf1f8b
+adjustments: 0
+adjusted_at: null
+approved_at: 2026-11-10T21:29:10Z
+approved_hash: db99e26b835fb82bbc3f55770dddd108d47f5fd4d266b46e04216f37f5bf1f8b
+attempts: 0
+tests_result: null
+regression_result: null
+evidence_result: null
+waiting_on: []
+waiting_reason: null
+execution_hash: e09803c2b4527f11f668a8d6e425f589e9d57d345cb4e526a2629849f4b9bad0
+verification_hash: 3482dcb1a632f6cac71a7168787c801a287fa321bf3fb5707dc4a4c42885b895
+criteria_hash: 9db65d748a2bde5b0ee93d29da7b742ec0aacf2c4d62a2678cfeb7a3688b0e3f
+state_hash: c07dfac71fcc9a6efe1d215a1521d41a7cb9bd3ef4d78dacf88d7bff43d805b1

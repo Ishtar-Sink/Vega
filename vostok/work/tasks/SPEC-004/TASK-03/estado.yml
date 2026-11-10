@@ -1,0 +1,28 @@
+id: TASK-03
+spec: SPEC-004
+title: "ConnectionStatus"
+description: "Cria o `ConnectionStatus` com os cinco estados, as variantes `chip` e `detail`, o progresso, a fila e o tempo relativo."
+profile: padrao
+persona: ui-ux-designer
+depends_on: []
+closes_after: []
+wave: 1
+covers: [RF-13, RF-14, RF-15, RF-16, RF-17, CT-10, CT-11, CT-12, CB-06, CB-07]
+type: tarefa
+labels: [SPEC-004, padrao]
+status: approved
+content_hash: 8e2951df4b86065a4de2f1b241b62f2cb24e530bd82a100d2e90f37f7707fad8
+adjustments: 0
+adjusted_at: null
+approved_at: 2026-11-10T21:29:10Z
+approved_hash: 8e2951df4b86065a4de2f1b241b62f2cb24e530bd82a100d2e90f37f7707fad8
+attempts: 0
+tests_result: null
+regression_result: null
+evidence_result: null
+waiting_on: []
+waiting_reason: null
+execution_hash: f79587c24cdaa46dfb6f8c052ed8b1d02d80141ff1c5925ebe1e6b641be6b7cf
+verification_hash: 06e3489afa850bfbfefa46a3e1a72f4904bc9eabffb552a25b3dc9beda054ec5
+criteria_hash: ce85d1605f3463a46848e75f15b8fcf6b97c7772902e7abe01b6f1184bc8a7d2
+state_hash: b22cc165b0b5460052642c2948b752599873ae3d4eacd9aa2a39bad2f4020d4a

@@ -1,0 +1,28 @@
+id: TASK-01
+spec: SPEC-004
+title: "Timer"
+description: "Cria o `Timer` regressivo e progressivo, com ocultar, avisos, fim e o utilitário `formatDuration`."
+profile: julgamento
+persona: ui-ux-designer
+depends_on: []
+closes_after: []
+wave: 1
+covers: [RF-01, RF-02, RF-03, RF-04, RF-05, RF-06, RF-07, RF-08, RF-09, RF-18, CT-01, CT-02, CT-03, CT-04, CT-05, CT-06, CT-07, CT-13, CB-01, CB-02, CB-03, CB-04, CB-08]
+type: tarefa
+labels: [SPEC-004, julgamento]
+status: approved
+content_hash: d649b2e0d4fc98eb3e613afb3b927abace15616dd9e41fcdfb07dd3fd24e5559
+adjustments: 0
+adjusted_at: null
+approved_at: 2026-11-10T21:29:10Z
+approved_hash: d649b2e0d4fc98eb3e613afb3b927abace15616dd9e41fcdfb07dd3fd24e5559
+attempts: 0
+tests_result: null
+regression_result: null
+evidence_result: null
+waiting_on: []
+waiting_reason: null
+execution_hash: dd8f302650768c3bd7b94abb714ced1f34e8fdb663ddf42e98da4f0bc88ca8cc
+verification_hash: c50c64d6c27ae2e9073ffb67153c65b746b93c89aecbc8cdfcb6c03436ff9159
+criteria_hash: ec28a77f26e105a3e54631b1fbdfca3a8cab05289d87b7ce3a87dbea6ccbdadd
+state_hash: 6f73609bf4d6d33fb029802f0155322e90f09489bce2b154cbf9bb841aefc8c7

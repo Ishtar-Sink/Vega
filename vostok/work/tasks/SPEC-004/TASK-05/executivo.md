@@ -1,0 +1,3 @@
+<!-- Escrito no planejamento com o que a tarefa vai fazer e enriquecido na conclusão com o que foi feito. -->
+
+Publica a versão 0.3.0 da Vega no npm, com o cronômetro, a contagem de dias e o indicador de conexão que o Synestia precisa para o simulado. A publicação continua só pelo GitHub, com o selo público de origem. Também registra no histórico o que entrou e atualiza o README com a seção de tempo e conexão. Perfil `julgamento`; risco alto pelo prazo do Synestia (17/11) e pela dependência dos passos manuais do usuário (tag e acompanhamento). Depende do índice público (TASK-04) e fecha a SPEC-004.

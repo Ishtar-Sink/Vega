@@ -1,0 +1,21 @@
+### Ler
+
+- `vostok/work/specs/refined/SPEC-004-timer-countdown-e-connectionstatus.md` (RF-19, CT-14, RNF-08, "Contratos e interfaces", em especial a lista do "Índice")
+- `vostok/rules/project/architecture.md` ([project/architecture-03])
+- `src/index.ts` (formato: um `export` e um `export type` por módulo, sem `export *`; o bloco do tema fica por último)
+- `src/index.test.ts` (`RUNTIME_EXPORTS`, `PublicTypes` e os cinco testes do `describe('índice público')`)
+- `vostok/work/tasks/SPEC-004/TASK-01/tecnico.md`, `vostok/work/tasks/SPEC-004/TASK-02/tecnico.md` e `vostok/work/tasks/SPEC-004/TASK-03/tecnico.md` (nomes exportados, nomes trocados e valores ou tipos públicos acrescentados por cada tarefa)
+- `vostok/work/.archive/SPEC-003/tasks/TASK-15/tecnico.md` (como o índice da 0.2.0 foi montado)
+
+### Mudar
+
+- `src/index.ts` (alterar): exporta `Timer`, `Countdown`, `ConnectionStatus`, `formatDuration`, `daysBetween` e os 10 tipos públicos (RF-19, [project/architecture-03]).
+- `src/index.test.ts` (alterar): superfície pública com os 5 valores novos e os 10 tipos novos (CT-14).
+
+### Passos
+
+1. Localize os módulos: para cada nome dos passos 2 e 3, rode `grep -rn "export .*\bNOME\b" src --include='*.ts' --include='*.tsx' | grep -v '\.test\.' | grep -v '^src/index.ts'` e anote o arquivo que o declara. Origens esperadas: `Timer` em `src/timer/timer.tsx`; `formatDuration` em `src/timer/timer.utils.ts`; `TimerProps`, `TimerCountdownProps`, `TimerElapsedProps`, `TimerLabels` e `DurationParts` em `src/timer/timer.types.ts`; `Countdown` em `src/countdown/countdown.tsx`; `daysBetween` em `src/countdown/countdown.utils.ts`; `CountdownProps` e `CountdownLabels` em `src/countdown/countdown.types.ts`; `ConnectionStatus` em `src/connection-status/connection-status.tsx`; `ConnectionStatusProps`, `ConnectionStatusLabels` e `ConnectionState` em `src/connection-status/connection-status.types.ts`. Se um nome estiver em outro arquivo, ou tiver sido trocado por uma tarefa de componente e registrado no `tecnico.md` dela, use o que o `grep` e o registro mostram e cite a diferença no `tecnico.md` desta tarefa. Se uma tarefa registrou um valor ou tipo público a mais (por exemplo, um `DEFAULT_*_LABELS`), acrescente-o aos passos 2 e 3 e à contagem. Confira: todo nome tem arquivo de origem.
+2. `src/index.test.ts` (alterar), antes do índice: em `RUNTIME_EXPORTS`, mantenha os 122 nomes atuais e acrescente, depois de `AppShell` e antes do bloco do tema (`'light'`), os 5 valores novos: `Timer`, `Countdown`, `ConnectionStatus`, `formatDuration`, `daysBetween`. No `import type` do topo e em `PublicTypes`, acrescente, depois de `AppShellProps` e antes de `Theme`, os 10 tipos: `TimerProps`, `TimerCountdownProps`, `TimerElapsedProps`, `TimerLabels`, `DurationParts`, `CountdownProps`, `CountdownLabels`, `ConnectionStatusProps`, `ConnectionStatusLabels`, `ConnectionState`. Não mexa nos testes do `describe('índice público', ...)`. Rode `pnpm vitest run src/index.test.ts`. Confira: falha nos 5 `exporta <Nome>` novos e em `exporta só a superfície pública`, e o `tsc` acusa os tipos ausentes.
+3. `src/index.ts` (alterar): depois da linha `export type { NavItem, RenderNavLink } from './app-shell/nav.types';` e antes do bloco do tema (`export {` com `light`), acrescente, na ordem do passo 2, uma linha `export { ... } from './<pasta>/<arquivo>';` e uma `export type { ... } from './<pasta>/<arquivo>.types';` por módulo, com os arquivos do passo 1. O componente e o utilitário da mesma pasta ficam em linhas separadas, porque vêm de arquivos diferentes: `export { Timer } from './timer/timer';` e `export { formatDuration } from './timer/timer.utils';`; o mesmo vale para `Countdown` e `daysBetween`. Nada de `export *`. Confira: `pnpm vitest run src/index.test.ts` passa e `wc -l src/index.ts` fica em até 200 linhas.
+4. Rode `pnpm exec prettier --write src/index.ts src/index.test.ts`, `pnpm exec eslint src/index.ts src/index.test.ts --max-warnings 0` e `pnpm typecheck`. Confira: os três com código 0.
+5. Rode o bloco da "Verificação" inteiro. Se o `node` falhar ao importar `dist/index.js` por acesso ao DOM no carregamento de um módulo, o defeito é do componente: pare e registre o bloqueio com o nome do módulo, sem contornar no índice. Confira: código 0.

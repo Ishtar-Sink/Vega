@@ -9,7 +9,7 @@ Arquivos, um contexto por arquivo ([project/code-style-09]):
 | Arquivo | Conteúdo |
 |---|---|
 | `prose.tsx` | componente e o invólucro interno da tabela |
-| `prose.types.ts` | `ProseProps`, `ProseComponents`, `ProsePlugin` |
+| `prose.types.ts` | `ProseProps`, `ProseComponents`, `ProsePlugin`, `ProseSize` (exportados); `HastRoot` e `HastElement` (internos, derivados dos pacotes) |
 | `prose.constants.ts` | `PROSE_SCHEMA` |
 | `prose.utils.ts` | `proseUrlTransform`, `rehypeProseLinks` |
 | `prose.module.css` | tipografia e tabela |
@@ -40,3 +40,35 @@ RF-22 a RF-27; CT-20 a CT-24; CB-08, CB-09; RNF-01, RNF-06, RNF-07, RNF-08; RN-0
 ## Arquivos em comum com a onda
 
 Nenhum. A onda 2 (TASK-02 e TASK-13) cria pastas diferentes. A TASK-13 só lê o `vite.config.ts` e o `package.json` da TASK-01. O `pnpm build` da Verificação apaga e recria o `dist/`, então o Coordenador não deve rodar a Verificação desta tarefa ao mesmo tempo que outro comando que dependa do `dist/`.
+
+## O que foi feito
+
+Arquivos em `src/prose/`:
+
+- `prose.tsx`: `Prose`. Com `markdown`, renderiza com `ReactMarkdown` (`skipHtml`; `remarkGfm` seguido dos `remarkPlugins` do produto; `rehype-sanitize` com `PROSE_SCHEMA` e depois `rehypeProseLinks`; `urlTransform` = `proseUrlTransform`). Sem `markdown`, só estiliza os `children`. `components` é mesclado depois do `table` interno (`TableWrap`), que tira a prop `node` antes de repassar as demais ao `<table>`.
+- `prose.types.ts`: `ProseProps`, `ProseComponents`, `ProsePlugin` e `ProseSize`, além de `HastRoot` e `HastElement`, que ficam internos e são derivados dos tipos de `rehype-sanitize` e `react-markdown`. Não há `@types/hast` direto no `package.json`.
+- `prose.constants.ts`: `PROSE_SCHEMA`, lista fechada de tags e atributos. Reaproveita de `defaultSchema` só `clobber` e `clobberPrefix`.
+- `prose.utils.ts`: `proseUrlTransform` (bloqueia `javascript:`, `data:` e `vbscript:`, com espaços e maiúsculas) e `rehypeProseLinks` (`rel="noopener noreferrer"` em links externos e `loading="lazy"` em imagens).
+- `prose.module.css`: tipografia de leitura, tamanhos `base` e `reading`, medida de `68ch`, tabela com rolagem e imagens limitadas à largura. Só tokens.
+- `index.ts`: entrada `@ishtar-sink/vega/prose`, exporta `Prose` e os tipos `ProseProps`, `ProseComponents`, `ProsePlugin` e `ProseSize`.
+- `prose.utils.test.ts` e `prose.test.tsx`: 19 testes ao todo, com axe, sanitização, plugins, `components`, tamanhos, regras de CSS lidas do arquivo e repasse de props e `ref`.
+
+Build: `pnpm build` gera `dist/prose.js` e `dist/prose/index.d.ts`, e `dist/index.js` não importa `react-markdown`.
+
+## Como foi verificado
+
+- TDD: os testes de `prose.utils` e de `prose` foram escritos antes e falharam sem os módulos.
+- Depois da implementação, os 19 testes de `src/prose` passam.
+- Segurança: o teste do CB-08 (`<script>`, `<img onerror>` e `[clique](javascript:...)`) confere que nada disso chega ao DOM.
+- Regressão: os 3 comandos do baseline rodaram de novo com código de saída 0.
+- Evidências: `testes-prose.txt`, `prose-seguranca.txt`, `prose-entrada.txt` e `prose-temas.png`, conferidas pelo usuário.
+
+## Pontos de atenção
+
+- `HastRoot` e `HastElement` mudam se `react-markdown` ou `rehype-sanitize` mudarem de versão maior. A versão `^10` do `react-markdown` está fixada pela TASK-01.
+- `code` usa a fonte do corpo, porque não há token de fonte monoespaçada. Ele se distingue só pelo fundo `--surface-muted`. Se a Vega ganhar um token mono, troque em `.root :where(code)` e `pre`.
+- Tabela a 360 px: o `overflow-wrap: anywhere` da raiz quebrava palavras no meio e a tabela encolhia em vez de rolar. Correção: `overflow-wrap: normal` em `th` e `td`, `white-space: nowrap` em `th`, e `.tableWrap` com `overflow-x: auto`. Textos de célula com espaço, como "um meio", ainda quebram em duas linhas.
+- `PROSE_SCHEMA` é a lista do que é permitido. Ampliar a lista é mudança da Vega; o produto amplia por `components`.
+- O `rehypeProseLinks` roda antes dos `components`, então `rel` e `loading` continuam valendo mesmo se o produto trocar `a` ou `img`.
+- Um plugin de matemática (como o `remark-math`) gera `code` com `language-math`, que passa pela regra. A renderização cabe ao produto, em `components`.
+- O teste de CSS lê o arquivo e confere as regras, mas não mede o layout. A rolagem da tabela foi comprovada no print.

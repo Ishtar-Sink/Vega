@@ -1,0 +1,48 @@
+import { defaultSchema, type Options as Schema } from 'rehype-sanitize';
+
+// Lista do que é permitido: só o que a spec pede; ampliar é papel do produto, por `components`.
+export const PROSE_SCHEMA: Schema = {
+  tagNames: [
+    'h1',
+    'h2',
+    'h3',
+    'h4',
+    'h5',
+    'h6',
+    'p',
+    'br',
+    'hr',
+    'ul',
+    'ol',
+    'li',
+    'em',
+    'strong',
+    'del',
+    'code',
+    'pre',
+    'blockquote',
+    'table',
+    'thead',
+    'tbody',
+    'tr',
+    'th',
+    'td',
+    'a',
+    'img',
+  ],
+  attributes: {
+    a: ['href', 'title'],
+    img: ['src', 'alt', 'title'],
+    th: ['align'],
+    td: ['align'],
+    code: [['className', /^language-./]],
+    ol: ['start'],
+  },
+  protocols: {
+    href: ['http', 'https', 'mailto'],
+    src: ['http', 'https'],
+  },
+  clobberPrefix: defaultSchema.clobberPrefix,
+  clobber: defaultSchema.clobber,
+  strip: ['script', 'style'],
+};

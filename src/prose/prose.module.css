@@ -1,0 +1,140 @@
+.root {
+  font-family: var(--font-body);
+  color: var(--text);
+  line-height: var(--line-height-relaxed);
+  max-width: 68ch;
+  overflow-wrap: anywhere;
+}
+
+.base {
+  font-size: var(--font-size-base);
+}
+
+.reading {
+  font-size: var(--font-size-lg);
+}
+
+.root > :first-child {
+  margin-top: 0;
+}
+
+.root > :last-child {
+  margin-bottom: 0;
+}
+
+.root :where(p, ul, ol, blockquote, pre, .tableWrap) {
+  margin: 0 0 var(--s4);
+}
+
+.root :where(h1, h2, h3, h4) {
+  margin: var(--s8) 0 var(--s3);
+  font-family: var(--font-display);
+  font-weight: var(--font-weight-bold);
+  line-height: var(--line-height-tight);
+  letter-spacing: calc(var(--space) * -0.15);
+}
+
+.root :where(h1) {
+  font-size: var(--font-size-xxl);
+}
+
+.root :where(h2) {
+  font-size: var(--font-size-xl);
+}
+
+.root :where(h3, h4) {
+  font-size: var(--font-size-lg);
+}
+
+.root :where(ul, ol) {
+  padding-left: var(--s6);
+}
+
+.root :where(li + li) {
+  margin-top: var(--s1);
+}
+
+.root :where(strong) {
+  font-weight: var(--font-weight-bold);
+}
+
+.root a {
+  color: var(--primary);
+  text-decoration: underline;
+  text-underline-offset: calc(var(--space) / 2);
+  border-radius: var(--radius-sm);
+  transition: color var(--motion-fast) var(--motion-ease-standard);
+}
+
+.root a:hover {
+  color: var(--primary-hover);
+}
+
+.root a:focus-visible {
+  outline: calc(var(--space) / 2) solid var(--primary);
+  outline-offset: calc(var(--space) / 2);
+}
+
+.root :where(code) {
+  padding: 0 var(--s1);
+  border-radius: var(--radius-sm);
+  background: var(--surface-muted);
+  color: var(--text);
+}
+
+.root :where(pre) {
+  padding: var(--s4);
+  overflow-x: auto;
+  border: calc(var(--space) / 4) solid var(--border);
+  border-radius: var(--radius-md);
+  background: var(--surface-muted);
+}
+
+.root :where(pre code) {
+  padding: 0;
+  background: none;
+}
+
+.root :where(blockquote) {
+  padding: var(--s2) var(--s4);
+  border-left: var(--s1) solid var(--primary);
+  border-radius: var(--radius-sm);
+  background: var(--primary-soft);
+  color: var(--text-muted);
+}
+
+.root :where(hr) {
+  margin: var(--s8) 0;
+  border: 0;
+  border-top: calc(var(--space) / 4) solid var(--border);
+}
+
+.tableWrap {
+  overflow-x: auto;
+  max-width: 100%;
+}
+
+.root :where(table) {
+  border-collapse: collapse;
+  min-width: 100%;
+}
+
+.root :where(th, td) {
+  padding: var(--s2) var(--s3);
+  border: calc(var(--space) / 4) solid var(--border);
+  text-align: left;
+  /* Sem isso, o `anywhere` da raiz quebra as palavras e a tabela encolhe em vez de rolar. */
+  overflow-wrap: normal;
+}
+
+.root :where(th) {
+  white-space: nowrap;
+  background: var(--surface-muted);
+  font-weight: var(--font-weight-semibold);
+}
+
+.root img {
+  max-width: 100%;
+  height: auto;
+  border-radius: var(--radius-md);
+}

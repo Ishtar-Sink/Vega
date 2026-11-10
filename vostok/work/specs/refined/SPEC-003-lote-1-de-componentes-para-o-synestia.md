@@ -1,17 +1,21 @@
 ---
 id: SPEC-003
 title: "Lote 1 de componentes para o Synestia"
-status: refined
+status: planned
 author: "Victor Batalha"
 created_at: 2026-11-10T17:44:48Z
-updated_at: 2026-11-10T17:50:46Z
+updated_at: 2026-11-10T18:27:56Z
 tags: []
 type: feature
 source: "draft/SPEC-003-lote-1-de-componentes-para-o-synestia.md"
 refined_at: 2026-11-10T17:50:46Z
-adjustments: 0
-adjusted_at: null
-content_hash: 8c8fd0afa2f8d1b76f561357627c41b6556312d9f608b519074bcb12976af432
+adjustments: 1
+adjusted_at: 2026-11-10T18:14:25Z
+content_hash: 8cf3864f6c914b59e1ce2ca89584f93d5f7add7e257fc2cf67185db166706842
+approved_at: 2026-11-10T18:27:56Z
+approved_hash: 8cf3864f6c914b59e1ce2ca89584f93d5f7add7e257fc2cf67185db166706842
+status_history: 2026-11-10T18:01:34Z approved; 2026-11-10T18:14:13Z planned; 2026-11-10T18:14:25Z refined; 2026-11-10T18:27:56Z planned
+changed_ids: []
 ---
 
 # Lote 1 de componentes para o Synestia - Especificação Refinada
@@ -51,7 +55,7 @@ O Synestia precisa montar a interface da fase 1 só com a Vega ([project/archite
 
 | ID | Requisito |
 |---|---|
-| RF-01 | O sistema deve exportar os 36 ícones da primeira leva do KT-001 como componentes da Vega (`HomeIcon`, `CloseIcon`...), feitos sobre o `lucide-react`. |
+| RF-01 | O sistema deve exportar os 36 ícones da primeira leva (os 34 do KT-001 mais `SearchIcon` e `TrashIcon`) como componentes da Vega (`HomeIcon`, `CloseIcon`...), feitos sobre o `lucide-react`. |
 | RF-02 | Os ícones devem ter `aria-hidden="true"` e `focusable="false"` por padrão, tamanho padrão 20 (`size` 16, 20 ou 24), traço `currentColor` com espessura 2, e repassar a `ref` e as props nativas do `<svg>`. |
 | RF-03 | O `Switch` deve ser um `<button role="switch">` com `aria-checked`, nome acessível vindo do `label` e `help` opcional ligado por `aria-describedby`. |
 | RF-04 | O `Switch` deve alternar por clique, Espaço, Enter e toque no rótulo, chamando `onCheckedChange`, e não alternar quando `disabled`. |
@@ -176,7 +180,7 @@ export interface IconProps extends Omit<ComponentPropsWithRef<'svg'>, 'children'
 // RefreshIcon (RefreshCw), EyeIcon, CheckIcon, CircleCheckIcon, InfoIcon,
 // AlertTriangleIcon (TriangleAlert), CircleAlertIcon, WifiOffIcon, CloudCheckIcon,
 // UserIcon, SettingsIcon, LogOutIcon, SunIcon, MoonIcon, LightbulbIcon, ClockIcon,
-// CalendarIcon, PencilIcon
+// CalendarIcon, PencilIcon, SearchIcon (Search), TrashIcon (Trash2)
 ```
 
 Campos e conteúdo:
@@ -486,6 +490,7 @@ export interface FocusHeaderProps extends Omit<ComponentPropsWithRef<'header'>, 
 | 4 | Card interativo | `as` polimórfico ou dois componentes | `CardLink` e `CardButton` |
 | 5 | Versão | 0.2.0 de uma vez ou versões menores | 0.2.0 de uma vez |
 | 6 | SPEC-002 | Sem relação definida | A refatoração fica para depois; só a SPEC-003 agora |
+| 7 | Ícones da primeira leva | 34 nomes listados no KT-001 | 36 nomes, com `SearchIcon` e `TrashIcon` |
 
 ## Registro de decisões
 
@@ -502,6 +507,7 @@ export interface FocusHeaderProps extends Omit<ComponentPropsWithRef<'header'>, 
 | 9 | Medidas novas (44, 48 e 56 px, 85%) com `calc(var(--space) * N)` ou unidades relativas, sem tokens novos | Criar tokens de tamanho | inferência D |
 | 10 | O `docs/KT-001-vega-lote-1.md` é versionado, sem o `Zone.Identifier` | Deixar o KT fora do git | inferência E |
 | 11 | Os rótulos padrão novos são `Fechar`, `Sair`, `Principal`, `Pular para o conteúdo` e `Abrir menu` | Rótulos obrigatórios | inferência F |
+| 12 | A primeira leva tem 36 ícones: os 34 listados no KT-001 mais `SearchIcon` e `TrashIcon` | Corrigir a contagem para 34 | ajuste 1, pedido do usuário |
 
 ## Pendências
 
@@ -513,3 +519,4 @@ export interface FocusHeaderProps extends Omit<ComponentPropsWithRef<'header'>, 
 
 | # | Data | Origem | Resumo |
 |---|---|---|---|
+| 1 | 2026-11-10 | agente | SearchIcon e TrashIcon acrescentados à primeira leva de ícones, que passa a ter 36 nomes (34 do KT-001 mais os dois); CA-01 inalterado (já dizia 36) |

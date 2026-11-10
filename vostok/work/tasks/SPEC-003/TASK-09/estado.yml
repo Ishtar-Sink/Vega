@@ -1,0 +1,28 @@
+id: TASK-09
+spec: SPEC-003
+title: "Callout"
+description: "Cria o `Callout` com os seis tons, ícone por tom, ação e região viva opcional."
+profile: padrao
+persona: ui-ux-designer
+depends_on: [TASK-02]
+closes_after: []
+wave: 3
+covers: [RF-16, RF-17, RF-18, CT-16, CT-17, CB-06]
+type: historia
+labels: [SPEC-003, padrao]
+status: approved
+content_hash: e4a67cb6f23c17af74016eb145a05a81aa8a55c711d730e06fdd283108e1b806
+adjustments: 0
+adjusted_at: null
+approved_at: 2026-11-10T18:28:14Z
+approved_hash: e4a67cb6f23c17af74016eb145a05a81aa8a55c711d730e06fdd283108e1b806
+attempts: 0
+tests_result: null
+regression_result: null
+evidence_result: null
+waiting_on: []
+waiting_reason: null
+execution_hash: d6fe48ffeb2e87699f5dcb4d7d5e8c0acc4d235463e74c27dde6a992ec5e309f
+verification_hash: 7f90af8c813258d24dfb42b22d9651086889b2a3b42acb884323166a29f7f058
+criteria_hash: 2e145a41c9396c4460fdc9352d64bcbce9710f9dc0e3c1ccd7cfa9facd28f625
+state_hash: 5376afeea67e31c87f5b051d66ef20b34201765d2e51cee6d7535456307c43ae

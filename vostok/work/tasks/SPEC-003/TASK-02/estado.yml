@@ -1,0 +1,29 @@
+id: TASK-02
+spec: SPEC-003
+title: "Ícones de interface"
+description: "Cria o `Icon` interno sobre o `lucide-react` e os 36 ícones com os nomes da Vega."
+profile: padrao
+persona: ui-ux-designer
+depends_on: [TASK-01]
+closes_after: []
+wave: 2
+covers: [RF-01, RF-02, CT-01, CT-02]
+type: historia
+labels: [SPEC-003, padrao]
+status: approved
+content_hash: 730277ccdb9e010af07c327647272f9b9cc7e5e483d282f9233d436b647c1308
+adjustments: 1
+adjusted_at: 2026-11-10T18:14:59Z
+approved_at: 2026-11-10T18:28:14Z
+approved_hash: 730277ccdb9e010af07c327647272f9b9cc7e5e483d282f9233d436b647c1308
+attempts: 0
+tests_result: null
+regression_result: null
+evidence_result: null
+waiting_on: []
+waiting_reason: null
+execution_hash: f2209d36ad2d3f4abc3be213f4f4c482ca020ad2ad390d23ee3a85aabdbf02ff
+verification_hash: adcd5e890cea30adccc0b1f143c06ca9908a51b70365c6e06becdd91154c1b8a
+criteria_hash: d64ef6cefb98c2731042adfc066bc112b0f021e28b4ca03218a6a5c99a370ec6
+state_hash: 4c3eefe6d6b437eedf653be9d3573457002839c7e72de707359a580f03c210c7
+updated_at: 2026-11-10T18:14:59Z

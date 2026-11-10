@@ -1,0 +1,28 @@
+id: TASK-04
+spec: SPEC-003
+title: "ProgressBar com valueText e indeterminado"
+description: "Acrescenta `valueText` e `indeterminate` ao `ProgressBar`."
+profile: padrao
+persona: ui-ux-designer
+depends_on: []
+closes_after: []
+wave: 1
+covers: [RF-37, RF-38, CT-34, CT-35, CB-12]
+type: historia
+labels: [SPEC-003, padrao]
+status: approved
+content_hash: 86e12906874e1e431bfd4a3ed48606f3165d726bf8309e6e7971b2f04e22e26f
+adjustments: 0
+adjusted_at: null
+approved_at: 2026-11-10T18:28:14Z
+approved_hash: 86e12906874e1e431bfd4a3ed48606f3165d726bf8309e6e7971b2f04e22e26f
+attempts: 0
+tests_result: null
+regression_result: null
+evidence_result: null
+waiting_on: []
+waiting_reason: null
+execution_hash: 893f08f3526e4ecbf3e91a80a6ef162b12b6673e741fbb78131197ce2aef9d82
+verification_hash: cc81e46e213687e6762d6fe3d69fc853d6ea46e92efb5b09bd40f78644674697
+criteria_hash: 858311fb895e8ccffd42e17a693c103a9e1894867802447c152c3a0cab0cfbe7
+state_hash: d4cb87cd53a7e9057bd0eff952adbd112ac0dd9879cf5775fd52c954e18d2590

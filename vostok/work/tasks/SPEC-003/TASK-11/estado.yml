@@ -1,0 +1,28 @@
+id: TASK-11
+spec: SPEC-003
+title: "FocusHeader"
+description: "Cria o cabeçalho de fluxo guiado com sair, título, posição e progresso."
+profile: padrao
+persona: ui-ux-designer
+depends_on: [TASK-02, TASK-04]
+closes_after: []
+wave: 3
+covers: [RF-40, CT-37, CB-13]
+type: historia
+labels: [SPEC-003, padrao]
+status: approved
+content_hash: 223c991dd0af215b73a8518ead17a8090203cd72e6f8c81831ebaab3dbdfc08a
+adjustments: 0
+adjusted_at: null
+approved_at: 2026-11-10T18:28:14Z
+approved_hash: 223c991dd0af215b73a8518ead17a8090203cd72e6f8c81831ebaab3dbdfc08a
+attempts: 0
+tests_result: null
+regression_result: null
+evidence_result: null
+waiting_on: []
+waiting_reason: null
+execution_hash: dd146ee3790a0f2ff2a21f45e6fc77a4127367e91c1145b28f4050565774e2b5
+verification_hash: 048786950facd464d9684dad7cc45148f08f43ce272d8cb868a71426f7a04953
+criteria_hash: da43c130f8dd04548446320db6d822df53d4053f486064903f6dc6877a633b37
+state_hash: 3bb25dcc13c1ebe27d5b02f225ed096f8ba4c04cc9bd20c96b0178c5c92ba085

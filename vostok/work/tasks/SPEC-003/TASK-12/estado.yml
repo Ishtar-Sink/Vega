@@ -1,0 +1,28 @@
+id: TASK-12
+spec: SPEC-003
+title: "BottomSheet"
+description: "Cria o `BottomSheet` sobre o `<dialog>` nativo, com posição automática em 720 px."
+profile: padrao
+persona: ui-ux-designer
+depends_on: [TASK-02]
+closes_after: []
+wave: 3
+covers: [RF-19, RF-20, RF-21, CT-18, CT-19, CB-07]
+type: historia
+labels: [SPEC-003, padrao]
+status: approved
+content_hash: 87ab3bc3adbf55aa46fff042e7c9378c3e7c8682734235c82619ea3b379097ce
+adjustments: 0
+adjusted_at: null
+approved_at: 2026-11-10T18:28:14Z
+approved_hash: 87ab3bc3adbf55aa46fff042e7c9378c3e7c8682734235c82619ea3b379097ce
+attempts: 0
+tests_result: null
+regression_result: null
+evidence_result: null
+waiting_on: []
+waiting_reason: null
+execution_hash: 3ad8eb071765fef787432aa0d9e08b8f3ce8cb87e2c81a2ee8666e28b40abd16
+verification_hash: f3f3e719b3099b17130ee1cd543b27e997615535839fa584d060b57f3cb1f3c0
+criteria_hash: 17c93542084a6360900fa71d3a6a9af5402fde87c9ac49ad356aadccbb0f2f3b
+state_hash: 24aa233fc2768162cb223ed0de16caea818edc89741d096f4af909a363c0e106

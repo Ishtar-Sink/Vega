@@ -1,0 +1,28 @@
+id: TASK-07
+spec: SPEC-003
+title: "TextAreaField"
+description: "Cria o `TextAreaField` com `autoResize` e contador."
+profile: padrao
+persona: ui-ux-designer
+depends_on: []
+closes_after: []
+wave: 1
+covers: [RF-10, RF-11, RF-12, CT-10, CT-11, CT-12, CB-04]
+type: historia
+labels: [SPEC-003, padrao]
+status: approved
+content_hash: 364f3356d01b0ba06afa3cb2506aa7dda68c654556dda84cd68094ff6e42cae7
+adjustments: 0
+adjusted_at: null
+approved_at: 2026-11-10T18:28:14Z
+approved_hash: 364f3356d01b0ba06afa3cb2506aa7dda68c654556dda84cd68094ff6e42cae7
+attempts: 0
+tests_result: null
+regression_result: null
+evidence_result: null
+waiting_on: []
+waiting_reason: null
+execution_hash: cc31e73e8403908f38001ed77fa7c14e166f30309e7751823b2c07b78305d4a5
+verification_hash: e80e36360b1d7fd09571ec88d9f2fe16275fcd95bbc417804e04dad9be28033b
+criteria_hash: 2be73aaf31c2d201a9f37b82d63156b9edad9bc16aff6a41929620ef0e29aa87
+state_hash: 7edb45e87b7b039e4a0932c51a5ad94bb6aabe983513241cb545d2ea50088570

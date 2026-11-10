@@ -1,0 +1,28 @@
+id: TASK-06
+spec: SPEC-003
+title: "RadioGroup"
+description: "Cria o `RadioGroup` nas variantes `default` e `card`, com tons, `readOnly`, ajuda e erro."
+profile: padrao
+persona: ui-ux-designer
+depends_on: [TASK-02]
+closes_after: []
+wave: 3
+covers: [RF-05, RF-06, RF-07, RF-08, RF-09, CT-05, CT-06, CT-07, CT-08, CT-09, CB-02, CB-03]
+type: historia
+labels: [SPEC-003, padrao]
+status: approved
+content_hash: 0ce2e25698412ed12792f200bb71e0bdbe5c9898192f584fafbcfecccb20d4a5
+adjustments: 0
+adjusted_at: null
+approved_at: 2026-11-10T18:28:14Z
+approved_hash: 0ce2e25698412ed12792f200bb71e0bdbe5c9898192f584fafbcfecccb20d4a5
+attempts: 0
+tests_result: null
+regression_result: null
+evidence_result: null
+waiting_on: []
+waiting_reason: null
+execution_hash: fe3f626bb0d0947f6518a070ef549e1f37385c5c3d56305b5aba4ffcd2cd5627
+verification_hash: ee376929260282aa31b2d9f7d8f30830e2562f29d51625068f13a93fcc4c8b68
+criteria_hash: a7484d3884e574e12460969101952dc0ee6b84dede8ea413eff50e515c4122fa
+state_hash: 2a7339b5f749be9aa9f85671e751798d948686f285177cc4f906bf5993dd73f1

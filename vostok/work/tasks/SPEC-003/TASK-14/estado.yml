@@ -1,0 +1,29 @@
+id: TASK-14
+spec: SPEC-003
+title: "AppShell e navegação"
+description: "Cria `Topbar`, `Sidebar`, `BottomNav` e `AppShell`, com gaveta, barra inferior e `renderLink`."
+profile: julgamento
+persona: ui-ux-designer
+depends_on: [TASK-02]
+closes_after: []
+wave: 3
+covers: [RF-28, RF-29, RF-30, RF-31, RF-32, RF-33, RF-34, RF-35, CT-25, CT-26, CT-27, CT-28, CT-29, CT-30, CT-31, CT-32, CB-10, CB-11]
+type: historia
+labels: [SPEC-003, julgamento]
+status: approved
+content_hash: 53bc0a81d404537d6b7b983c44b51c2fc452c0cb5bdcd62686a7a2450c83542a
+adjustments: 1
+adjusted_at: 2026-11-10T18:14:59Z
+approved_at: 2026-11-10T18:28:14Z
+approved_hash: 53bc0a81d404537d6b7b983c44b51c2fc452c0cb5bdcd62686a7a2450c83542a
+attempts: 0
+tests_result: null
+regression_result: null
+evidence_result: null
+waiting_on: []
+waiting_reason: null
+execution_hash: a00debbac3fda6accf4a3c202f3ba70cb3b85b8ef5586909e6654fc16e7fd4d6
+verification_hash: 0c47d541b44220c831e342e6c2fdc6ee77e581f90c9496f82ed0cae3c05f61e4
+criteria_hash: acab974e767c9132d8c5e6ba71848498f6556cf2793874dba939a6e5254bc3ed
+state_hash: 916ab1715df427acf07c84d0a097227d60b4cfb78e7a8a56c3d2cadfc5088143
+updated_at: 2026-11-10T18:14:59Z

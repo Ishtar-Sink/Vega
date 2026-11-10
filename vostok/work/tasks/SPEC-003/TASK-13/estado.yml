@@ -1,0 +1,28 @@
+id: TASK-13
+spec: SPEC-003
+title: "Prose"
+description: "Cria o `Prose`, que renderiza e sanitiza Markdown, exportado em `@ishtar-sink/vega/prose`."
+profile: julgamento
+persona: ui-ux-designer
+depends_on: [TASK-01]
+closes_after: []
+wave: 2
+covers: [RF-22, RF-23, RF-24, RF-25, RF-26, RF-27, CT-20, CT-21, CT-22, CT-23, CT-24, CB-08, CB-09]
+type: historia
+labels: [SPEC-003, julgamento]
+status: approved
+content_hash: b7a436756aadb21bc968acba0f5b890b9caa33e5ff52e69d9f9493d3a650379a
+adjustments: 0
+adjusted_at: null
+approved_at: 2026-11-10T18:28:14Z
+approved_hash: b7a436756aadb21bc968acba0f5b890b9caa33e5ff52e69d9f9493d3a650379a
+attempts: 0
+tests_result: null
+regression_result: null
+evidence_result: null
+waiting_on: []
+waiting_reason: null
+execution_hash: 45178dddc43d33a4394c612057c3805c944e0071e1d8dc1254756875b005c61f
+verification_hash: f605896e526fd9d0510e270ad6f3ca9d3aef83c2baa92fa4044f35faf40e4509
+criteria_hash: 1f373e1ee1a56874086c9796dd161d1a156ca3c68f45ce47504aee88e6525ae4
+state_hash: d63c1d51dcd4da4f6798d7fb65de4561de10b4f3a7bc7c5cb369b0e599e3332d

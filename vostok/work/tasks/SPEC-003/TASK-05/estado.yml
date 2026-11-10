@@ -1,0 +1,28 @@
+id: TASK-05
+spec: SPEC-003
+title: "Switch"
+description: "Cria o `Switch` com papel `switch`, rótulo, ajuda e teclado."
+profile: padrao
+persona: ui-ux-designer
+depends_on: []
+closes_after: []
+wave: 1
+covers: [RF-03, RF-04, CT-03, CT-04, CB-01]
+type: historia
+labels: [SPEC-003, padrao]
+status: approved
+content_hash: 8eb8276400bc74eb627cc04dea5477e2cfe1259fad63fa8f2fbde4f67017e39b
+adjustments: 0
+adjusted_at: null
+approved_at: 2026-11-10T18:28:14Z
+approved_hash: 8eb8276400bc74eb627cc04dea5477e2cfe1259fad63fa8f2fbde4f67017e39b
+attempts: 0
+tests_result: null
+regression_result: null
+evidence_result: null
+waiting_on: []
+waiting_reason: null
+execution_hash: 15d2f7a5e47e06e5679084b3ef375d1295c1467e33febdb7c8a1cc0544162f04
+verification_hash: 027cfabf2e37dd5ed4bea2d4b1b302b8fd80ea1d46c46f8d4c05f445dbb3f939
+criteria_hash: b7a5221af18e823290078e035d6fc29cd5e7f8324ed80d145991a7f843021e20
+state_hash: 102862cc8a62b2264ccd0602bb7bb815433723b3010e6796b6eec8a86e040c63

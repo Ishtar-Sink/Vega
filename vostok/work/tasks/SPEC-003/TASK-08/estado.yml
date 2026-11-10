@@ -1,0 +1,28 @@
+id: TASK-08
+spec: SPEC-003
+title: "Disclosure e Accordion"
+description: "Cria o `Disclosure` sobre `<details>` e o `Accordion` `single` e `multiple`."
+profile: padrao
+persona: ui-ux-designer
+depends_on: [TASK-02]
+closes_after: []
+wave: 3
+covers: [RF-13, RF-14, RF-15, CT-13, CT-14, CT-15, CB-05]
+type: historia
+labels: [SPEC-003, padrao]
+status: approved
+content_hash: 353c3969eb3718cfd0064c94a407b1380a3b655f325e49957047bf6e48f8d471
+adjustments: 0
+adjusted_at: null
+approved_at: 2026-11-10T18:28:14Z
+approved_hash: 353c3969eb3718cfd0064c94a407b1380a3b655f325e49957047bf6e48f8d471
+attempts: 0
+tests_result: null
+regression_result: null
+evidence_result: null
+waiting_on: []
+waiting_reason: null
+execution_hash: 21209bd24b29f16533fecb6f49be4371c6517df5b7a74d98c08a573f4c163d3b
+verification_hash: 900ab95e0717af42e35a4ddda0cbf636750db79bc51f4cb4bc9b494b16a02b29
+criteria_hash: b948511e814be96b5fb8feff1a4e8ee2ccf59ccf084d4126128834a7c1399320
+state_hash: ad4421cf7fa835c014f61e73b31193200b4052a7b4152628179c3dba45e9eef6

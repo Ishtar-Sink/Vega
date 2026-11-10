@@ -1,0 +1,28 @@
+id: TASK-10
+spec: SPEC-003
+title: "CardLink e CardButton"
+description: "Cria os cartões interativos como `<a>` e `<button>` com o visual do `Card`."
+profile: padrao
+persona: ui-ux-designer
+depends_on: []
+closes_after: []
+wave: 1
+covers: [RF-39, CT-36]
+type: historia
+labels: [SPEC-003, padrao]
+status: approved
+content_hash: de78e62ded78743e8a18e75dd1499b675c697355aae7b543b9bf3f3ac6a97ce6
+adjustments: 0
+adjusted_at: null
+approved_at: 2026-11-10T18:28:14Z
+approved_hash: de78e62ded78743e8a18e75dd1499b675c697355aae7b543b9bf3f3ac6a97ce6
+attempts: 0
+tests_result: null
+regression_result: null
+evidence_result: null
+waiting_on: []
+waiting_reason: null
+execution_hash: b019a6190b2fb9e3b25185b4eac6b3de4b2f2e31ad234d6b4fbc87b41f40be99
+verification_hash: 9fb367feaedb90ab464d6e6bfb325840a5878d7a3ed3905522cf0a90912a6e46
+criteria_hash: d117bef1d3fc8f2cdd3cace4cb3d33964abcc2a1410edc4fa752135e24b1e510
+state_hash: 852c0ae8abaeed2fe3974131767367dcc30c4d3a46c1a4b3627853d9aac0de77

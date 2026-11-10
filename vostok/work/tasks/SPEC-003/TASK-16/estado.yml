@@ -1,0 +1,29 @@
+id: TASK-16
+spec: SPEC-003
+title: "Publicação da 0.2.0"
+description: "Escreve o CHANGELOG e o README da 0.2.0, sobe a versão e publica pela tag `v0.2.0`."
+profile: julgamento
+persona: desenvolvedor
+depends_on: [TASK-15]
+closes_after: []
+wave: 5
+covers: [RF-42, CT-39]
+type: tarefa
+labels: [SPEC-003, julgamento]
+status: approved
+content_hash: 7e59feed7994b95c4d40be5088f4d680f96820ac398e285865653a43d2ec679c
+adjustments: 1
+adjusted_at: 2026-11-10T18:14:59Z
+approved_at: 2026-11-10T18:28:14Z
+approved_hash: 7e59feed7994b95c4d40be5088f4d680f96820ac398e285865653a43d2ec679c
+attempts: 0
+tests_result: null
+regression_result: null
+evidence_result: null
+waiting_on: []
+waiting_reason: null
+execution_hash: f1ae66c994186a0b02808148558b26dd43c0274da26bf81295c11d6741537f79
+verification_hash: 6b3beb1bbc4e20d4ba9dde38ba31f2cab57a15f0205ddef4e5bb45fba8d8bec9
+criteria_hash: 3b60a25ca678bc38e8eea2579a6cd5adca8120f3e95152eea25724f823d78e05
+state_hash: e8c38cea9f20ddb17020bbfad475f4eb7017fd8147357be95d320b25e3b61be0
+updated_at: 2026-11-10T18:14:59Z

@@ -1,0 +1,28 @@
+id: TASK-01
+spec: SPEC-003
+title: "Dependências e entrada do Prose"
+description: "Adiciona `lucide-react`, `react-markdown`, `remark-gfm` e `rehype-sanitize`, a entrada `./prose` no build e versiona o KT-001."
+profile: padrao
+persona: desenvolvedor
+depends_on: []
+closes_after: []
+wave: 1
+covers: [RF-27, CT-24]
+type: tarefa
+labels: [SPEC-003, padrao]
+status: approved
+content_hash: b4d4daba88a15c7ea34fe973c3ea6bf401707113edae192ba53fecb924d19456
+adjustments: 0
+adjusted_at: null
+approved_at: 2026-11-10T18:28:14Z
+approved_hash: b4d4daba88a15c7ea34fe973c3ea6bf401707113edae192ba53fecb924d19456
+attempts: 0
+tests_result: null
+regression_result: null
+evidence_result: null
+waiting_on: []
+waiting_reason: null
+execution_hash: e356349325a3000b19f3c18dbe5fa050fa8e87a14f93b1df34d95883942b3593
+verification_hash: cdf308f4f34e5a820bdc022dbf4a60c2bc90f3224af657a7da6934a83ad082d4
+criteria_hash: 5f160edeb88d5a22578e7512a39c2ebb4eca9ace812a713ee381d888ee5b7269
+state_hash: 6fca7dca0bf4e26bcbf7c04495288363dead34465a10247c0abfc05839ec2a66
